@@ -1,3 +1,11 @@
-let name = "World";
+import { csv } from "d3";
 
-console.log(`Hello, ${name}`);
+async function init() {
+  const data = await csv("./data/sample.csv");
+
+  for (let row of data) {
+    console.log(row.a, row.b);
+  }
+}
+
+init();
