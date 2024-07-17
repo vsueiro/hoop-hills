@@ -1,0 +1,16 @@
+{
+  "name": "hoop-hills",
+  "version": "1.0.0",
+  "description": "Explore the peaks and valleys of NBA game leads: this 3D data visualization shows every moment a team was leading 🟦 or trailing 🟥 during an entire season.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "vite": "^5.3.4"
+  }
+}
