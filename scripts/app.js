@@ -24,10 +24,14 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
 
 async function init() {
-  const data = await csv("./data/sample.csv");
+  const teamFilter = document.querySelector("#filter-team");
+  const teams = await csv("./data/teams/2024-25.csv");
 
-  for (let row of data) {
-    console.log(row.a, row.b);
+  for (let team of teams) {
+    const option = `<option value="${team.id}">${team.name}</option>`;
+    teamFilter.insertAdjacentHTML("beforeend", option);
+
+    // console.log(team.id, team.name, team.nick);
   }
 }
 
