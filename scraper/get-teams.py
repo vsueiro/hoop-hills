@@ -38,6 +38,52 @@ for link in team_links:
 # Create a DataFrame from the collected data
 teams_df = pd.DataFrame(teams_data, columns=['id', 'nick', 'name'])
 
+# Manual fixes
+team_id_replacements = {
+  'NJN': 'BRK',
+  'CHA': 'CHO',
+  'NOH': 'NOP',
+}
+
+# Replace team IDs
+teams_df['id'] = teams_df['id'].replace(team_id_replacements)
+
+locations = {
+  'ATL': 'Atlanta',
+  'BOS': 'Boston',
+  'BRK': 'Brooklyn',
+  'CHO': 'Charlotte',
+  'CHI': 'Chicago',
+  'CLE': 'Cleveland',
+  'DAL': 'Dallas',
+  'DEN': 'Denver',
+  'DET': 'Detroit',
+  'GSW': 'Golden State',
+  'HOU': 'Houston',
+  'IND': 'Indiana',
+  'LAC': 'LA Clippers',
+  'LAL': 'LA Lakers',
+  'MEM': 'Memphis',
+  'MIA': 'Miami',
+  'MIL': 'Milwaukee',
+  'MIN': 'Minnesota',
+  'NOP': 'New Orleans',
+  'NYK': 'New York',
+  'OKC': 'Oklahoma City',
+  'ORL': 'Orlando',
+  'PHI': 'Philadelphia',
+  'PHO': 'Phoenix',
+  'POR': 'Portland',
+  'SAC': 'Sacramento',
+  'SAS': 'San Antonio',
+  'TOR': 'Toronto',
+  'UTA': 'Utah',
+  'WAS': 'Washington'
+}
+
+# Add locations used on play-by-play table by Basketball Reference
+teams_df['location'] = teams_df['id'].map(locations)
+
 # Define the output directory and file path
 output_dir = './public/data/teams/'
 os.makedirs(output_dir, exist_ok=True)

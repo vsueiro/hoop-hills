@@ -1,31 +1,31 @@
-id,nick,name
-ATL,Hawks,Atlanta Hawks
-BOS,Celtics,Boston Celtics
-NJN,Nets,Brooklyn Nets
-CHA,Hornets,Charlotte Hornets
-CHI,Bulls,Chicago Bulls
-CLE,Cavaliers,Cleveland Cavaliers
-DAL,Mavericks,Dallas Mavericks
-DEN,Nuggets,Denver Nuggets
-DET,Pistons,Detroit Pistons
-GSW,Warriors,Golden State Warriors
-HOU,Rockets,Houston Rockets
-IND,Pacers,Indiana Pacers
-LAC,Clippers,Los Angeles Clippers
-LAL,Lakers,Los Angeles Lakers
-MEM,Grizzlies,Memphis Grizzlies
-MIA,Heat,Miami Heat
-MIL,Bucks,Milwaukee Bucks
-MIN,Timberwolves,Minnesota Timberwolves
-NOH,Pelicans,New Orleans Pelicans
-NYK,Knicks,New York Knicks
-OKC,Thunder,Oklahoma City Thunder
-ORL,Magic,Orlando Magic
-PHI,76ers,Philadelphia 76ers
-PHO,Suns,Phoenix Suns
-POR,Blazers,Portland Trail Blazers
-SAC,Kings,Sacramento Kings
-SAS,Spurs,San Antonio Spurs
-TOR,Raptors,Toronto Raptors
-UTA,Jazz,Utah Jazz
-WAS,Wizards,Washington Wizards
+id,nick,name,location
+ATL,Hawks,Atlanta Hawks,Atlanta
+BOS,Celtics,Boston Celtics,Boston
+BRK,Nets,Brooklyn Nets,Brooklyn
+CHO,Hornets,Charlotte Hornets,Charlotte
+CHI,Bulls,Chicago Bulls,Chicago
+CLE,Cavaliers,Cleveland Cavaliers,Cleveland
+DAL,Mavericks,Dallas Mavericks,Dallas
+DEN,Nuggets,Denver Nuggets,Denver
+DET,Pistons,Detroit Pistons,Detroit
+GSW,Warriors,Golden State Warriors,Golden State
+HOU,Rockets,Houston Rockets,Houston
+IND,Pacers,Indiana Pacers,Indiana
+LAC,Clippers,Los Angeles Clippers,LA Clippers
+LAL,Lakers,Los Angeles Lakers,LA Lakers
+MEM,Grizzlies,Memphis Grizzlies,Memphis
+MIA,Heat,Miami Heat,Miami
+MIL,Bucks,Milwaukee Bucks,Milwaukee
+MIN,Timberwolves,Minnesota Timberwolves,Minnesota
+NOP,Pelicans,New Orleans Pelicans,New Orleans
+NYK,Knicks,New York Knicks,New York
+OKC,Thunder,Oklahoma City Thunder,Oklahoma City
+ORL,Magic,Orlando Magic,Orlando
+PHI,76ers,Philadelphia 76ers,Philadelphia
+PHO,Suns,Phoenix Suns,Phoenix
+POR,Blazers,Portland Trail Blazers,Portland
+SAC,Kings,Sacramento Kings,Sacramento
+SAS,Spurs,San Antonio Spurs,San Antonio
+TOR,Raptors,Toronto Raptors,Toronto
+UTA,Jazz,Utah Jazz,Utah
+WAS,Wizards,Washington Wizards,Washington
