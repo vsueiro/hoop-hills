@@ -1,7 +1,7 @@
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
 import os
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
 
 # Define the URL to scrape
 url = "https://www.basketball-reference.com/teams/"
