@@ -1,31 +1,31 @@
-id,nick,name,location
-ATL,Hawks,Atlanta Hawks,Atlanta
-BOS,Celtics,Boston Celtics,Boston
-BRK,Nets,Brooklyn Nets,Brooklyn
-CHO,Hornets,Charlotte Hornets,Charlotte
-CHI,Bulls,Chicago Bulls,Chicago
-CLE,Cavaliers,Cleveland Cavaliers,Cleveland
-DAL,Mavericks,Dallas Mavericks,Dallas
-DEN,Nuggets,Denver Nuggets,Denver
-DET,Pistons,Detroit Pistons,Detroit
-GSW,Warriors,Golden State Warriors,Golden State
-HOU,Rockets,Houston Rockets,Houston
-IND,Pacers,Indiana Pacers,Indiana
-LAC,Clippers,Los Angeles Clippers,LA Clippers
-LAL,Lakers,Los Angeles Lakers,LA Lakers
-MEM,Grizzlies,Memphis Grizzlies,Memphis
-MIA,Heat,Miami Heat,Miami
-MIL,Bucks,Milwaukee Bucks,Milwaukee
-MIN,Timberwolves,Minnesota Timberwolves,Minnesota
-NOP,Pelicans,New Orleans Pelicans,New Orleans
-NYK,Knicks,New York Knicks,New York
-OKC,Thunder,Oklahoma City Thunder,Oklahoma City
-ORL,Magic,Orlando Magic,Orlando
-PHI,76ers,Philadelphia 76ers,Philadelphia
-PHO,Suns,Phoenix Suns,Phoenix
-POR,Blazers,Portland Trail Blazers,Portland
-SAC,Kings,Sacramento Kings,Sacramento
-SAS,Spurs,San Antonio Spurs,San Antonio
-TOR,Raptors,Toronto Raptors,Toronto
-UTA,Jazz,Utah Jazz,Utah
-WAS,Wizards,Washington Wizards,Washington
+id,nick,name,location,initials
+ATL,Hawks,Atlanta Hawks,Atlanta,ATL
+BOS,Celtics,Boston Celtics,Boston,BOS
+BRK,Nets,Brooklyn Nets,Brooklyn,BKN
+CHO,Hornets,Charlotte Hornets,Charlotte,CHA
+CHI,Bulls,Chicago Bulls,Chicago,CHI
+CLE,Cavaliers,Cleveland Cavaliers,Cleveland,CLE
+DAL,Mavericks,Dallas Mavericks,Dallas,DAL
+DEN,Nuggets,Denver Nuggets,Denver,DEN
+DET,Pistons,Detroit Pistons,Detroit,DET
+GSW,Warriors,Golden State Warriors,Golden State,GSW
+HOU,Rockets,Houston Rockets,Houston,HOU
+IND,Pacers,Indiana Pacers,Indiana,IND
+LAC,Clippers,Los Angeles Clippers,LA Clippers,LAC
+LAL,Lakers,Los Angeles Lakers,LA Lakers,LAL
+MEM,Grizzlies,Memphis Grizzlies,Memphis,MEM
+MIA,Heat,Miami Heat,Miami,MIA
+MIL,Bucks,Milwaukee Bucks,Milwaukee,MIL
+MIN,Timberwolves,Minnesota Timberwolves,Minnesota,MIN
+NOP,Pelicans,New Orleans Pelicans,New Orleans,NOP
+NYK,Knicks,New York Knicks,New York,NYK
+OKC,Thunder,Oklahoma City Thunder,Oklahoma City,OKC
+ORL,Magic,Orlando Magic,Orlando,ORL
+PHI,76ers,Philadelphia 76ers,Philadelphia,PHI
+PHO,Suns,Phoenix Suns,Phoenix,PHX
+POR,Blazers,Portland Trail Blazers,Portland,POR
+SAC,Kings,Sacramento Kings,Sacramento,SAC
+SAS,Spurs,San Antonio Spurs,San Antonio,SAS
+TOR,Raptors,Toronto Raptors,Toronto,TOR
+UTA,Jazz,Utah Jazz,Utah,UTA
+WAS,Wizards,Washington Wizards,Washington,WAS
