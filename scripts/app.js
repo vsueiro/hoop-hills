@@ -1,3 +1,24 @@
+window.app = {};
+
+const form = document.querySelector("form");
+const teamSelector = form.querySelector('[name="team"]');
+const opponentSelector = form.querySelector('[name="opponent"]');
+
+// Prevent opponent from being the currently selected team
+teamSelector.addEventListener("input", () => {
+  for (let option of opponentSelector.options) {
+    option.hidden = option.value === teamSelector.value;
+  }
+
+  if (opponentSelector.value === teamSelector.value) {
+    opponentSelector.value = "all";
+  }
+});
+
+/*
+
+// import './styles/main.css';
+
 import { csv } from "d3";
 import * as THREE from "three";
 
@@ -36,3 +57,5 @@ async function init() {
 }
 
 init();
+
+*/
