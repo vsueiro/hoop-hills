@@ -8,8 +8,151 @@
     <script type="module" src="./scripts/app.js"></script>
   </head>
   <body>
-    <h1>Hoop Hills</h1>
-    <select name="team" id="filter-team"></select>
-    <canvas id="canvas"></canvas>
+    <header>
+      <h1>Hoop Hills</h1>
+      <p>Explore the peaks and valleys of NBA game leads</p>
+      <p>
+        This 3D data visualization shows every moment a team was
+        <span class="leading">leading 🟦</span> or <span class="leading">trailing 🟥</span>
+        during an entire season
+      </p>
+    </header>
+    <main>
+      <section class="filters">
+        <h2>Filters</h2>
+
+        <form>
+          <label>
+            <span>Team</span>
+            <select name="team">
+              <option value="ATL">Atlanta Hawks</option>
+              <option value="BOS" selected>Boston Celtics</option>
+              <option value="BRK">Brooklyn Nets</option>
+              <option value="CHO">Charlotte Hornets</option>
+              <option value="CHI">Chicago Bulls</option>
+              <option value="CLE">Cleveland Cavaliers</option>
+              <option value="DAL">Dallas Mavericks</option>
+              <option value="DEN">Denver Nuggets</option>
+              <option value="DET">Detroit Pistons</option>
+              <option value="GSW">Golden State Warriors</option>
+              <option value="HOU">Houston Rockets</option>
+              <option value="IND">Indiana Pacers</option>
+              <option value="LAC">Los Angeles Clippers</option>
+              <option value="LAL">Los Angeles Lakers</option>
+              <option value="MEM">Memphis Grizzlies</option>
+              <option value="MIA">Miami Heat</option>
+              <option value="MIL">Milwaukee Bucks</option>
+              <option value="MIN">Minnesota Timberwolves</option>
+              <option value="NOP">New Orleans Pelicans</option>
+              <option value="NYK">New York Knicks</option>
+              <option value="OKC">Oklahoma City Thunder</option>
+              <option value="ORL">Orlando Magic</option>
+              <option value="PHI">Philadelphia 76ers</option>
+              <option value="PHO">Phoenix Suns</option>
+              <option value="POR">Portland Trail Blazers</option>
+              <option value="SAC">Sacramento Kings</option>
+              <option value="SAS">San Antonio Spurs</option>
+              <option value="TOR">Toronto Raptors</option>
+              <option value="UTA">Utah Jazz</option>
+              <option value="WAS">Washington Wizards</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Opponent</span>
+            <select name="opponent">
+              <option value="all" selected>All Teams</option>
+              <option value="ATL">Atlanta Hawks</option>
+              <option value="BOS" hidden>Boston Celtics</option>
+              <option value="BRK">Brooklyn Nets</option>
+              <option value="CHO">Charlotte Hornets</option>
+              <option value="CHI">Chicago Bulls</option>
+              <option value="CLE">Cleveland Cavaliers</option>
+              <option value="DAL">Dallas Mavericks</option>
+              <option value="DEN">Denver Nuggets</option>
+              <option value="DET">Detroit Pistons</option>
+              <option value="GSW">Golden State Warriors</option>
+              <option value="HOU">Houston Rockets</option>
+              <option value="IND">Indiana Pacers</option>
+              <option value="LAC">Los Angeles Clippers</option>
+              <option value="LAL">Los Angeles Lakers</option>
+              <option value="MEM">Memphis Grizzlies</option>
+              <option value="MIA">Miami Heat</option>
+              <option value="MIL">Milwaukee Bucks</option>
+              <option value="MIN">Minnesota Timberwolves</option>
+              <option value="NOP">New Orleans Pelicans</option>
+              <option value="NYK">New York Knicks</option>
+              <option value="OKC">Oklahoma City Thunder</option>
+              <option value="ORL">Orlando Magic</option>
+              <option value="PHI">Philadelphia 76ers</option>
+              <option value="PHO">Phoenix Suns</option>
+              <option value="POR">Portland Trail Blazers</option>
+              <option value="SAC">Sacramento Kings</option>
+              <option value="SAS">San Antonio Spurs</option>
+              <option value="TOR">Toronto Raptors</option>
+              <option value="UTA">Utah Jazz</option>
+              <option value="WAS">Washington Wizards</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Season</span>
+            <select name="season">
+              <option value="2024">2023-24</option>
+              <option value="2023">2022-23</option>
+              <option value="2022">2021-22</option>
+              <option value="2021">2020-21</option>
+              <option value="2020">2019-20</option>
+              <option value="2019">2018-19</option>
+              <option value="2018">2017-18</option>
+              <option value="2017">2016-17</option>
+              <option value="2016">2015-16</option>
+              <option value="2015">2014-15</option>
+            </select>
+          </label>
+
+          <fieldset>
+            <legend>Games</legend>
+            <label><input type="checkbox" name="games" value="RS" checked />Regular Season</label>
+            <label><input type="checkbox" name="games" value="PI" checked />Play-In</label>
+            <label><input type="checkbox" name="games" value="PO" checked />Playoffs</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Result</legend>
+            <label><input type="checkbox" name="result" value="won" checked />Won</label>
+            <label><input type="checkbox" name="result" value="lost" checked />Lost</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Periods</legend>
+            <label><input type="checkbox" name="periods" value="Q1" checked />Q1</label>
+            <label><input type="checkbox" name="periods" value="Q2" checked />Q2</label>
+            <label><input type="checkbox" name="periods" value="Q3" checked />Q3</label>
+            <label><input type="checkbox" name="periods" value="Q4" checked />Q4</label>
+            <label><input type="checkbox" name="periods" value="OTs" checked />OTs</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Sort by</legend>
+            <label
+              ><input type="radio" name="sorting" value="margin" checked /><!--Win -->Margin</label
+            >
+            <label><input type="radio" name="sorting" value="date" />Date</label>
+          </fieldset>
+
+          <div class="actions">
+            <input type="submit" value="Filter" />
+            <input type="reset" value="Reset" />
+          </div>
+        </form>
+      </section>
+      <canvas id="canvas"></canvas>
+    </main>
+    <footer>
+      <p>
+        <small>Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a></small>
+      </p>
+    </footer>
   </body>
 </html>

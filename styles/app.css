@@ -1,0 +1,15 @@
+@import url(./reset.css);
+@import url(./variables.css);
+@import url(./fonts.css);
+
+.filters {
+  max-width: 360px;
+  padding: 16px;
+  background: pink;
+}
+
+.filters form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
