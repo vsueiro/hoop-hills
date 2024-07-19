@@ -1,3 +1,5 @@
+import { csv } from "d3";
+
 window.app = {};
 
 const form = document.querySelector("form");
@@ -5,8 +7,31 @@ const teamSelector = form.querySelector('[name="team"]');
 const opponentSelector = form.querySelector('[name="opponent"]');
 const seasonSelector = form.querySelector('[name="season"]');
 
-function loadData() {
-  console.log(`Load ${teamSelector.value} ${seasonSelector.value}`);
+let data = [];
+
+function highlightData() {
+  // Visually hide or show three.js objects based on filters
+  // team ✅
+  // season ✅
+  // opponent
+  // games
+  // result
+  // periods
+  // Sort three.js objects based on date or win margin
+  // sorting
+}
+
+async function loadData() {
+  console.log("Loading…");
+
+  const team = teamSelector.value;
+  const season = seasonSelector.value;
+  const url = `./data/seasons/${season}/${team}.csv`;
+
+  data = await csv(url);
+  console.log(data);
+
+  highlightData();
 }
 
 // Prevent opponent from being the currently selected team
@@ -25,6 +50,8 @@ teamSelector.addEventListener("input", () => {
 seasonSelector.addEventListener("input", () => {
   loadData();
 });
+
+loadData();
 
 /*
 
