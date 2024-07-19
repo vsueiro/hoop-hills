@@ -139,6 +139,46 @@
             <label><input type="radio" name="sorting" value="date" />Date</label>
           </fieldset>
 
+          <fieldset>
+            <legend>View</legend>
+            <div class="cube">
+              <label>
+                <input type="radio" name="view" value="corner" checked />
+                <svg viewBox="0 0 100 100">
+                  <path d="M70.7823 37.9995H29.2129L50.0026 73.999L70.7823 37.9995Z" />
+                </svg>
+                <span class="screen-reader">Corner</span>
+              </label>
+              <label>
+                <input type="radio" name="view" value="lines" />
+                <svg viewBox="0 0 100 100">
+                  <path
+                    d="M29.2147 37.9993L8.43066 25.9995L8.43129 73.9994L50.0003 97.9997L50.0001 73.9984L29.2101 37.9993H29.2147Z"
+                  />
+                </svg>
+                <span class="screen-reader">Lines</span>
+              </label>
+              <label>
+                <input type="radio" name="view" value="bars" />
+                <svg viewBox="0 0 100 100">
+                  <path
+                    d="M91.5678 25.9995L91.5675 73.9996L49.9985 97.9999L49.9987 73.9976L70.7746 38.0048L91.5678 25.9995Z"
+                  />
+                </svg>
+                <span class="screen-reader">Bars</span>
+              </label>
+              <label>
+                <input type="radio" name="view" value="grid" />
+                <svg viewBox="0 0 100 100">
+                  <path
+                    d="M8.43066 25.9998L50.0001 2L91.5694 25.9996L70.7769 38.004L70.7795 37.9994H29.2152L8.43066 25.9998Z"
+                  />
+                </svg>
+                <span class="screen-reader">Grid</span>
+              </label>
+            </div>
+          </fieldset>
+
           <div class="actions">
             <input type="submit" value="Filter" />
             <input type="reset" value="Reset" />
@@ -146,7 +186,7 @@
         </form>
       </section>
 
-      <svg class="cube" viewBox="0 0 100 100">
+      <svg viewBox="0 0 100 100">
         <path
           class="active"
           data-view="corner"
