@@ -6,7 +6,7 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = 2023 # Season (ending year) to be scraped
+options['year'] = 2020 # Season (ending year) to be scraped
 options['delay'] = 4 # Seconds to be waited between requests
 options['teams_path'] = './public/data/teams/2024-25.csv' # Location to read CSV file
 options['seasons_path'] = './public/data/seasons/' # Location to write games for team and season 
@@ -18,8 +18,8 @@ teams = pd.read_csv(options['teams_path'])
 for _, team in teams.iterrows():
 
   # TEMP: Filter teams
-  if team['id'] in ['ATL', 'BOS']:
-    continue
+  # if team['id'] not in ['ATL', 'BOS']:
+  #   continue
 
   # Create empty dataframe
   columns = ['id', 'type', 'opponent', 'elapsedTime', 'event', 'teamScore', 'opponentScore', 'pointDifference']
