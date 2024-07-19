@@ -1,5 +1,5 @@
-import os
 import re
+import time
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -39,7 +39,7 @@ def get_ids_of_games(team_id, year):
   # Send a GET request to the URL
   response = requests.get(url)
   if response.status_code != 200:
-    print('Status is not 200')
+    print('Status was not 200')
     return pd.DataFrame()
 
   # Parse the HTML content
@@ -193,8 +193,11 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
 
   # Check if the request was successful
   if response.status_code != 200:
-    print(f'Status was not 200')
-    return False
+    print('Status was not 200. Retrying in 10s')
+
+    time.sleep(10)
+
+    return get_play_by_play_data( team_id, team_location, game_id, game_type, index, location_to_id )
   
   # Parse the HTML content
   soup = BeautifulSoup(response.text, 'html.parser')
@@ -202,10 +205,25 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
   # Find the table with id 'pbp'
   table = soup.find('table', {'id': 'pbp'})
 
+  # One-liner check for the absence of table or information in the table
+  table_is_empty = not table or not table.find_all('tr')
+
   # Check if the table was found
-  if not table:
-    print(f'No table found for {game_id}')
-    return False
+  if table_is_empty:
+    print(f'No table information found for {game_id}')
+
+    empty_df = pd.DataFrame({
+      'id': [game_id],
+      'type': [game_type],
+      'opponent': '',
+      'elapsedTime': [0.0],
+      'event': [''],
+      'teamScore': [0],
+      'opponentScore': [0],
+      'pointDifference': [0]
+    })
+
+    return empty_df
 
   rows = []
 
@@ -247,7 +265,7 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
     if row:
       rows.append(row)
 
-  df = pd.DataFrame(rows, columns=['A', 'B','C','D','E','F','Event'])
+  df = pd.DataFrame(rows, columns=['A','B','C','D','E','F','Event'])
 
   df = clean_play_by_play_data(df, team_location) 
 

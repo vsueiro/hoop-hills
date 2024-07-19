@@ -1,15 +1,12 @@
 import os
 import time
-# import requests
 import pandas as pd
-# from bs4 import BeautifulSoup
-
 from scraper import get_ids_of_games, get_play_by_play_data
 
 # Settings
 options = {}
 
-options['year'] = 2024 # Season (ending year) to be scraped
+options['year'] = 2023 # Season (ending year) to be scraped
 options['delay'] = 4 # Seconds to be waited between requests
 options['teams_path'] = './public/data/teams/2024-25.csv' # Location to read CSV file
 options['seasons_path'] = './public/data/seasons/' # Location to write games for team and season 
@@ -19,6 +16,10 @@ teams = pd.read_csv(options['teams_path'])
 
 # For each NBA team
 for _, team in teams.iterrows():
+
+  # TEMP: Filter teams
+  if team['id'] in ['ATL', 'BOS']:
+    continue
 
   # Create empty dataframe
   columns = ['id', 'type', 'opponent', 'elapsedTime', 'event', 'teamScore', 'opponentScore', 'pointDifference']
@@ -38,10 +39,10 @@ for _, team in teams.iterrows():
     # Scrape play-by-play data
     play_by_play_df = get_play_by_play_data( team['id'], team['location'], game['id'], game['type'], index, location_to_id )
 
-    time.sleep(options['delay'])
-
     # Append data to games_df
     games_df = pd.concat([games_df, play_by_play_df], ignore_index=True)
+
+    time.sleep(options['delay'])
 
   # Sort by "id" and then by "ElapsedTime"
   games_df = games_df.sort_values(by=['id', 'elapsedTime'])
