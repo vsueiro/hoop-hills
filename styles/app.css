@@ -2,10 +2,22 @@
 @import url(./variables.css);
 @import url(./fonts.css);
 
+body {
+  background: #000;
+  color: #fff;
+}
+
+header {
+  padding: 16px;
+}
+
+label {
+  user-select: none;
+}
+
 .filters {
   max-width: 360px;
   padding: 16px;
-  background: pink;
 }
 
 .filters form {
