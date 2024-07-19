@@ -3,6 +3,11 @@ window.app = {};
 const form = document.querySelector("form");
 const teamSelector = form.querySelector('[name="team"]');
 const opponentSelector = form.querySelector('[name="opponent"]');
+const seasonSelector = form.querySelector('[name="season"]');
+
+function loadData() {
+  console.log(`Load ${teamSelector.value} ${seasonSelector.value}`);
+}
 
 // Prevent opponent from being the currently selected team
 teamSelector.addEventListener("input", () => {
@@ -13,6 +18,12 @@ teamSelector.addEventListener("input", () => {
   if (opponentSelector.value === teamSelector.value) {
     opponentSelector.value = "all";
   }
+
+  loadData();
+});
+
+seasonSelector.addEventListener("input", () => {
+  loadData();
 });
 
 /*
