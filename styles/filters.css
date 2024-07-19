@@ -1,0 +1,14 @@
+.filters {
+  max-width: 360px;
+  padding: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  user-select: none;
+}

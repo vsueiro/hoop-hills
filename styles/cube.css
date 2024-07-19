@@ -1,14 +1,33 @@
 .cube {
-  position: fixed;
-  right: 24px;
-  top: 24px;
+  background: black;
+  height: 100px;
+  position: relative;
   width: 100px;
 }
 
+.cube label {
+  bottom: 0;
+  display: block;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cube input {
+  display: none;
+}
+
+.cube svg {
+  pointer-events: none;
+}
+
 .cube path {
-  fill: white;
+  fill: White;
   fill-opacity: 0.1;
-  stroke: white;
+  pointer-events: all;
+  stroke: White;
   stroke-linejoin: round;
   stroke-width: 2;
 }
@@ -21,7 +40,7 @@
   }
 }
 
-.cube path.active {
+.cube input:checked + svg path {
   fill: DeepPink;
   fill-opacity: 1;
 }

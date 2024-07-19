@@ -1,6 +1,8 @@
 @import url(./reset.css);
+@import url(./screen-reader.css);
 @import url(./variables.css);
 @import url(./fonts.css);
+@import url(./filters.css);
 @import url(./cube.css);
 
 body {
@@ -10,19 +12,4 @@ body {
 
 header {
   padding: 16px;
-}
-
-label {
-  user-select: none;
-}
-
-.filters {
-  max-width: 360px;
-  padding: 16px;
-}
-
-.filters form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
