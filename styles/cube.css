@@ -1,0 +1,27 @@
+.cube {
+  position: fixed;
+  right: 24px;
+  top: 24px;
+  width: 100px;
+}
+
+.cube path {
+  fill: white;
+  fill-opacity: 0.1;
+  stroke: white;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+@media (hover: hover) {
+  .cube path:hover {
+    cursor: pointer;
+    fill: DeepPink;
+    fill-opacity: 0.5;
+  }
+}
+
+.cube path.active {
+  fill: DeepPink;
+  fill-opacity: 1;
+}

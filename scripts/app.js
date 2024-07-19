@@ -2,12 +2,27 @@ import { csv } from "d3";
 
 window.app = {};
 
+let data = [];
+let view = "corner";
+
 const form = document.querySelector("form");
 const teamSelector = form.querySelector('[name="team"]');
 const opponentSelector = form.querySelector('[name="opponent"]');
 const seasonSelector = form.querySelector('[name="season"]');
+const cubeViews = document.querySelectorAll(".cube [data-view]");
 
-let data = [];
+for (let cubeView of cubeViews) {
+  cubeView.addEventListener("click", () => {
+    for (let other of cubeViews) {
+      other.classList.remove("active");
+    }
+
+    cubeView.classList.add("active");
+
+    view = cubeView.dataset.view;
+    console.log(view);
+  });
+}
 
 function highlightData() {
   // Visually hide or show three.js objects based on filters
