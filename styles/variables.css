@@ -1,4 +1,5 @@
 :root {
-  --background: #38306b;
-  --accent: #c95422;
+  /* --background: #38306b; */
+  --background: rgb(192, 192, 192);
+  --accent: #f48042;
 }

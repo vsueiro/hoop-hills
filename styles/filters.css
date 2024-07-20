@@ -30,7 +30,22 @@ fieldset legend {
 
 input[type="checkbox"],
 input[type="radio"] {
-  display: none;
+  /* display: none; */
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+label:has(input[type="checkbox"]:focus-visible),
+label:has(input[type="radio"]:focus-visible) {
+  outline: 2px solid white;
+  outline-offset: -3px;
+  position: relative;
+  z-index: 1;
 }
 
 label:has(input[type="checkbox"]) {
@@ -61,13 +76,15 @@ label:has(input[type="checkbox"]):active {
 
 label:has(input[type="radio"]) {
   align-items: center;
+  border-radius: 16px;
   display: flex;
-  padding: 4px 16px 4px 0;
+  margin-inline-end: 4px;
+  padding: 4px 8px 4px 8px;
 }
 
 label:has(input[type="radio"])::before {
   background: transparent;
-  border: 2px solid var(--accent);
+  border: 2px solid black;
   border-radius: 16px;
   content: "";
   display: inline-block;
@@ -76,6 +93,11 @@ label:has(input[type="radio"])::before {
   width: 1em;
 }
 
+.cube label:has(input[type="radio"])::before {
+  display: none;
+}
+
 label:has(input[type="radio"]:checked)::before {
   background: var(--accent);
+  background: radial-gradient(black 0% 50%, var(--accent) 50% 100%);
 }

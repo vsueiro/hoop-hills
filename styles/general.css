@@ -1,6 +1,6 @@
 body {
-  background: var(--background);
-  color: #fff;
+  background: rgb(192, 192, 192);
+  color: #000;
   overflow: hidden;
 }
 

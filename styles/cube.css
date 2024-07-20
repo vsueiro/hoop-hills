@@ -25,10 +25,10 @@
 }
 
 .cube path {
-  fill: White;
+  fill: var(--accent);
   fill-opacity: 0.1;
   pointer-events: all;
-  stroke: White;
+  stroke: black;
   stroke-linejoin: round;
   stroke-width: 2;
 }
