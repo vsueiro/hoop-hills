@@ -10,5 +10,52 @@ form {
 }
 
 label {
+  cursor: pointer;
   user-select: none;
+}
+
+select {
+  cursor: pointer;
+}
+
+fieldset {
+  all: unset;
+  display: flex;
+  flex-direction: row;
+}
+
+fieldset legend {
+  all: unset;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
+}
+
+label:has(input[type="checkbox"]) {
+  box-shadow: 0 0 0 0.5px white, inset 0 0 0 0.5px white;
+  padding: 4px 12px;
+}
+
+label:has(input[type="checkbox"]:checked) {
+  background-color: var(--accent);
+}
+
+label:has(input[type="checkbox"]):first-of-type {
+  border-bottom-left-radius: 999px;
+  border-top-left-radius: 999px;
+}
+
+label:has(input[type="checkbox"]):last-of-type {
+  border-bottom-right-radius: 999px;
+  border-top-right-radius: 999px;
+}
+
+/* label:has(input[type="checkbox"])::before {
+  content: "";
+} */
+
+label:has(input[type="radio"])::before {
+  content: "O";
 }

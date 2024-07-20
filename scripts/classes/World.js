@@ -32,8 +32,9 @@ export default class World {
     this.scene = new THREE.Scene();
 
     // Objects
+    const color = getComputedStyle(document.body).getPropertyValue("--accent");
     const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: "red", wireframe: true });
+    const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
 
     this.mesh = new THREE.Mesh(geometry, material);
 

@@ -36,12 +36,12 @@
 @media (hover: hover) {
   .cube path:hover {
     cursor: pointer;
-    fill: DeepPink;
+    fill: var(--accent);
     fill-opacity: 0.5;
   }
 }
 
 .cube input:checked + svg path {
-  fill: DeepPink;
+  fill: var(--accent);
   fill-opacity: 1;
 }
