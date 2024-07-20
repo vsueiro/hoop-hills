@@ -1,0 +1,32 @@
+.legend {
+  margin: 1em 0 2em;
+}
+
+.leading::after,
+.trailing::after {
+  border-radius: 2px;
+  content: "";
+  display: inline-block;
+  height: 0.5em;
+  margin-inline-end: 0.25em;
+  margin-inline-start: 0.25em;
+  width: 1em;
+}
+
+.leading {
+  color: #2271b5;
+  font-weight: bold;
+}
+
+.trailing {
+  color: #de2d26;
+  font-weight: bold;
+}
+
+.leading::after {
+  background: #2271b5;
+}
+
+.trailing::after {
+  background: #de2d26;
+}

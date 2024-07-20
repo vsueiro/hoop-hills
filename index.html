@@ -12,9 +12,9 @@
     <header>
       <h1>Hoop Hills</h1>
       <p><strong>Explore the peaks and valleys of NBA games</strong></p>
-      <p>
+      <p class="legend">
         This chart shows every moment a team was
-        <span class="leading">leading</span> or <span class="leading">trailing</span>
+        <span class="leading">leading</span> or <span class="trailing">trailing</span>
         during the season
       </p>
     </header>
@@ -120,18 +120,18 @@
           </fieldset>
 
           <fieldset>
-            <legend>Result</legend>
-            <label><input type="checkbox" name="results" value="won" checked />Won</label>
-            <label><input type="checkbox" name="results" value="lost" checked />Lost</label>
-          </fieldset>
-
-          <fieldset>
             <legend>Periods</legend>
             <label><input type="checkbox" name="periods" value="Q1" checked />Q1</label>
             <label><input type="checkbox" name="periods" value="Q2" checked />Q2</label>
             <label><input type="checkbox" name="periods" value="Q3" checked />Q3</label>
             <label><input type="checkbox" name="periods" value="Q4" checked />Q4</label>
             <label><input type="checkbox" name="periods" value="OTs" checked />OTs</label>
+          </fieldset>
+
+          <fieldset>
+            <legend>Result</legend>
+            <label><input type="checkbox" name="results" value="won" checked />Won</label>
+            <label><input type="checkbox" name="results" value="lost" checked />Lost</label>
           </fieldset>
 
           <fieldset>
@@ -185,10 +185,10 @@
             </div>
           </fieldset>
 
-          <div class="actions">
-            <!-- <input type="submit" value="Filter" /> -->
-            <input type="reset" value="Reset" />
-          </div>
+          <!-- <div class="actions"> -->
+          <!-- <input type="submit" value="Filter" /> -->
+          <!-- <input type="reset" value="Reset" /> -->
+          <!-- </div> -->
         </form>
       </section>
 

@@ -34,9 +34,11 @@ select:focus-visible {
 }
 
 fieldset {
+  align-items: start;
   all: unset;
   display: flex;
   flex-direction: row;
+  justify-content: start;
 }
 
 fieldset legend {
