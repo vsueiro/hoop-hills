@@ -6,7 +6,7 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = 2018 # Season (ending year) to be scraped
+options['year'] = 2016 # Season (ending year) to be scraped
 options['delay'] = 4 # Seconds to be waited between requests
 options['teams_path'] = './public/data/teams/2024-25.csv' # Location to read CSV file
 options['seasons_path'] = './public/data/seasons/' # Location to write games for team and season 
