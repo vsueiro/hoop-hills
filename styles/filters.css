@@ -18,15 +18,19 @@ label {
 select {
   all: unset;
   background: white;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10px' width='15px'%3E%3Ctext x='0' y='10' fill='black'%3E%E2%96%BE%3C/text%3E%3C/svg%3E");
+  background-image: url('data:image/svg+xml,<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.70711 14.7071C9.07714 14.0771 9.52331 13 10.4142 13H21.5858C22.4767 13 22.9229 14.0771 22.2929 14.7071L16.7071 20.2929C16.3166 20.6834 15.6834 20.6834 15.2929 20.2929L9.70711 14.7071Z" fill="black"/></svg>');
   background-position: right center;
   background-repeat: no-repeat;
-  background-size: 1.25em 1em;
+  background-size: 32px;
   border-radius: 16px;
   box-shadow: 0 0 0 2px black, 0 3px 0 2px black;
   cursor: pointer;
-  margin-inline: 4px;
+  margin-inline-start: 4px;
   padding: 4px 32px 4px 12px;
+}
+
+label:has(select) {
+  width: fit-content;
 }
 
 select:focus-visible {

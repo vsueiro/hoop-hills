@@ -8,6 +8,6 @@ footer {
   width: fit-content;
 }
 
-footer > p {
+footer p {
   pointer-events: all;
 }

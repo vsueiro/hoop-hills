@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 export default class World {
   constructor(app, canvas) {
@@ -44,11 +45,10 @@ export default class World {
     const color = getComputedStyle(document.body).getPropertyValue("--accent");
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
-
     this.mesh = new THREE.Mesh(geometry, material);
-
     this.scene.add(this.mesh);
 
+    // Camera
     this.camera = new THREE.OrthographicCamera(
       -this.halfFrustumWidth,
       this.halfFrustumWidth,
@@ -57,10 +57,11 @@ export default class World {
       1,
       2000
     );
-
     this.camera.position.z = 3;
-
     this.scene.add(this.camera);
+
+    // Orbit controls
+    this.controls = new OrbitControls(this.camera, this.canvas);
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
@@ -68,6 +69,7 @@ export default class World {
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatio);
     this.renderer.render(this.scene, this.camera);
+    // this.controls.update();
 
     window.addEventListener("resize", () => {
       this.resize();
@@ -85,6 +87,8 @@ export default class World {
     this.camera.top = this.halfFrustumHeight;
     this.camera.bottom = -this.halfFrustumHeight;
     this.camera.updateProjectionMatrix();
+
+    // this.controls.update();
 
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatio);

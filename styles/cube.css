@@ -1,6 +1,6 @@
 .cube {
   height: 100px;
-  position: absolute;
+  position: fixed;
   right: 12px;
   top: 16px;
   width: 100px;

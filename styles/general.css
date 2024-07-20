@@ -11,18 +11,26 @@ a {
 header {
   max-width: 360px;
   padding: 16px;
+  pointer-events: none;
+  position: relative;
   width: 100%;
 }
 
 h1 {
   line-height: 1.5;
+  pointer-events: all;
 }
 
 h2 {
   font-size: medium;
   letter-spacing: 0.1em;
   margin-bottom: 1em;
+  pointer-events: all;
   text-transform: uppercase;
+}
+
+p {
+  pointer-events: all;
 }
 
 header .heading {
@@ -32,4 +40,14 @@ header .heading {
   flex-direction: column;
   justify-content: center;
   min-height: 100px;
+}
+
+main {
+  pointer-events: none;
+  position: relative;
+}
+
+main select,
+main label {
+  pointer-events: all;
 }
