@@ -1,6 +1,8 @@
 .cube {
   height: 100px;
-  position: relative;
+  position: absolute;
+  right: 12px;
+  top: 16px;
   width: 100px;
 }
 

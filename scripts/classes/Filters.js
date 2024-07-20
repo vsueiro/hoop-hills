@@ -16,7 +16,6 @@ export default class Filters {
     };
 
     this.setup();
-
     this.update();
   }
 
@@ -38,10 +37,10 @@ export default class Filters {
       this.update();
     });
 
-    this.form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      this.update();
-    });
+    // this.form.addEventListener("submit", (event) => {
+    //   event.preventDefault();
+    //   this.update();
+    // });
 
     // Reload data when team or season changes
     this.teamSelector.addEventListener("input", () => {
@@ -76,5 +75,7 @@ export default class Filters {
     this.games = formData.getAll("games");
     this.results = formData.getAll("results");
     this.periods = formData.getAll("periods");
+
+    this.app.params.update(formData);
   }
 }

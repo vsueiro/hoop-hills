@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hoop Hills</title>
+    <meta name="description" content="This 3D data visualization shows every moment a team was leading or trailing" />
     <link rel="stylesheet" href="./styles/index.css" />
     <script type="module" src="./scripts/index.js"></script>
   </head>
@@ -12,16 +13,16 @@
       <h1>Hoop Hills</h1>
       <p><strong>Explore the peaks and valleys of NBA games</strong></p>
       <p>
-        This 3D data visualization shows every moment a team was
-        <span class="leading">leading 🟦</span> or <span class="leading">trailing 🟥</span>
-        during an entire season
+        This chart shows every moment a team was
+        <span class="leading">leading</span> or <span class="leading">trailing</span>
+        during the season
       </p>
     </header>
     <main>
       <section class="filters">
         <h2>Filters</h2>
 
-        <form>
+        <form onsubmit="return false">
           <label>
             <span>Team</span>
             <select name="team">
@@ -180,18 +181,20 @@
           </fieldset>
 
           <div class="actions">
-            <input type="submit" value="Filter" />
+            <!-- <input type="submit" value="Filter" /> -->
             <input type="reset" value="Reset" />
           </div>
         </form>
       </section>
 
       <canvas></canvas>
-      <pre></pre>
     </main>
     <footer>
       <p>
-        <small>Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a></small>
+        <small>
+          Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a> with data from
+          <a href="https://basketball-reference.com/" target="_blank">basketball-reference.com</a>
+        </small>
       </p>
     </footer>
   </body>

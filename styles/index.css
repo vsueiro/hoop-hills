@@ -1,17 +1,9 @@
 @import url(./reset.css);
 @import url(./screen-reader.css);
 @import url(./variables.css);
+@import url(./general.css);
 @import url(./fonts.css);
 @import url(./filters.css);
 @import url(./cube.css);
 @import url(./world.css);
-
-body {
-  background: #111;
-  color: #fff;
-  overflow: hidden;
-}
-
-header {
-  padding: 16px;
-}
+@import url(./footer.css);
