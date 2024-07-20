@@ -33,6 +33,18 @@
   stroke-width: 2;
 }
 
+.cube .cube-shadow {
+  pointer-events: none;
+  translate: 0 6px;
+}
+
+.cube .cube-shadow path {
+  fill: black;
+  fill-opacity: 1;
+  pointer-events: none;
+  stroke: black;
+}
+
 @media (hover: hover) {
   .cube path:hover {
     cursor: pointer;

@@ -6,7 +6,7 @@
 form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 label {
@@ -15,7 +15,22 @@ label {
 }
 
 select {
+  all: unset;
+  background: white;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' height='10px' width='15px'%3E%3Ctext x='0' y='10' fill='black'%3E%E2%96%BE%3C/text%3E%3C/svg%3E");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1em;
+  border-radius: 16px;
+  box-shadow: 0 0 0 2px black, 0 3px 0 2px black;
   cursor: pointer;
+  margin-inline: 4px;
+  padding: 4px 32px 4px 12px;
+}
+
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 fieldset {
@@ -86,11 +101,22 @@ label:has(input[type="radio"])::before {
   background: transparent;
   border: 2px solid black;
   border-radius: 16px;
+  box-shadow: 0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black; /*, 0 2.5px 0 0 black, 0 3px 0 0 black;*/
   content: "";
   display: inline-block;
   height: 1em;
   margin-inline-end: 4px;
   width: 1em;
+}
+
+label:has(input[type="radio"]):active::before {
+  box-shadow: none; /*0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black; /*, 0 2.5px 0 0 black, 0 3px 0 0 black;*/
+  translate: 0 2px;
+}
+
+.cube label:has(input[type="radio"]) {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .cube label:has(input[type="radio"])::before {
