@@ -4,6 +4,7 @@
 }
 
 form {
+  /* border-bottom: 2px solid black; */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -47,7 +48,6 @@ fieldset legend {
 
 input[type="checkbox"],
 input[type="radio"] {
-  /* display: none; */
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   height: 1px;
@@ -68,7 +68,7 @@ label:has(input[type="radio"]:focus-visible) {
 label:has(input[type="checkbox"]) {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 4px 0 0 black;
+  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 3px 0 1px black;
   padding: 4px 12px;
 }
 
@@ -87,7 +87,7 @@ label:has(input[type="checkbox"]):last-of-type {
 }
 
 label:has(input[type="checkbox"]):active {
-  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 2px 0 0 black;
+  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 1px 0 1px black;
   translate: 0 2px;
 }
 
@@ -103,7 +103,7 @@ label:has(input[type="radio"])::before {
   background: transparent;
   border: 2px solid black;
   border-radius: 16px;
-  box-shadow: 0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black; /*, 0 2.5px 0 0 black, 0 3px 0 0 black;*/
+  box-shadow: 0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black;
   content: "";
   display: inline-block;
   height: 1em;
@@ -112,7 +112,7 @@ label:has(input[type="radio"])::before {
 }
 
 label:has(input[type="radio"]):active::before {
-  box-shadow: none; /*0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black; /*, 0 2.5px 0 0 black, 0 3px 0 0 black;*/
+  box-shadow: none;
   translate: 0 2px;
 }
 
@@ -127,5 +127,5 @@ label:has(input[type="radio"]):active::before {
 
 label:has(input[type="radio"]:checked)::before {
   background: var(--accent);
-  background: radial-gradient(black 0% 50%, var(--accent) 50% 100%);
+  background: radial-gradient(black 0% 33.33%, var(--accent) 33.333% 100%);
 }
