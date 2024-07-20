@@ -6,7 +6,8 @@ export default class World {
     this.canvas = typeof canvas === "string" ? document.querySelector(canvas) : canvas;
 
     // Settings
-    this.fov = 75;
+    this.frustum = 10;
+    // this.fov = 75;
 
     // Sizes
     this.width = window.innerWidth;
@@ -22,6 +23,14 @@ export default class World {
 
   get pixelRatio() {
     return Math.min(window.devicePixelRatio, 2);
+  }
+
+  get halfFrustumWidth() {
+    return this.frustum * this.aspect * 0.5;
+  }
+
+  get halfFrustumHeight() {
+    return this.frustum * 0.5;
   }
 
   setup() {
@@ -40,15 +49,24 @@ export default class World {
 
     this.scene.add(this.mesh);
 
-    // Camera
-    this.camera = new THREE.PerspectiveCamera(this.fov, this.aspect);
+    this.camera = new THREE.OrthographicCamera(
+      -this.halfFrustumWidth,
+      this.halfFrustumWidth,
+      this.halfFrustumHeight,
+      -this.halfFrustumHeight,
+      1,
+      2000
+    );
+
     this.camera.position.z = 3;
+
     this.scene.add(this.camera);
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setClearColor(0x000000, 0);
     this.renderer.setSize(this.width, this.height);
+    this.renderer.setPixelRatio(this.pixelRatio);
     this.renderer.render(this.scene, this.camera);
 
     window.addEventListener("resize", () => {
@@ -62,7 +80,12 @@ export default class World {
 
     this.camera.aspect = this.aspect;
 
+    this.camera.left = -this.halfFrustumWidth;
+    this.camera.right = this.halfFrustumWidth;
+    this.camera.top = this.halfFrustumHeight;
+    this.camera.bottom = -this.halfFrustumHeight;
     this.camera.updateProjectionMatrix();
+
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatio);
   }
