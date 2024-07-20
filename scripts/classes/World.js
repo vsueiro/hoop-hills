@@ -47,6 +47,7 @@ export default class World {
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+    this.renderer.setClearColor(0x000000, 0);
     this.renderer.setSize(this.width, this.height);
     this.renderer.render(this.scene, this.camera);
 

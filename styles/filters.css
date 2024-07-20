@@ -34,7 +34,9 @@ input[type="radio"] {
 }
 
 label:has(input[type="checkbox"]) {
-  box-shadow: 0 0 0 0.5px white, inset 0 0 0 0.5px white;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 4px 0 0 black;
   padding: 4px 12px;
 }
 
@@ -43,19 +45,37 @@ label:has(input[type="checkbox"]:checked) {
 }
 
 label:has(input[type="checkbox"]):first-of-type {
-  border-bottom-left-radius: 999px;
-  border-top-left-radius: 999px;
+  border-bottom-left-radius: 16px;
+  border-top-left-radius: 16px;
 }
 
 label:has(input[type="checkbox"]):last-of-type {
-  border-bottom-right-radius: 999px;
-  border-top-right-radius: 999px;
+  border-bottom-right-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
-/* label:has(input[type="checkbox"])::before {
-  content: "";
-} */
+label:has(input[type="checkbox"]):active {
+  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 2px 0 0 black;
+  translate: 0 2px;
+}
+
+label:has(input[type="radio"]) {
+  align-items: center;
+  display: flex;
+  padding: 4px 16px 4px 0;
+}
 
 label:has(input[type="radio"])::before {
-  content: "O";
+  background: transparent;
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  content: "";
+  display: inline-block;
+  height: 1em;
+  margin-inline-end: 4px;
+  width: 1em;
+}
+
+label:has(input[type="radio"]:checked)::before {
+  background: var(--accent);
 }
