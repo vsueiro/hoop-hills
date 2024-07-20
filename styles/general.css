@@ -13,3 +13,23 @@ header {
   padding: 16px;
   width: 100%;
 }
+
+h1 {
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: medium;
+  letter-spacing: 0.1em;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+
+header .heading {
+  align-items: start;
+  border-bottom: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+}
