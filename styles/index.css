@@ -4,10 +4,12 @@
 @import url(./fonts.css);
 @import url(./filters.css);
 @import url(./cube.css);
+@import url(./world.css);
 
 body {
-  background: #000;
+  background: #111;
   color: #fff;
+  overflow: hidden;
 }
 
 header {

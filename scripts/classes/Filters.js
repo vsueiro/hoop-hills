@@ -1,16 +1,12 @@
 export default class Filters {
-  constructor(app) {
+  constructor(app, form = "form") {
     this.app = app;
-    this.form = document.querySelector("form");
 
-    this.team = "";
-    this.opponent = "";
-    this.season = "";
-    this.sorting = "";
-    this.view = "";
-    this.games = [];
-    this.results = [];
-    this.periods = [];
+    this.form = typeof form === "string" ? document.querySelector(form) : form;
+
+    this.teamSelector = this.form.querySelector('[name="team"]');
+    this.opponentSelector = this.form.querySelector('[name="opponent"]');
+    this.seasonSelector = this.form.querySelector('[name="season"]');
 
     this.allValues = {
       opponent: "all",
@@ -19,16 +15,9 @@ export default class Filters {
       periods: ["Q1", "Q2", "Q3", "Q4", "OTs"],
     };
 
-    this.form.addEventListener("input", () => {
-      this.updateFiltersValues();
-    });
+    this.setup();
 
-    this.form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      this.updateFiltersValues();
-    });
-
-    this.updateFiltersValues();
+    this.update();
   }
 
   isAll(field) {
@@ -43,19 +32,49 @@ export default class Filters {
     return isArrayEqual;
   }
 
-  updateFiltersValues() {
+  setup() {
+    // Handle form submission
+    this.form.addEventListener("input", () => {
+      this.update();
+    });
+
+    this.form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      this.update();
+    });
+
+    // Reload data when team or season changes
+    this.teamSelector.addEventListener("input", () => {
+      this.app.data.load("games", this.app.update);
+    });
+
+    this.seasonSelector.addEventListener("input", () => {
+      this.app.data.load("games", this.app.update);
+    });
+
+    // Prevent opponent from being the currently selected team
+    this.teamSelector.addEventListener("input", () => {
+      for (let option of this.opponentSelector.options) {
+        option.hidden = option.value === this.teamSelector.value;
+      }
+
+      if (this.opponentSelector.value === this.teamSelector.value) {
+        this.opponentSelector.value = "all";
+      }
+    });
+  }
+
+  update() {
     const formData = new FormData(this.form);
 
     this.team = formData.get("team");
     this.opponent = formData.get("opponent");
-    this.season = formData.get("opponent");
+    this.season = formData.get("season");
     this.sorting = formData.get("sorting");
     this.view = formData.get("view");
 
     this.games = formData.getAll("games");
     this.results = formData.getAll("results");
     this.periods = formData.getAll("periods");
-
-    console.log(this.view);
   }
 }
