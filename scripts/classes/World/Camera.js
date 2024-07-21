@@ -13,7 +13,7 @@ export default class Camera {
 
     this.views = {
       bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5 },
-      grid: { theta: Math.PI * 0.5, phi: 0 },
+      grid: { theta: 0, phi: 0 },
       lines: { theta: 0, phi: Math.PI * 0.5 },
       corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.333 },
     };
@@ -74,7 +74,6 @@ export default class Camera {
   expDecay(a, b, decay = 6, deltaTime = this.world.deltaTime) {
     return b + (a - b) * Math.exp(-decay * deltaTime);
   }
-
   updatePosition() {
     if (this.isUserRotating) {
       return;
