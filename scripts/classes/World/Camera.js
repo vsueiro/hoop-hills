@@ -4,8 +4,8 @@ export default class Camera {
   constructor(world) {
     this.world = world;
 
-    this.distance = 24;
-    this.frustum = 10;
+    this.distance = 1000;
+    this.frustum = 200;
     this.near = 1;
     this.far = 2000;
 
