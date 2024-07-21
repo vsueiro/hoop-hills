@@ -8,6 +8,13 @@ export default class World {
 
     // Settings
     this.frustum = 10;
+    this.views = {
+      bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5 },
+      grid: { theta: Math.PI * 0.5, phi: 0 },
+      lines: { theta: 0, phi: Math.PI * 0.5 },
+      corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.333 },
+    };
+    this.cameraDistanceFromOrigin = 24;
     // this.fov = 75;
 
     // Sizes
@@ -34,6 +41,17 @@ export default class World {
     return this.frustum * 0.5;
   }
 
+  get currentView() {
+    return this.views[this.app.filters.view];
+  }
+
+  moveCameraTo(target) {
+    target = target || this.currentView;
+
+    this.camera.position.setFromSphericalCoords(this.cameraDistanceFromOrigin, target.phi, target.theta);
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+  }
+
   setup() {
     // Canvas
     this.canvas = document.querySelector("canvas");
@@ -44,8 +62,19 @@ export default class World {
     // Objects
     const color = getComputedStyle(document.body).getPropertyValue("--accent");
     const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
-    this.mesh = new THREE.Mesh(geometry, material);
+    // const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
+
+    // Materials for each face
+    const materials = [
+      new THREE.MeshBasicMaterial({ color: 0xff0000 }), // red
+      new THREE.MeshBasicMaterial({ color: 0x00ff00 }), // green
+      new THREE.MeshBasicMaterial({ color: 0x0000ff }), // blue
+      new THREE.MeshBasicMaterial({ color: 0xffff00 }), // yellow
+      new THREE.MeshBasicMaterial({ color: 0xff00ff }), // magenta
+      new THREE.MeshBasicMaterial({ color: 0x00ffff }), // cyan
+    ];
+
+    this.mesh = new THREE.Mesh(geometry, materials);
     this.scene.add(this.mesh);
 
     // Camera
@@ -57,11 +86,17 @@ export default class World {
       1,
       2000
     );
-    this.camera.position.z = 3;
+    // this.camera.position.z = 3;
+
+    // Set initial camera position
+    this.moveCameraTo(this.currentView);
     this.scene.add(this.camera);
 
     // Orbit controls
     this.controls = new OrbitControls(this.camera, this.canvas);
+    this.controls.enableRotate = true;
+    this.controls.enableZoom = true;
+    this.controls.enablePan = false;
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
@@ -95,8 +130,8 @@ export default class World {
   }
 
   update(ms) {
-    this.mesh.rotation.z = ms * 0.001;
-    this.mesh.rotation.y = ms * 0.001;
+    // this.mesh.rotation.z = ms * 0.001;
+    // this.mesh.rotation.y = ms * 0.001;
 
     this.renderer.render(this.scene, this.camera);
 

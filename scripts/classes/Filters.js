@@ -6,7 +6,6 @@ export default class Filters {
 
     this.teamSelector = this.form.querySelector('[name="team"]');
     this.opponentSelector = this.form.querySelector('[name="opponent"]');
-    this.seasonSelector = this.form.querySelector('[name="season"]');
 
     this.allValues = {
       opponent: "all",
@@ -31,34 +30,39 @@ export default class Filters {
     return isArrayEqual;
   }
 
+  preventSameTeamSelection() {
+    for (let option of this.opponentSelector.options) {
+      option.hidden = option.value === this.teamSelector.value;
+    }
+
+    if (this.opponentSelector.value === this.teamSelector.value) {
+      this.opponentSelector.value = "all";
+    }
+  }
+
   setup() {
     // Handle form submission
-    this.form.addEventListener("input", () => {
+    this.form.addEventListener("input", (event) => {
       this.update();
-    });
 
-    // this.form.addEventListener("submit", (event) => {
-    //   event.preventDefault();
-    //   this.update();
-    // });
+      const name = event.target.name;
 
-    // Reload data when team or season changes
-    this.teamSelector.addEventListener("input", () => {
-      this.app.data.load("games", this.app.update);
-    });
+      switch (name) {
+        case "view":
+          // Trigger camera movement on view selection
+          this.app.world.moveCameraTo();
+          break;
+        case "team":
+          // Reload data when team changes
+          this.app.data.load("games", this.app.update);
 
-    this.seasonSelector.addEventListener("input", () => {
-      this.app.data.load("games", this.app.update);
-    });
-
-    // Prevent opponent from being the currently selected team
-    this.teamSelector.addEventListener("input", () => {
-      for (let option of this.opponentSelector.options) {
-        option.hidden = option.value === this.teamSelector.value;
-      }
-
-      if (this.opponentSelector.value === this.teamSelector.value) {
-        this.opponentSelector.value = "all";
+          // Prevent opponent from being the currently selected team
+          this.preventSameTeamSelection();
+          break;
+        case "season":
+          // Reload data when  changes
+          this.app.data.load("games", this.app.update);
+          break;
       }
     });
   }
