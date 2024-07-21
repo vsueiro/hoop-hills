@@ -45,6 +45,12 @@ export default class Camera {
     return this.views[this.world.app.filters.view];
   }
 
+  get currentView() {
+    const spherical = new THREE.Spherical();
+    spherical.setFromVector3(this.instance.position);
+    return spherical;
+  }
+
   get origin() {
     return new THREE.Vector3(0, 0, 0);
   }
@@ -54,7 +60,7 @@ export default class Camera {
     this.instance.left = this.left;
     this.instance.right = this.right;
     this.instance.top = this.top;
-    this.instance.bottom = -this.bottom;
+    this.instance.bottom = this.bottom;
     this.instance.updateProjectionMatrix();
   }
 
@@ -75,16 +81,10 @@ export default class Camera {
     }
 
     const target = this.targetView;
+    const current = this.currentView;
 
-    const spherical = new THREE.Spherical();
-
-    spherical.setFromVector3(this.instance.position);
-
-    const currentTheta = spherical.theta;
-    const currentPhi = spherical.phi;
-
-    const theta = this.expDecay(currentTheta, target.theta);
-    const phi = this.expDecay(currentPhi, target.phi);
+    const theta = this.expDecay(current.theta, target.theta);
+    const phi = this.expDecay(current.phi, target.phi);
 
     this.instance.position.setFromSphericalCoords(this.distance, phi, theta);
     this.instance.lookAt(this.origin);
