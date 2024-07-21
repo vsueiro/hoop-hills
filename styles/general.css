@@ -19,6 +19,7 @@ header {
 h1 {
   line-height: 1.5;
   pointer-events: all;
+  width: fit-content;
 }
 
 h2 {
@@ -27,6 +28,7 @@ h2 {
   margin-bottom: 1em;
   pointer-events: all;
   text-transform: uppercase;
+  width: fit-content;
 }
 
 p {
