@@ -45,6 +45,18 @@ export default class World {
     return this.views[this.app.filters.view];
   }
 
+  updateDeltaTime(currentTime) {
+    if (this.lastTime === undefined) {
+      this.lastTime = 0;
+    }
+    this.deltaTime = (currentTime - this.lastTime) / 1000;
+    this.lastTime = currentTime;
+  }
+
+  expDecay = (a, b, decay, deltaTime) => {
+    return b + (a - b) * Math.exp(-decay * deltaTime);
+  };
+
   moveCameraTo(target) {
     target = target || this.currentView;
 
@@ -130,6 +142,8 @@ export default class World {
   }
 
   update(ms) {
+    this.updateDeltaTime(ms);
+
     // this.mesh.rotation.z = ms * 0.001;
     // this.mesh.rotation.y = ms * 0.001;
 
