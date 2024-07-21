@@ -7,6 +7,8 @@ export default class World {
     this.canvas = typeof canvas === "string" ? document.querySelector(canvas) : canvas;
 
     // Settings
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
     this.frustum = 10;
     this.views = {
       bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5 },
@@ -15,11 +17,7 @@ export default class World {
       corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.333 },
     };
     this.cameraDistanceFromOrigin = 24;
-    // this.fov = 75;
-
-    // Sizes
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    this.isOrbitControlling = false;
 
     this.setup();
     requestAnimationFrame((ms) => this.update(ms));
@@ -53,14 +51,28 @@ export default class World {
     this.lastTime = currentTime;
   }
 
-  expDecay = (a, b, decay, deltaTime) => {
+  expDecay(a, b, decay = 12, deltaTime = this.deltaTime) {
     return b + (a - b) * Math.exp(-decay * deltaTime);
-  };
+  }
 
-  moveCameraTo(target) {
+  updateCameraPosition(target) {
+    if (this.isOrbitControlling) {
+      return;
+    }
+
     target = target || this.currentView;
 
-    this.camera.position.setFromSphericalCoords(this.cameraDistanceFromOrigin, target.phi, target.theta);
+    const decay = 6;
+
+    const spherical = new THREE.Spherical();
+    spherical.setFromVector3(this.camera.position);
+    const currentTheta = spherical.theta;
+    const currentPhi = spherical.phi;
+
+    const theta = this.expDecay(currentTheta, target.theta, decay);
+    const phi = this.expDecay(currentPhi, target.phi, decay);
+
+    this.camera.position.setFromSphericalCoords(this.cameraDistanceFromOrigin, phi, theta);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
   }
 
@@ -101,7 +113,13 @@ export default class World {
     // this.camera.position.z = 3;
 
     // Set initial camera position
-    this.moveCameraTo(this.currentView);
+    this.camera.position.setFromSphericalCoords(
+      this.cameraDistanceFromOrigin,
+      this.currentView.phi,
+      this.currentView.theta
+    );
+    this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+    // this.moveCameraTo(this.currentView);
     this.scene.add(this.camera);
 
     // Orbit controls
@@ -109,6 +127,12 @@ export default class World {
     this.controls.enableRotate = true;
     this.controls.enableZoom = true;
     this.controls.enablePan = false;
+    this.controls.enableDamping = true;
+    this.controls.addEventListener("start", () => {
+      this.isOrbitControlling = true;
+    });
+
+    // this.controls.update();
 
     // Renderer
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
@@ -116,7 +140,6 @@ export default class World {
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatio);
     this.renderer.render(this.scene, this.camera);
-    // this.controls.update();
 
     window.addEventListener("resize", () => {
       this.resize();
@@ -143,9 +166,8 @@ export default class World {
 
   update(ms) {
     this.updateDeltaTime(ms);
-
-    // this.mesh.rotation.z = ms * 0.001;
-    // this.mesh.rotation.y = ms * 0.001;
+    this.updateCameraPosition();
+    this.controls.update();
 
     this.renderer.render(this.scene, this.camera);
 

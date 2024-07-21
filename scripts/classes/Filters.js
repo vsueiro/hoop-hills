@@ -49,8 +49,8 @@ export default class Filters {
 
       switch (name) {
         case "view":
-          // Trigger camera movement on view selection
-          this.app.world.moveCameraTo();
+          // Allow camera animation on view selection
+          this.app.world.isOrbitControlling = false;
           break;
         case "team":
           // Reload data when team changes
