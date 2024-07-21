@@ -27,7 +27,7 @@ export default class Data {
   }
 
   get teamsPath() {
-    return "./data/teams/2024-2045.csv";
+    return "./data/teams/2024-25.csv";
   }
 
   get gamesPath() {
