@@ -1,4 +1,5 @@
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 
 export default class Controls {
   constructor(world) {
@@ -7,18 +8,30 @@ export default class Controls {
   }
 
   setup() {
-    this.instance = new OrbitControls(this.world.camera.instance, this.world.canvas);
-    this.instance.enableRotate = true;
-    this.instance.enableZoom = true;
-    this.instance.enablePan = false;
-    this.instance.enableDamping = true;
+    // Orbit for smooth rotating
+    this.orbitInstance = new OrbitControls(this.world.camera.instance, this.world.canvas);
+    this.orbitInstance.enableRotate = true;
+    this.orbitInstance.enableZoom = false;
+    this.orbitInstance.enablePan = false;
+    this.orbitInstance.enableDamping = true;
 
-    this.instance.addEventListener("start", () => {
+    this.orbitInstance.addEventListener("start", () => {
       this.world.camera.isUserRotating = true;
     });
+
+    // Trackball for smooth zooming
+    this.trackallInstance = new TrackballControls(this.world.camera.instance, this.world.canvas);
+    this.trackallInstance.noRotate = true;
+    this.trackallInstance.noPan = true;
+    this.trackallInstance.noZoom = false;
+    this.trackallInstance.zoomSpeed = 2.5;
+    this.trackallInstance.dynamicDampingFactor = 0.1;
   }
 
   update() {
-    this.instance.update();
+    const target = this.orbitInstance.target;
+    this.orbitInstance.update();
+    this.trackallInstance.target.set(target.x, target.y, target.z);
+    this.trackallInstance.update();
   }
 }
