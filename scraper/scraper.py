@@ -14,12 +14,20 @@ def scrape_games_from_table(soup, table_id, game_type):
   
   # Find all <td> elements with data-stat="box_score_text"
   tds = table.find_all('td', {'data-stat': 'box_score_text'})
+
+  # Find all <td> elements with data-stat="game_remarks"
+  remarks_tds = table.find_all('td', {'data-stat': 'game_remarks'})
   
   # Iterate over each <td> element to find <a> tags within them
-  for td in tds:
+  for index, td in enumerate(tds):
     a_tag = td.find('a', href=True)
     if a_tag and a_tag['href'].startswith('/boxscores/'):
       game_id = a_tag['href'].split('/')[-1].replace('.html', '')
+
+      # Check Play-In Game
+      if game_type == 'RS' and remarks_tds[index].get_text(strip=True) == "Play-In Game":
+        game_type = 'PI'
+
       game_ids.append({'id': game_id, 'type': game_type})
     
   return game_ids

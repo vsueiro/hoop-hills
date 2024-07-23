@@ -18,8 +18,8 @@ teams = pd.read_csv(options['teams_path'])
 for _, team in teams.iterrows():
 
   # TEMP: Filter teams
-  # if team['id'] in ['ATL','BOS']:
-  #   continue
+  if team['id'] not in ['MIA']:
+    continue
 
   # Create empty dataframe
   columns = ['id', 'type', 'opponent', 'elapsedTime', 'event', 'teamScore', 'opponentScore', 'pointDifference']
