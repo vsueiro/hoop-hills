@@ -43,6 +43,16 @@ export default class World {
     this.renderer.resize();
   }
 
+  build() {
+    console.log("Rebuild the scene because team or season changed");
+
+    this.highlight();
+  }
+
+  highlight() {
+    console.log("Highlight parts of scene to match filters");
+  }
+
   update(ms) {
     this.deltaTime.update(ms);
 

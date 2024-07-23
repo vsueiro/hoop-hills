@@ -10,7 +10,4 @@ export default class App {
     this.data = new Data(this);
     this.world = new World(this, "canvas");
   }
-  update() {
-    console.log("Just updated games data");
-  }
 }

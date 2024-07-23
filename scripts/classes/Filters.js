@@ -7,25 +7,25 @@ export default class Filters {
     this.teamSelector = this.form.querySelector('[name="team"]');
     this.opponentSelector = this.form.querySelector('[name="opponent"]');
 
-    this.allValues = {
+    this.setup();
+    this.update();
+  }
+
+  isAll(field) {
+    const values = {
       opponent: "all",
       games: ["RS", "PI", "PO"],
       results: ["won", "lost"],
       periods: ["Q1", "Q2", "Q3", "Q4", "OTs"],
     };
 
-    this.setup();
-    this.update();
-  }
-
-  isAll(field) {
     if (typeof this[field] === "string") {
-      return this[field] === this.allValues[field];
+      return this[field] === values[field];
     }
 
     const isArrayEqual =
-      this[field].length === this.allValues[field].length &&
-      this[field].every((value, index) => value === this.allValues[field][index]);
+      this[field].length === values[field].length &&
+      this[field].every((value, index) => value === values[field][index]);
 
     return isArrayEqual;
   }
@@ -54,16 +54,23 @@ export default class Filters {
           break;
         case "team":
           // Reload data when team changes
-          this.app.data.load("games", this.app.update);
+          this.app.data.load("games", () => this.app.world.build());
 
           // Prevent opponent from being the currently selected team
           this.preventSameTeamSelection();
-          break;
+
+          // Stop executing
+          return;
         case "season":
-          // Reload data when  changes
-          this.app.data.load("games", this.app.update);
-          break;
+          // Reload data when season changes
+          this.app.data.load("games", () => this.app.world.build());
+
+          // Stop executing
+          return;
       }
+
+      // Filter chart onyl if team and season didn’t change
+      this.app.world.highlight();
     });
   }
 
