@@ -51,6 +51,16 @@ export default class Hills {
     }
   }
 
+  clear() {
+    for (let i = this.world.scene.instance.children.length - 1; i >= 0; i--) {
+      const child = this.world.scene.instance.children[i];
+
+      if (this.groups.includes(child)) {
+        this.world.scene.instance.remove(child);
+      }
+    }
+  }
+
   setup() {
     this.createAxes();
     this.createGroups();

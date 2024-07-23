@@ -46,7 +46,7 @@ export default class World {
 
   clear() {
     if (this.hills) {
-      // this.hills.clear()
+      this.hills.clear();
     }
   }
 
