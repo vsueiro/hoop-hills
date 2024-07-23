@@ -9,5 +9,12 @@ export default class App {
     this.filters = new Filters(this, "form");
     this.data = new Data(this);
     this.world = new World(this, "canvas");
+
+    this.setup();
+  }
+
+  setup() {
+    this.data.load("teams");
+    this.data.load("games", () => this.world.build());
   }
 }

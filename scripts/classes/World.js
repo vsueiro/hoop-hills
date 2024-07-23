@@ -1,8 +1,11 @@
 import DeltaTime from "./World/DeltaTime.js";
+
 import Scene from "./World/Scene.js";
 import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
 import Renderer from "./World/Renderer.js";
+
+import Games from "./World/Games.js";
 import Hills from "./World/Hills.js";
 
 export default class World {
@@ -29,8 +32,6 @@ export default class World {
     this.controls = new Controls(this);
     this.renderer = new Renderer(this);
 
-    this.hills = new Hills(this);
-
     window.addEventListener("resize", () => {
       this.resize();
     });
@@ -43,7 +44,18 @@ export default class World {
     this.renderer.resize();
   }
 
+  clear() {
+    if (this.hills) {
+      // this.hills.clear()
+    }
+  }
+
   build() {
+    this.clear();
+
+    this.games = new Games(this, this.app.data.games);
+    this.hills = new Hills(this, this.games.summaries);
+
     console.log("Rebuild the scene because team or season changed");
 
     this.highlight();

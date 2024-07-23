@@ -1,13 +1,10 @@
-import { csv } from "d3";
+import { csv, autoType } from "d3";
 
 export default class Data {
   constructor(app) {
     this.app = app;
     this.teams = [];
     this.games = [];
-
-    this.load("teams");
-    this.load("games", this.app.update);
   }
 
   async load(property, callback) {
@@ -18,7 +15,7 @@ export default class Data {
 
     if (property in paths) {
       let path = paths[property];
-      this[property] = await csv(path);
+      this[property] = await csv(path, autoType);
 
       if (callback) {
         callback();
