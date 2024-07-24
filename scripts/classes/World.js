@@ -4,14 +4,17 @@ import Scene from "./World/Scene.js";
 import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
 import Renderer from "./World/Renderer.js";
+import Renderer2D from "./World/Renderer2D.js";
 
 import Games from "./World/Games.js";
 import Hills from "./World/Hills.js";
+import Labels from "./World/Labels.js";
 
 export default class World {
-  constructor(app, canvas) {
+  constructor(app, canvas, canvas2D) {
     this.app = app;
     this.canvas = document.querySelector(canvas);
+    this.canvas2D = document.querySelector(canvas2D);
 
     this.setup();
   }
@@ -31,6 +34,9 @@ export default class World {
     this.camera = new Camera(this);
     this.controls = new Controls(this);
     this.renderer = new Renderer(this);
+    this.renderer2D = new Renderer2D(this);
+
+    this.labels = new Labels(this);
 
     window.addEventListener("resize", () => {
       this.resize();
@@ -42,6 +48,7 @@ export default class World {
   resize() {
     this.camera.resize();
     this.renderer.resize();
+    this.renderer2D.resize();
   }
 
   clear() {
@@ -59,6 +66,9 @@ export default class World {
 
       setTimeout(() => {
         this.hills.hideAll = false;
+
+        this.labels.addBiggestLead();
+        this.labels.addBiggestTrail();
       }, 200);
     }, 200);
   }
@@ -70,6 +80,7 @@ export default class World {
     this.camera.update();
     this.controls.update();
     this.renderer.update();
+    this.renderer2D.update();
 
     if (this.hills) {
       this.hills.update();

@@ -8,7 +8,7 @@ export default class App {
     this.params = new Params(this);
     this.filters = new Filters(this, "form");
     this.data = new Data(this);
-    this.world = new World(this, "canvas");
+    this.world = new World(this, ".canvas", ".canvas2D");
 
     this.setup();
   }

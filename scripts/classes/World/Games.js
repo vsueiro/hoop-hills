@@ -15,10 +15,10 @@ export default class Games {
         this.ids.push(play.id);
 
         const summary = {
-          number: this.ids.length - 1,
           id: play.id,
           opponent: play.opponent,
           type: play.type,
+
           leadChanges: 0,
           timesTied: 0,
           biggestLead: 0,
@@ -26,7 +26,11 @@ export default class Games {
           teamScore: 0,
           opponentScore: 0,
           pointDifference: 0,
+
           result: "",
+
+          orderByDate: this.ids.length - 1,
+          orderByMargin: 0,
         };
 
         this.summaries.push(summary);
@@ -50,6 +54,15 @@ export default class Games {
         summary.pointDifference = play.pointDifference;
         summary.result = play.teamScore > play.opponentScore ? "won" : "lost";
       }
+    });
+
+    // Calculated order sorted by margin
+    const indexedSummaries = this.summaries
+      .map((summary, index) => ({ ...summary, index }))
+      .sort((a, b) => b.pointDifference - a.pointDifference);
+
+    indexedSummaries.forEach((summary, index) => {
+      this.summaries[summary.index].orderByMargin = index;
     });
   }
 

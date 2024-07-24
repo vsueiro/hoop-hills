@@ -14,19 +14,19 @@
 }
 
 .leading {
-  color: #2271b5;
+  color: var(--leading);
   font-weight: bold;
 }
 
 .trailing {
-  color: #de2d26;
+  color: var(--trailing);
   font-weight: bold;
 }
 
 .leading::after {
-  background: #2271b5;
+  background: var(--leading);
 }
 
 .trailing::after {
-  background: #de2d26;
+  background: var(--trailing);
 }

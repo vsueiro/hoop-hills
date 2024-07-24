@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { interpolateBlues, interpolateReds } from "d3";
 import Hill from "./Hill.js";
 
 function normalize(value, min, max) {
@@ -13,9 +12,9 @@ export default class Hills {
     this.groups = [];
 
     this.depth = 2;
-    this.gap = 0.5;
+    this.gap = 0;
     this.widthPerSecond = 100 / 2880;
-    this.heightPerPoint = 0.5;
+    this.heightPerPoint = 0.75;
     this.hideAll = true;
 
     this.depthOffset = this.getDepthOffset();
@@ -23,8 +22,8 @@ export default class Hills {
     this.setup();
   }
 
-  getDepth(index) {
-    return this.depth * 0.5 + (this.depth + this.gap) * index;
+  getDepth(order) {
+    return this.depth * 0.5 + (this.depth + this.gap) * order;
   }
 
   getDepthOffset() {
@@ -36,7 +35,7 @@ export default class Hills {
       const group = new THREE.Group();
 
       group.userData = game;
-      group.position.z = this.getDepth(game.number) - this.depthOffset;
+      group.position.z = 0;
       group.position.x = this.widthPerSecond * 2880 * -0.5;
 
       this.groups.push(group);
@@ -114,9 +113,9 @@ export default class Hills {
   }
 
   highlight(filters = this.world.app.filters) {
-    if (filters === undefined) {
-      return;
-    }
+    // if (filters === undefined) {
+    //   return;
+    // }
 
     const some = {};
 
@@ -150,6 +149,16 @@ export default class Hills {
     }
   }
 
+  sort(filters = this.world.app.filters) {
+    const property = filters.sorting === "margin" ? "orderByMargin" : "orderByDate";
+
+    for (let group of this.groups) {
+      const order = group.userData[property];
+      const z = this.getDepth(order) - this.depthOffset;
+      group.position.z = this.expDecay(group.position.z, z);
+    }
+  }
+
   setup() {
     this.createGroups();
     this.createHills();
@@ -159,5 +168,6 @@ export default class Hills {
 
   update() {
     this.highlight();
+    this.sort();
   }
 }

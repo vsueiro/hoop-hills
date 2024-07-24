@@ -47,6 +47,9 @@ export default class Hill {
     // Store original y position
     this.mesh.userData.heightOffset = heightOffset;
 
+    // Store point diffrence
+    this.mesh.userData.pointDifference = play.pointDifference;
+
     // Calculate period
     if (play.elapsedTime >= 2880) {
       this.mesh.userData.period = "OT";
