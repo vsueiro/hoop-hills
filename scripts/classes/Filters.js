@@ -52,25 +52,23 @@ export default class Filters {
           // Allow camera animation on view selection
           this.app.world.camera.isUserRotating = false;
           break;
+
         case "team":
+          this.app.world.hills.hideAll = true;
+
           // Reload data when team changes
           this.app.data.load("games", () => this.app.world.build());
-
           // Prevent opponent from being the currently selected team
           this.preventSameTeamSelection();
+          break;
 
-          // Stop executing
-          return;
         case "season":
+          this.app.world.hills.hideAll = true;
+
           // Reload data when season changes
           this.app.data.load("games", () => this.app.world.build());
-
-          // Stop executing
-          return;
+          break;
       }
-
-      // Filter chart only if team and season didn’t change
-      this.app.world.highlight();
     });
   }
 

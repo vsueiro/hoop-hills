@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { interpolateBlues, interpolateReds } from "d3";
+import Hill from "./Hill.js";
 
 function normalize(value, min, max) {
   return (value - min) / (max - min);
@@ -15,10 +16,7 @@ export default class Hills {
     this.gap = 0.5;
     this.widthPerSecond = 100 / 2880;
     this.heightPerPoint = 0.5;
-
-    // this.width = 100; // should be proportional to game duration (>=2880s)
-    // this.height = 50; // should be proportional to biggest lead/trail (~60)
-    // this.depth = 200; // should be proportional to season duration (~82, 112 max)
+    this.hideAll = true;
 
     this.depthOffset = this.getDepthOffset();
 
@@ -31,11 +29,6 @@ export default class Hills {
 
   getDepthOffset() {
     return (this.getDepth(this.games.length - 1) + this.depth * 0.5) * 0.5;
-  }
-
-  createAxes() {
-    const axesHelper = new THREE.AxesHelper(100);
-    this.world.scene.instance.add(axesHelper);
   }
 
   createGroups() {
@@ -51,20 +44,7 @@ export default class Hills {
     }
   }
 
-  clear() {
-    for (let i = this.world.scene.instance.children.length - 1; i >= 0; i--) {
-      const child = this.world.scene.instance.children[i];
-
-      if (this.groups.includes(child)) {
-        this.world.scene.instance.remove(child);
-      }
-    }
-  }
-
-  setup() {
-    this.createAxes();
-    this.createGroups();
-
+  createHills() {
     let groupIndex = -1;
     let groupId;
     const plays = this.world.app.data.games;
@@ -88,109 +68,96 @@ export default class Hills {
         continue;
       }
 
+      // Check if the play lasted more than 0 seconds
       const duration = nextPlay.elapsedTime - play.elapsedTime;
-
       if (duration === 0) {
         continue;
       }
 
-      const width = duration * this.widthPerSecond;
-      const widthOffset = nextPlay.elapsedTime * this.widthPerSecond + width * -0.5;
+      const hill = new Hill(this.world, this, play, nextPlay);
 
-      // TEMP: using absolute values instead of check if positive or negative
-      const height = Math.abs(play.pointDifference) * this.heightPerPoint;
-
-      let color = "#808080";
-      let heightOffset = 0;
-
-      if (play.pointDifference > 0) {
-        color = interpolateBlues(normalize(play.pointDifference, 50, 1));
-        heightOffset = height * 0.5;
-      } else if (play.pointDifference < 0) {
-        color = interpolateReds(normalize(play.pointDifference, -50, 1));
-        heightOffset = height * -0.5;
-      }
-
-      const geometry = new THREE.BoxGeometry(width, height, this.depth);
-      const material = new THREE.MeshBasicMaterial({ color: color, transparent: true });
-      const mesh = new THREE.Mesh(geometry, material);
-
-      mesh.position.x = widthOffset;
-      mesh.position.y = heightOffset;
-
-      // Store original y position
-      mesh.userData.heightOffset = heightOffset;
-
-      // Calculate period
-      if (play.elapsedTime >= 2880) {
-        mesh.userData.period = "OT";
-      } else if (play.elapsedTime >= 2160) {
-        mesh.userData.period = "Q4";
-      } else if (play.elapsedTime >= 1440) {
-        mesh.userData.period = "Q3";
-      } else if (play.elapsedTime >= 720) {
-        mesh.userData.period = "Q2";
-      } else if (play.elapsedTime >= 0) {
-        mesh.userData.period = "Q1";
-      }
-
-      group.add(mesh);
+      group.add(hill.mesh);
     }
+  }
+
+  clear() {
+    // TODO: consider optimizing by looping through this.groups instead
+    for (let i = this.world.scene.instance.children.length - 1; i >= 0; i--) {
+      const child = this.world.scene.instance.children[i];
+
+      if (this.groups.includes(child)) {
+        this.world.scene.instance.remove(child);
+      }
+    }
+  }
+
+  expDecay(a, b, decay = 6, deltaTime = this.world.deltaTime) {
+    const newValue = b + (a - b) * Math.exp(-decay * deltaTime);
+    const tolerance = 0.01; // 1%
+    return; // if new value is within tolerance, return b, else return newValue;
+  }
+
+  expDecay(a, b, decay = 12, deltaTime = this.world.deltaTime) {
+    return b + (a - b) * Math.exp(-decay * deltaTime);
+  }
+
+  show(hill) {
+    hill.material.opacity = this.expDecay(hill.material.opacity, 1);
+    hill.scale.y = this.expDecay(hill.scale.y, 1);
+    hill.position.y = this.expDecay(hill.position.y, hill.userData.heightOffset);
+  }
+
+  hide(hill) {
+    hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.25 : 0.25);
+    hill.scale.y = this.expDecay(hill.scale.y, 0);
+    hill.position.y = this.expDecay(hill.position.y, 0);
+  }
+
+  highlight(filters = this.world.app.filters) {
+    if (filters === undefined) {
+      return;
+    }
+
+    const some = {};
+
+    some.opponent = !filters.isAll("opponent");
+    some.games = !filters.isAll("games");
+    some.results = !filters.isAll("results");
+    some.periods = !filters.isAll("periods");
+
+    for (let group of this.groups) {
+      for (let hill of group.children) {
+        let show = true;
+
+        if (this.hideAll) {
+          show = false;
+        } else if (some.opponent && group.userData.opponent !== filters.opponent) {
+          show = false;
+        } else if (some.games && !filters.games.includes(group.userData.type)) {
+          show = false;
+        } else if (some.results && !filters.results.includes(group.userData.result)) {
+          show = false;
+        } else if (some.periods && !filters.periods.includes(hill.userData.period)) {
+          show = false;
+        }
+
+        if (show) {
+          this.show(hill);
+        } else {
+          this.hide(hill);
+        }
+      }
+    }
+  }
+
+  setup() {
+    this.createGroups();
+    this.createHills();
 
     this.world.app.data.games.forEach((play) => {});
   }
 
-  highlight(filters) {
-    const show = 1;
-    const hide = 0.25;
-    const fullScale = 1;
-    const reducedScale = 0;
-
-    for (let group of this.groups) {
-      for (let hill of group.children) {
-        hill.material.opacity = show;
-        hill.scale.y = fullScale;
-        hill.position.y = hill.userData.heightOffset;
-        // hill.visible = true;
-
-        if (!filters.isAll("opponent")) {
-          if (group.userData.opponent !== filters.opponent) {
-            hill.material.opacity = hide;
-            hill.scale.y = reducedScale;
-            hill.position.y = 0;
-            // hill.visible = false;
-          }
-        }
-
-        if (!filters.isAll("games")) {
-          if (!filters.games.includes(group.userData.type)) {
-            hill.material.opacity = hide;
-            hill.scale.y = reducedScale;
-            hill.position.y = 0;
-            // hill.visible = false;
-          }
-        }
-
-        if (!filters.isAll("results")) {
-          if (!filters.results.includes(group.userData.result)) {
-            hill.material.opacity = hide;
-            hill.scale.y = reducedScale;
-            hill.position.y = 0;
-            // hill.visible = false;
-          }
-        }
-
-        if (!filters.isAll("periods")) {
-          if (!filters.periods.includes(hill.userData.period)) {
-            hill.material.opacity = hide;
-            hill.scale.y = reducedScale;
-            hill.position.y = 0;
-            // hill.visible = false;
-          }
-        }
-      }
-    }
+  update() {
+    this.highlight();
   }
-
-  update() {}
 }

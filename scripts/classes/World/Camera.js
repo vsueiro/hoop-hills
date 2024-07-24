@@ -74,6 +74,7 @@ export default class Camera {
   expDecay(a, b, decay = 6, deltaTime = this.world.deltaTime) {
     return b + (a - b) * Math.exp(-decay * deltaTime);
   }
+
   updatePosition() {
     if (this.isUserRotating) {
       return;

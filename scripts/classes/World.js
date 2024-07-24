@@ -51,20 +51,16 @@ export default class World {
   }
 
   build() {
-    this.clear();
+    setTimeout(() => {
+      this.clear();
 
-    this.games = new Games(this, this.app.data.games);
-    this.hills = new Hills(this, this.games.summaries);
+      this.games = new Games(this, this.app.data.games);
+      this.hills = new Hills(this, this.games.summaries);
 
-    console.log("Rebuild the scene because team or season changed");
-
-    this.highlight();
-  }
-
-  highlight() {
-    console.log("Highlight parts of scene to match filters");
-
-    this.hills.highlight(this.app.filters);
+      setTimeout(() => {
+        this.hills.hideAll = false;
+      }, 200);
+    }, 200);
   }
 
   update(ms) {
@@ -74,6 +70,10 @@ export default class World {
     this.camera.update();
     this.controls.update();
     this.renderer.update();
+
+    if (this.hills) {
+      this.hills.update();
+    }
 
     requestAnimationFrame((ms) => this.update(ms));
   }
