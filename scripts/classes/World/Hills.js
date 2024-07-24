@@ -42,7 +42,7 @@ export default class Hills {
     for (let game of this.games) {
       const group = new THREE.Group();
 
-      group.userData.id = game.id;
+      group.userData = game;
       group.position.z = this.getDepth(game.number) - this.depthOffset;
       group.position.x = this.widthPerSecond * 2880 * -0.5;
 
@@ -112,7 +112,7 @@ export default class Hills {
       }
 
       const geometry = new THREE.BoxGeometry(width, height, this.depth);
-      const material = new THREE.MeshBasicMaterial({ color: color });
+      const material = new THREE.MeshBasicMaterial({ color: color, transparent: true, depthWrite: false });
       const mesh = new THREE.Mesh(geometry, material);
 
       mesh.position.x = widthOffset;
@@ -122,6 +122,21 @@ export default class Hills {
     }
 
     this.world.app.data.games.forEach((play) => {});
+  }
+
+  highlight(filters) {
+    const show = 1;
+    const hide = 0.025;
+
+    for (let group of this.groups) {
+      for (let hill of group.children) {
+        hill.material.opacity = show;
+
+        if (!filters.isAll("opponent")) {
+          hill.material.opacity = group.userData.opponent === filters.opponent ? show : hide;
+        }
+      }
+    }
   }
 
   update() {}

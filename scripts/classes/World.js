@@ -63,6 +63,8 @@ export default class World {
 
   highlight() {
     console.log("Highlight parts of scene to match filters");
+
+    this.hills.highlight(this.app.filters);
   }
 
   update(ms) {

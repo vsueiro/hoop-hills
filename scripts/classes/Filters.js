@@ -69,7 +69,7 @@ export default class Filters {
           return;
       }
 
-      // Filter chart onyl if team and season didn’t change
+      // Filter chart only if team and season didn’t change
       this.app.world.highlight();
     });
   }
