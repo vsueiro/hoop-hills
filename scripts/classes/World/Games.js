@@ -48,6 +48,8 @@ export default class Games {
         summary.teamScore = play.teamScore;
         summary.opponentScore = play.opponentScore;
         summary.pointDifference = play.pointDifference;
+
+        summary.result = play.teamScore > play.opponentScore ? "won" : "lost";
       }
     });
   }

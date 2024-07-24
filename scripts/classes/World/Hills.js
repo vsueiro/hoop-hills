@@ -133,7 +133,21 @@ export default class Hills {
         hill.material.opacity = show;
 
         if (!filters.isAll("opponent")) {
-          hill.material.opacity = group.userData.opponent === filters.opponent ? show : hide;
+          if (group.userData.opponent !== filters.opponent) {
+            hill.material.opacity = hide;
+          }
+        }
+
+        if (!filters.isAll("games")) {
+          if (!filters.games.includes(group.userData.type)) {
+            hill.material.opacity = hide;
+          }
+        }
+
+        if (!filters.isAll("results")) {
+          if (!filters.results.includes(group.userData.result)) {
+            hill.material.opacity = hide;
+          }
         }
       }
     }
