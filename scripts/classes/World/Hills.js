@@ -112,11 +112,27 @@ export default class Hills {
       }
 
       const geometry = new THREE.BoxGeometry(width, height, this.depth);
-      const material = new THREE.MeshBasicMaterial({ color: color, transparent: true, depthWrite: false });
+      const material = new THREE.MeshBasicMaterial({ color: color, transparent: true });
       const mesh = new THREE.Mesh(geometry, material);
 
       mesh.position.x = widthOffset;
       mesh.position.y = heightOffset;
+
+      // Store original y position
+      mesh.userData.heightOffset = heightOffset;
+
+      // Calculate period
+      if (play.elapsedTime >= 2880) {
+        mesh.userData.period = "OT";
+      } else if (play.elapsedTime >= 2160) {
+        mesh.userData.period = "Q4";
+      } else if (play.elapsedTime >= 1440) {
+        mesh.userData.period = "Q3";
+      } else if (play.elapsedTime >= 720) {
+        mesh.userData.period = "Q2";
+      } else if (play.elapsedTime >= 0) {
+        mesh.userData.period = "Q1";
+      }
 
       group.add(mesh);
     }
@@ -126,27 +142,50 @@ export default class Hills {
 
   highlight(filters) {
     const show = 1;
-    const hide = 0.025;
+    const hide = 0.25;
+    const fullScale = 1;
+    const reducedScale = 0;
 
     for (let group of this.groups) {
       for (let hill of group.children) {
         hill.material.opacity = show;
+        hill.scale.y = fullScale;
+        hill.position.y = hill.userData.heightOffset;
+        // hill.visible = true;
 
         if (!filters.isAll("opponent")) {
           if (group.userData.opponent !== filters.opponent) {
             hill.material.opacity = hide;
+            hill.scale.y = reducedScale;
+            hill.position.y = 0;
+            // hill.visible = false;
           }
         }
 
         if (!filters.isAll("games")) {
           if (!filters.games.includes(group.userData.type)) {
             hill.material.opacity = hide;
+            hill.scale.y = reducedScale;
+            hill.position.y = 0;
+            // hill.visible = false;
           }
         }
 
         if (!filters.isAll("results")) {
           if (!filters.results.includes(group.userData.result)) {
             hill.material.opacity = hide;
+            hill.scale.y = reducedScale;
+            hill.position.y = 0;
+            // hill.visible = false;
+          }
+        }
+
+        if (!filters.isAll("periods")) {
+          if (!filters.periods.includes(hill.userData.period)) {
+            hill.material.opacity = hide;
+            hill.scale.y = reducedScale;
+            hill.position.y = 0;
+            // hill.visible = false;
           }
         }
       }
