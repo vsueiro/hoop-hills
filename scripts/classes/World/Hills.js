@@ -8,7 +8,7 @@ export default class Hills {
     this.groups = [];
 
     this.depth = 2;
-    this.gap = 0;
+    this.gap = 0.4;
     this.widthPerSecond = 100 / 2880;
     this.heightPerPoint = 0.75;
     this.hideAll = true;
