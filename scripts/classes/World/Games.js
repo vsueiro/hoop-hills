@@ -27,6 +27,14 @@ export default class Games {
           opponentScore: 0,
           pointDifference: 0,
 
+          // Used for highlighting
+          most: {
+            leadChanges: false, // TODO
+            timesTied: false, // TODO
+            biggestLead: false,
+            biggestTrail: false,
+          },
+
           result: "",
 
           orderByDate: this.ids.length - 1,
@@ -62,7 +70,15 @@ export default class Games {
       .sort((a, b) => b.pointDifference - a.pointDifference);
 
     indexedSummaries.forEach((summary, index) => {
+      // Define sorting order
       this.summaries[summary.index].orderByMargin = index;
+
+      // Set biggest lead and trail of season
+      if (index === 0) {
+        this.summaries[summary.index].most.biggestLead = true;
+      } else if (index === indexedSummaries.length - 1) {
+        this.summaries[summary.index].most.biggestTrail = true;
+      }
     });
   }
 

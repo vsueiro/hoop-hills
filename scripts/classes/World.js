@@ -55,6 +55,8 @@ export default class World {
     if (this.hills) {
       this.hills.clear();
     }
+
+    this.labels.clear();
   }
 
   build() {
@@ -67,8 +69,8 @@ export default class World {
       setTimeout(() => {
         this.hills.hideAll = false;
 
-        this.labels.addBiggestLead();
-        this.labels.addBiggestTrail();
+        this.labels.add("biggestLead");
+        this.labels.add("biggestTrail");
       }, 200);
     }, 200);
   }

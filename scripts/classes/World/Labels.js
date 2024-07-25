@@ -4,6 +4,7 @@ import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 export default class Labels {
   constructor(world) {
     this.world = world;
+    this.list = [];
 
     this.root = document.querySelector(":root");
     this.setup();
@@ -13,64 +14,46 @@ export default class Labels {
     this.root.style.setProperty(`--${property}`, value);
   }
 
-  addBiggestLead() {
-    const groups = this.world.hills.groups;
-    const first = 0;
+  add(property) {
+    const { hill, group } = this.world.hills.findByMost(property);
 
-    for (let group of groups) {
-      const order = group.userData.orderByMargin;
+    let content = ``;
 
-      if (order !== first) {
-        continue;
-      }
-
-      for (let hill of group.children) {
-        if (hill.userData.pointDifference !== group.userData.biggestLead) {
-          continue;
-        }
-
-        const div = document.createElement("div");
-        div.classList.add("label");
-        div.innerHTML = `
-          Leading<br>
-          by ${Math.abs(hill.userData.pointDifference)}<br>
-          vs ${group.userData.opponent}`;
-        const label = new CSS2DObject(div);
-        label.position.set(0, hill.userData.heightOffset, 0);
-        hill.add(label);
-
+    switch (property) {
+      case "biggestLead":
+        content = `
+          ${this.world.app.filters.team} 
+          <span class="leading">leading</span><br>
+          by ${Math.abs(hill.userData.pointDifference)}
+          vs ${group.userData.opponent}
+        `;
         break;
-      }
+
+      case "biggestTrail":
+        content = `
+          ${this.world.app.filters.team}
+          <span class="trailing">trailing</span><br>
+          by ${Math.abs(hill.userData.pointDifference)}
+          vs ${group.userData.opponent}
+        `;
+        break;
     }
+
+    const div = document.createElement("div");
+    div.dataset.label = property;
+    div.innerHTML = `<div class="content">${content}</div>`;
+
+    const label = new CSS2DObject(div);
+    label.position.set(0, hill.userData.heightOffset, 0);
+
+    this.list.push(label);
+    hill.add(label);
   }
 
-  addBiggestTrail() {
-    const groups = this.world.hills.groups;
-    const last = groups.length - 1;
-
-    for (let group of groups) {
-      const order = group.userData.orderByMargin;
-
-      if (order !== last) {
-        continue;
-      }
-
-      for (let hill of group.children) {
-        if (hill.userData.pointDifference !== group.userData.biggestTrail) {
-          continue;
-        }
-        const div = document.createElement("div");
-        div.classList.add("label");
-        div.innerHTML = `
-          Trailing<br>
-          by ${Math.abs(hill.userData.pointDifference)}<br>
-          vs ${group.userData.opponent}`;
-        const label = new CSS2DObject(div);
-        label.position.set(0, hill.userData.heightOffset, 0);
-        hill.add(label);
-
-        break;
-      }
+  clear() {
+    for (let i = this.list.length - 1; i >= 0; i--) {
+      this.list[i].element.remove();
+      this.list.splice(i, 1);
     }
   }
 

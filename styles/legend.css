@@ -2,8 +2,8 @@
   margin: 1em 0 0;
 }
 
-.leading::after,
-.trailing::after {
+.legend .leading::after,
+.legend .trailing::after {
   border-radius: 2px;
   content: "";
   display: inline-block;
@@ -23,10 +23,10 @@
   font-weight: bold;
 }
 
-.leading::after {
+.legend .leading::after {
   background: var(--leading);
 }
 
-.trailing::after {
+.legend .trailing::after {
   background: var(--trailing);
 }

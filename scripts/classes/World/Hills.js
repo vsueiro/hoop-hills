@@ -1,10 +1,6 @@
 import * as THREE from "three";
 import Hill from "./Hill.js";
 
-function normalize(value, min, max) {
-  return (value - min) / (max - min);
-}
-
 export default class Hills {
   constructor(world, games) {
     this.world = world;
@@ -28,6 +24,27 @@ export default class Hills {
 
   getDepthOffset() {
     return (this.getDepth(this.games.length - 1) + this.depth * 0.5) * 0.5;
+  }
+
+  findByMost(property) {
+    const pairs = {
+      biggestTrail: "pointDifference",
+      biggestLead: "pointDifference",
+    };
+
+    for (let group of this.groups) {
+      if (group.userData.most[property] === false) {
+        continue;
+      }
+
+      for (let hill of group.children) {
+        const value = hill.userData[pairs[property]];
+
+        if (value === group.userData[property]) {
+          return { hill, group };
+        }
+      }
+    }
   }
 
   createGroups() {
@@ -80,13 +97,10 @@ export default class Hills {
   }
 
   clear() {
-    // TODO: consider optimizing by looping through this.groups instead
-    for (let i = this.world.scene.instance.children.length - 1; i >= 0; i--) {
-      const child = this.world.scene.instance.children[i];
-
-      if (this.groups.includes(child)) {
-        this.world.scene.instance.remove(child);
-      }
+    for (let i = this.groups.length - 1; i >= 0; i--) {
+      const group = this.groups[i];
+      this.world.scene.instance.remove(group);
+      this.groups.splice(i, 1);
     }
   }
 
@@ -104,19 +118,27 @@ export default class Hills {
     hill.material.opacity = this.expDecay(hill.material.opacity, 1);
     hill.scale.y = this.expDecay(hill.scale.y, 1);
     hill.position.y = this.expDecay(hill.position.y, hill.userData.heightOffset);
+
+    for (let child of hill.children) {
+      if (child.isCSS2DObject) {
+        child.element.style.opacity = 1;
+      }
+    }
   }
 
   hide(hill) {
     hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.25 : 0.25);
     hill.scale.y = this.expDecay(hill.scale.y, 0);
     hill.position.y = this.expDecay(hill.position.y, 0);
+
+    for (let child of hill.children) {
+      if (child.isCSS2DObject) {
+        child.element.style.opacity = 0;
+      }
+    }
   }
 
   highlight(filters = this.world.app.filters) {
-    // if (filters === undefined) {
-    //   return;
-    // }
-
     const some = {};
 
     some.opponent = !filters.isAll("opponent");
