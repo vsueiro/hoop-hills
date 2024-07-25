@@ -37,7 +37,6 @@ export default class World {
     this.renderer = new Renderer(this);
     this.renderer2D = new Renderer2D(this);
     this.raycaster = new Raycaster(this);
-
     this.labels = new Labels(this);
 
     window.addEventListener("resize", () => {
@@ -71,8 +70,8 @@ export default class World {
       setTimeout(() => {
         this.hills.hideAll = false;
 
-        this.labels.add("biggestLead");
-        this.labels.add("biggestTrail");
+        this.labels.show("biggestLead");
+        this.labels.show("biggestTrail");
       }, 200);
     }, 200);
   }
@@ -89,6 +88,10 @@ export default class World {
 
     if (this.hills) {
       this.hills.update();
+    }
+
+    if (this.labels) {
+      this.labels.update();
     }
 
     requestAnimationFrame((ms) => this.update(ms));
