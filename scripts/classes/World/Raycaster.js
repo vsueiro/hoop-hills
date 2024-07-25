@@ -4,7 +4,6 @@ export default class Raycaster {
   constructor(world) {
     this.world = world;
 
-    // this.previousHoveredHill = null
     this.instersections = [];
 
     this.setup();
@@ -21,7 +20,7 @@ export default class Raycaster {
     const result = this.instance.intersectObject(object, false);
 
     if (result.length > 0) {
-      this.instersections.push(...result);
+      this.instersections.push(result[0]);
     }
   }
 
@@ -30,8 +29,10 @@ export default class Raycaster {
     this.mouse = new THREE.Vector2(-1, -1);
 
     window.addEventListener("mousemove", (event) => {
-      this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      this.mouse.x = (event.clientX / this.world.width) * 2 - 1;
+      this.mouse.y = -(event.clientY / this.world.height) * 2 + 1;
+
+      console.log(this.mouse);
     });
   }
 
