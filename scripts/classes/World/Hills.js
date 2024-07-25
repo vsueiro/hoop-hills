@@ -164,11 +164,15 @@ export default class Hills {
 
         if (show) {
           this.show(hill);
+          this.world.raycaster.intersects(hill);
         } else {
           this.hide(hill);
         }
       }
     }
+
+    const hoveredHill = this.world.raycaster.hovered;
+    this.world.labels.showDetails(hoveredHill);
   }
 
   sort(filters = this.world.app.filters) {

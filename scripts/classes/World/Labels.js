@@ -6,6 +6,8 @@ export default class Labels {
     this.world = world;
     this.list = [];
 
+    this.detailedHill = null;
+
     this.root = document.querySelector(":root");
     this.setup();
   }
@@ -18,6 +20,20 @@ export default class Labels {
 
   var(property, value) {
     this.root.style.setProperty(`--${property}`, value);
+  }
+
+  showDetails(hill) {
+    if (this.detailedHill && hill !== this.detailedHill) {
+      // Reset
+      const { color } = this.detailedHill.userData;
+      this.detailedHill.material.color.set(color);
+    }
+
+    if (hill !== null) {
+      hill.material.color.set(0x000000);
+    }
+
+    this.detailedHill = hill;
   }
 
   add(property) {

@@ -5,6 +5,7 @@ import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
 import Renderer from "./World/Renderer.js";
 import Renderer2D from "./World/Renderer2D.js";
+import Raycaster from "./World/Raycaster.js";
 
 import Games from "./World/Games.js";
 import Hills from "./World/Hills.js";
@@ -35,6 +36,7 @@ export default class World {
     this.controls = new Controls(this);
     this.renderer = new Renderer(this);
     this.renderer2D = new Renderer2D(this);
+    this.raycaster = new Raycaster(this);
 
     this.labels = new Labels(this);
 
@@ -83,6 +85,7 @@ export default class World {
     this.controls.update();
     this.renderer.update();
     this.renderer2D.update();
+    this.raycaster.update();
 
     if (this.hills) {
       this.hills.update();
