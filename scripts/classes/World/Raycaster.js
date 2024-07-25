@@ -27,7 +27,7 @@ export default class Raycaster {
 
   setup() {
     this.instance = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
+    this.mouse = new THREE.Vector2(-1, -1);
 
     window.addEventListener("mousemove", (event) => {
       this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
