@@ -127,7 +127,7 @@ export default class Hills {
   }
 
   hide(hill) {
-    hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.25 : 0.25);
+    hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.125 : 0.125);
     hill.scale.y = this.expDecay(hill.scale.y, 0);
     hill.position.y = this.expDecay(hill.position.y, 0);
 
