@@ -10,6 +10,12 @@ export default class Labels {
     this.setup();
   }
 
+  getTeam(id) {
+    const teams = this.world.app.data.teams;
+
+    return teams.find((team) => team.id === id);
+  }
+
   var(property, value) {
     this.root.style.setProperty(`--${property}`, value);
   }
@@ -17,12 +23,15 @@ export default class Labels {
   add(property) {
     const { hill, group } = this.world.hills.findByMost(property);
 
+    const teamId = this.world.app.filters.team;
+    const team = this.getTeam(teamId);
+
     let content = ``;
 
     switch (property) {
       case "biggestLead":
         content = `
-          ${this.world.app.filters.team} 
+          ${team.initials}
           <span class="leading">leading</span><br>
           by ${Math.abs(hill.userData.pointDifference)}
           vs ${group.userData.opponent}
@@ -31,7 +40,7 @@ export default class Labels {
 
       case "biggestTrail":
         content = `
-          ${this.world.app.filters.team}
+          ${team.initials}
           <span class="trailing">trailing</span><br>
           by ${Math.abs(hill.userData.pointDifference)}
           vs ${group.userData.opponent}
