@@ -14,6 +14,7 @@ export default class Controls {
     this.orbitInstance.enableZoom = false;
     this.orbitInstance.enablePan = false;
     this.orbitInstance.enableDamping = true;
+    this.orbitInstance.dampingFactor = 0.1;
 
     this.orbitInstance.addEventListener("start", () => {
       this.world.camera.isUserControlling = true;
@@ -24,8 +25,8 @@ export default class Controls {
     this.trackallInstance.noRotate = true;
     this.trackallInstance.noPan = true;
     this.trackallInstance.noZoom = false;
-    this.trackallInstance.zoomSpeed = 2.5;
-    this.trackallInstance.dynamicDampingFactor = 0.1;
+    this.trackallInstance.zoomSpeed = 2;
+    this.trackallInstance.dynamicDampingFactor = 0.2;
 
     this.trackallInstance.addEventListener("start", () => {
       this.world.camera.isUserControlling = true;
