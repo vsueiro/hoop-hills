@@ -5,6 +5,7 @@ import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
 import Renderer from "./World/Renderer.js";
 import Renderer2D from "./World/Renderer2D.js";
+import Mouse from "./World/Mouse.js";
 import Raycaster from "./World/Raycaster.js";
 
 import Summaries from "./World/Summaries.js";
@@ -36,6 +37,7 @@ export default class World {
     this.controls = new Controls(this);
     this.renderer = new Renderer(this);
     this.renderer2D = new Renderer2D(this);
+    this.mouse = new Mouse(this);
     this.raycaster = new Raycaster(this);
     this.labels = new Labels(this);
 
@@ -70,8 +72,8 @@ export default class World {
       setTimeout(() => {
         this.hills.hideAll = false;
 
-        this.labels.show("biggestLead");
-        this.labels.show("biggestTrail");
+        this.labels.showMost("biggestLead");
+        this.labels.showMost("biggestTrail");
       }, 200);
     }, 200);
   }
@@ -84,6 +86,7 @@ export default class World {
     this.controls.update();
     this.renderer.update();
     this.renderer2D.update();
+    this.mouse.update();
     this.raycaster.update();
 
     if (this.hills) {

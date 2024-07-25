@@ -41,10 +41,12 @@ export default class Hills {
         const value = hill.userData[pairs[property]];
 
         if (value === group.userData[property]) {
-          return { hill, group };
+          return hill;
         }
       }
     }
+
+    return null;
   }
 
   createGroups() {
@@ -165,8 +167,8 @@ export default class Hills {
       }
     }
 
-    const hoveredHill = this.world.raycaster.hovered;
-    this.world.labels.showDetails(hoveredHill);
+    // const hill = this.world.raycaster.hovered;
+    // this.world.labels.showDetails(hill);
   }
 
   sort(filters = this.world.app.filters) {
@@ -182,8 +184,6 @@ export default class Hills {
   setup() {
     this.createGroups();
     this.createHills();
-
-    this.world.app.data.games.forEach((play) => {});
   }
 
   update() {

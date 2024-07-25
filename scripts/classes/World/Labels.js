@@ -21,23 +21,52 @@ export default class Labels {
     this.root.style.setProperty(`--${property}`, value);
   }
 
-  showDetails(hill) {
-    if (this.detailedHill && hill !== this.detailedHill) {
-      // Reset
-      const { color } = this.detailedHill.userData;
-      this.detailedHill.material.color.set(color);
-    }
+  // clearDetails() {
+  //   const property = "details";
 
-    if (hill !== null) {
-      hill.material.color.set(0x000000);
-    }
+  //   if (property in this.names) {
+  //     const label = this.names[property];
+  //     const hill = label.instance.parent;
 
-    this.detailedHill = hill;
-  }
+  //     console.log(label);
+  //     // console.log(label.instance);
+  //     // console.log(label.instance.parent);
 
-  create(property) {
-    const { hill, group } = this.world.hills.findByMost(property);
+  //     if (hill) {
+  //       const { color } = hill.userData;
 
+  //       hill.material.color.set(color);
+
+  //       // TO FIX
+  //       hill.remove(label.instance);
+  //       label.instance.element.remove();
+  //     }
+  //   }
+  // }
+
+  // createDetails(hill) {
+  //   const property = "details";
+  //   const content = "AAA";
+  //   const label = new Label(property, content, hill.userData.heightOffset);
+  //   this.names[property] = label;
+  //   hill.add(label.instance);
+  // }
+
+  // showDetails(hill) {
+  //   // if (this.detailedHill && hill !== this.detailedHill) {
+  //   this.clearDetails();
+  //   // }
+
+  //   if (hill !== null) {
+  //     this.createDetails(hill);
+  //     hill.material.color.set(0x000000);
+  //     // this.detailedHill = hill;
+  //   }
+  // }
+
+  createMost(property) {
+    const hill = this.world.hills.findByMost(property);
+    const group = hill.parent;
     const id = this.world.app.filters.team;
     const team = this.getTeam(id);
 
@@ -68,9 +97,9 @@ export default class Labels {
     hill.add(label.instance);
   }
 
-  show(property) {
+  showMost(property) {
     if (!this.names[property]) {
-      this.create(property);
+      this.createMost(property);
     }
 
     // TODO: Make sure this.names[property].instance is shown
