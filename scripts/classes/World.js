@@ -7,7 +7,7 @@ import Renderer from "./World/Renderer.js";
 import Renderer2D from "./World/Renderer2D.js";
 import Raycaster from "./World/Raycaster.js";
 
-import Games from "./World/Games.js";
+import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
 import Labels from "./World/Labels.js";
 
@@ -65,8 +65,8 @@ export default class World {
     setTimeout(() => {
       this.clear();
 
-      this.games = new Games(this, this.app.data.games);
-      this.hills = new Hills(this, this.games.summaries);
+      this.summaries = new Summaries(this, this.app.data.games);
+      this.hills = new Hills(this, this.summaries.list);
 
       setTimeout(() => {
         this.hills.hideAll = false;
