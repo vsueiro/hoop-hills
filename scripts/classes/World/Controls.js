@@ -16,7 +16,7 @@ export default class Controls {
     this.orbitInstance.enableDamping = true;
 
     this.orbitInstance.addEventListener("start", () => {
-      this.world.camera.isUserRotating = true;
+      this.world.camera.isUserControlling = true;
     });
 
     // Trackball for smooth zooming
@@ -26,6 +26,10 @@ export default class Controls {
     this.trackallInstance.noZoom = false;
     this.trackallInstance.zoomSpeed = 2.5;
     this.trackallInstance.dynamicDampingFactor = 0.1;
+
+    this.trackallInstance.addEventListener("start", () => {
+      this.world.camera.isUserControlling = true;
+    });
   }
 
   update() {

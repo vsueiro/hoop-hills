@@ -9,13 +9,13 @@ export default class Camera {
     this.near = 1;
     this.far = 2000;
 
-    this.isUserRotating = false;
+    this.isUserControlling = false;
 
     this.views = {
-      bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5 },
-      grid: { theta: 0, phi: 0 },
-      lines: { theta: 0, phi: Math.PI * 0.5 },
-      corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.36 },
+      bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5, zoom: 0.75 },
+      grid: { theta: 0, phi: 0, zoom: 0.666 },
+      lines: { theta: 0, phi: Math.PI * 0.5, zoom: 1.5 },
+      corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.36, zoom: 1 },
     };
 
     this.setup();
@@ -67,6 +67,7 @@ export default class Camera {
   setup() {
     this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, this.near, this.far);
     this.instance.position.setFromSphericalCoords(this.distance, this.targetView.phi, this.targetView.theta);
+    this.instance.zoom = this.targetView.zoom;
     this.instance.lookAt(this.origin);
     this.world.scene.instance.add(this.instance);
   }
@@ -76,7 +77,7 @@ export default class Camera {
   }
 
   updatePosition() {
-    if (this.isUserRotating) {
+    if (this.isUserControlling) {
       return;
     }
 
@@ -87,7 +88,13 @@ export default class Camera {
     const phi = this.expDecay(current.phi, target.phi);
 
     this.instance.position.setFromSphericalCoords(this.distance, phi, theta);
+
+    const zoom = this.expDecay(this.instance.zoom, target.zoom);
+    this.instance.zoom = zoom;
+
     this.instance.lookAt(this.origin);
+
+    this.instance.updateProjectionMatrix();
   }
 
   update() {

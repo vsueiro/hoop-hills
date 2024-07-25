@@ -50,7 +50,7 @@ export default class Filters {
       switch (name) {
         case "view":
           // Allow camera animation on view selection
-          this.app.world.camera.isUserRotating = false;
+          this.app.world.camera.isUserControlling = false;
           break;
 
         case "team":
