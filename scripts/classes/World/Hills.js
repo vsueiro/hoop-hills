@@ -104,12 +104,6 @@ export default class Hills {
     }
   }
 
-  expDecay(a, b, decay = 6, deltaTime = this.world.deltaTime) {
-    const newValue = b + (a - b) * Math.exp(-decay * deltaTime);
-    const tolerance = 0.01; // 1%
-    return; // if new value is within tolerance, return b, else return newValue;
-  }
-
   expDecay(a, b, decay = 12, deltaTime = this.world.deltaTime) {
     return b + (a - b) * Math.exp(-decay * deltaTime);
   }
