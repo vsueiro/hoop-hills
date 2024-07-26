@@ -67,12 +67,27 @@ export default class Labels {
       return;
     }
 
-    this.details.instance.parent.remove(this.details.instance);
+    const hill = this.details.instance.parent;
+
+    this.deactivate(hill);
+
+    hill.remove(this.details.instance);
     this.details.element.remove();
     this.details = null;
   }
 
+  activate(hill) {
+    hill.material.color.set(0x000000);
+  }
+
+  deactivate(hill) {
+    const { color } = hill.userData;
+    hill.material.color.set(color);
+  }
+
   createDetails(hill) {
+    this.activate(hill);
+
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
     const label = new Label("details", content, offset);

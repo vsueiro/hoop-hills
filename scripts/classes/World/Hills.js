@@ -160,15 +160,24 @@ export default class Hills {
 
         if (show) {
           this.show(hill);
-          this.world.raycaster.intersects(hill);
+
+          // Don’t check hover when rotating or zooming camera
+          if (!this.world.camera.isUserControlling) {
+            this.world.raycaster.intersects(hill);
+          }
         } else {
           this.hide(hill);
         }
       }
     }
 
-    const hill = this.world.raycaster.hovered;
-    this.world.labels.showDetails(hill);
+    // Hide label when rotating or zooming camera
+    if (this.world.camera.isUserControlling) {
+      this.world.labels.showDetails(null);
+    } else {
+      const hill = this.world.raycaster.hovered;
+      this.world.labels.showDetails(hill);
+    }
   }
 
   sort(filters = this.world.app.filters) {

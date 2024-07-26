@@ -11,6 +11,20 @@ export default class Filters {
     this.update();
   }
 
+  setView(value) {
+    const radios = this.form.querySelectorAll('[name="view"]');
+
+    for (let radio of radios) {
+      if (radio.value === value) {
+        radio.checked = true;
+        this.view = value;
+        continue;
+      }
+
+      radio.checked = false;
+    }
+  }
+
   isAll(field) {
     const values = {
       opponent: "all",
@@ -50,7 +64,8 @@ export default class Filters {
       switch (name) {
         case "view":
           // Allow camera animation on view selection
-          this.app.world.camera.isUserControlling = false;
+          this.app.world.camera.isUserRotating = false;
+          this.app.world.camera.isUserZooming = false;
           break;
 
         case "team":

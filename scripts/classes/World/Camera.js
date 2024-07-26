@@ -9,7 +9,8 @@ export default class Camera {
     this.near = 1;
     this.far = 2000;
 
-    this.isUserControlling = false;
+    this.isUserRotating = false;
+    this.isUserZooming = false;
 
     this.views = {
       bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5, zoom: 0.75 },
@@ -19,6 +20,14 @@ export default class Camera {
     };
 
     this.setup();
+  }
+
+  get isUserControlling() {
+    if (this.isUserRotating || this.isUserZooming) {
+      return true;
+    }
+
+    return false;
   }
 
   get aspect() {
@@ -42,7 +51,13 @@ export default class Camera {
   }
 
   get targetView() {
-    return this.views[this.world.app.filters.view];
+    const value = this.world.app.filters.view;
+
+    if (value === "user") {
+      return null;
+    }
+
+    return this.views[value];
   }
 
   get currentView() {
@@ -82,6 +97,11 @@ export default class Camera {
     }
 
     const target = this.targetView;
+
+    if (!target) {
+      return;
+    }
+
     const current = this.currentView;
 
     const theta = this.expDecay(current.theta, target.theta);
