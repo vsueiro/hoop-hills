@@ -4,20 +4,21 @@ export default class Raycaster {
   constructor(world) {
     this.world = world;
 
-    this.hovered = null;
+    this.closest = null;
 
     this.setup();
   }
 
-  // get hovered() {
-  //   if (this.instersections.length === 0) {
-  //     return null;
-  //   }
+  get hovered() {
+    return this.closest ? this.closest.object : null;
+    // if (this.instersections.length === 0) {
+    //   return null;
+    // }
 
-  //   const hill = this.instersections.sort((a, b) => a.distance - b.distance)[0].object;
+    // const hill = this.instersections.sort((a, b) => a.distance - b.distance)[0].object;
 
-  //   return hill === undefined ? null : hill;
-  // }
+    // return hill === undefined ? null : hill;
+  }
 
   intersects(object) {
     const result = this.instance.intersectObject(object, false);
@@ -26,13 +27,13 @@ export default class Raycaster {
       return;
     }
 
-    if (this.hovered === null) {
-      this.hovered = result[0];
+    if (this.closest === null) {
+      this.closest = result[0];
       return;
     }
 
-    if (result[0].distance < this.hovered.distance) {
-      this.hovered = result[0];
+    if (result[0].distance < this.closest.distance) {
+      this.closest = result[0];
     }
   }
 
@@ -41,7 +42,7 @@ export default class Raycaster {
   }
 
   update() {
-    this.hovered = null;
+    this.closest = null;
 
     this.instance.setFromCamera(this.world.mouse.coords, this.world.camera.instance);
   }
