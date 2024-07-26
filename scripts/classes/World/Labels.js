@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { interpolateBlues, interpolateReds } from "d3";
 import Label from "./Label.js";
 
@@ -41,14 +42,16 @@ export default class Labels {
     }
 
     const content = `
-      ${team.initials}
-      <b class="${situation}">
-        ${situation === "tied" ? "is tied" : situation}
-      </b>
-      <br>
-      ${situation === "tied" ? `at ${score}` : `by ${gap}`} 
-      vs
-      ${opponent.initials}
+      <div class="content">
+        ${team.initials}
+        <b class="${situation}">
+          ${situation === "tied" ? "is tied" : situation}
+        </b>
+        <br>
+        ${situation === "tied" ? `at ${score}` : `by ${gap}`} 
+        vs
+        ${opponent.initials}
+      </div>
     `;
 
     return content;
@@ -90,7 +93,7 @@ export default class Labels {
 
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
-    const label = new Label("details", content, offset);
+    const label = new Label(hill, content, offset);
     this.details = label;
     hill.add(label.instance);
   }
@@ -132,7 +135,7 @@ export default class Labels {
     const hill = this.world.hills.findByMost(property);
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
-    const label = new Label(property, content, offset);
+    const label = new Label(hill, content, offset);
     this.most[property] = label;
     hill.add(label.instance);
   }

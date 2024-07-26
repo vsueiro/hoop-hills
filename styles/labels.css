@@ -1,4 +1,4 @@
-[data-label] {
+.label {
   --gap: 0px;
   --stem: 16px;
 
@@ -9,7 +9,7 @@
   width: 1px;
 }
 
-[data-label] .content {
+.label .content {
   backdrop-filter: blur(4px);
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
@@ -23,8 +23,8 @@
   width: max-content;
 }
 
-[data-label]:has(.leading)::before,
-[data-label]:has(.tied)::before {
+.label:has(.leading)::before,
+.label:has(.tied)::before {
   background: Black;
   bottom: var(--gap);
   content: "";
@@ -34,15 +34,15 @@
   width: 1px;
 }
 
-[data-label]:has(.leading) .content,
-[data-label]:has(.tied) .content {
+.label:has(.leading) .content,
+.label:has(.tied) .content {
   bottom: calc(var(--stem) + var(--gap));
   content: "";
   top: unset;
   translate: -50% var(--gap);
 }
 
-[data-label]:has(.trailing)::before {
+.label:has(.trailing)::before {
   background: Black;
   content: "";
   height: var(--stem);
@@ -52,7 +52,7 @@
   width: 1px;
 }
 
-[data-label]:has(.trailing) .content {
+.label:has(.trailing) .content {
   content: "";
   top: calc(var(--stem) + var(--gap));
   translate: -50% 0;
