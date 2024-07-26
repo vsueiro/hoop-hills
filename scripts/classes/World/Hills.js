@@ -167,8 +167,8 @@ export default class Hills {
       }
     }
 
-    // const hill = this.world.raycaster.hovered;
-    // this.world.labels.showDetails(hill);
+    const hill = this.world.raycaster.hovered;
+    this.world.labels.showDetails(hill);
   }
 
   sort(filters = this.world.app.filters) {

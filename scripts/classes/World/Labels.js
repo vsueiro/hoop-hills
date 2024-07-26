@@ -4,9 +4,11 @@ import Label from "./Label.js";
 export default class Labels {
   constructor(world) {
     this.world = world;
-    this.names = {};
 
-    this.detailedHill = null;
+    this.names = {};
+    this.details = null;
+
+    // this.detailedHill = null;
 
     this.root = document.querySelector(":root");
     this.setup();
@@ -21,48 +23,61 @@ export default class Labels {
     this.root.style.setProperty(`--${property}`, value);
   }
 
-  // clearDetails() {
-  //   const property = "details";
+  clearDetails() {
+    if (this.details === null) {
+      return;
+    }
 
-  //   if (property in this.names) {
-  //     const label = this.names[property];
-  //     const hill = label.instance.parent;
+    this.details.instance.parent.remove(this.details.instance);
+    this.details.element.remove();
+    this.details = null;
 
-  //     console.log(label);
-  //     // console.log(label.instance);
-  //     // console.log(label.instance.parent);
+    // const property = "details";
 
-  //     if (hill) {
-  //       const { color } = hill.userData;
+    // if (property in this.names) {
+    //   const label = this.names[property];
+    //   const hill = label.instance.parent;
 
-  //       hill.material.color.set(color);
+    //   console.log(label);
+    //   // console.log(label.instance);
+    //   // console.log(label.instance.parent);
 
-  //       // TO FIX
-  //       hill.remove(label.instance);
-  //       label.instance.element.remove();
-  //     }
-  //   }
-  // }
+    //   if (hill) {
+    //     const { color } = hill.userData;
 
-  // createDetails(hill) {
-  //   const property = "details";
-  //   const content = "AAA";
-  //   const label = new Label(property, content, hill.userData.heightOffset);
-  //   this.names[property] = label;
-  //   hill.add(label.instance);
-  // }
+    //     hill.material.color.set(color);
 
-  // showDetails(hill) {
-  //   // if (this.detailedHill && hill !== this.detailedHill) {
-  //   this.clearDetails();
-  //   // }
+    //     // TO FIX
+    //     hill.remove(label.instance);
+    //     label.instance.element.remove();
+    //   }
+    // }
+  }
 
-  //   if (hill !== null) {
-  //     this.createDetails(hill);
-  //     hill.material.color.set(0x000000);
-  //     // this.detailedHill = hill;
-  //   }
-  // }
+  createDetails(hill) {
+    const content = "???";
+    const offset = 0;
+    const label = new Label("details", content, offset);
+    this.details = label;
+    hill.add(label.instance);
+  }
+
+  showDetails(hill) {
+    if (hill === null) {
+      this.clearDetails();
+      return;
+    }
+
+    if (this.details === null) {
+      this.createDetails(hill);
+      return;
+    }
+
+    if (hill !== this.details.instance.parent) {
+      this.clearDetails();
+      this.createDetails(hill);
+    }
+  }
 
   createMost(property) {
     const hill = this.world.hills.findByMost(property);
