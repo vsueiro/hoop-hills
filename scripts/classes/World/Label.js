@@ -9,4 +9,12 @@ export default class Label {
     this.instance = new CSS2DObject(this.element);
     this.instance.position.set(0, offset, 0);
   }
+
+  show() {
+    this.element.style.opacity = 1;
+  }
+
+  hide() {
+    this.element.style.opacity = 0;
+  }
 }

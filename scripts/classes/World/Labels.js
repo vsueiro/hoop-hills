@@ -44,18 +44,21 @@ export default class Labels {
   showDetails(hill) {
     if (hill === null) {
       this.clearDetails();
+
+      this.showMost("biggestLead");
+      this.showMost("biggestTrail");
       return;
     }
 
     if (this.details === null) {
       this.createDetails(hill);
-      return;
-    }
-
-    if (hill !== this.details.instance.parent) {
+    } else if (hill !== this.details.instance.parent) {
       this.clearDetails();
       this.createDetails(hill);
     }
+
+    this.hideMost("biggestLead");
+    this.hideMost("biggestTrail");
   }
 
   clearMost() {
@@ -109,7 +112,13 @@ export default class Labels {
       this.createMost(property);
     }
 
-    // TODO: Make sure this.most[property].instance is shown
+    this.most[property].show();
+  }
+
+  hideMost(property) {
+    if (this.most[property]) {
+      this.most[property].hide();
+    }
   }
 
   clear() {
