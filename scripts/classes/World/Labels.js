@@ -5,7 +5,7 @@ export default class Labels {
   constructor(world) {
     this.world = world;
 
-    this.names = {};
+    this.most = {};
     this.details = null;
 
     // this.detailedHill = null;
@@ -31,27 +31,6 @@ export default class Labels {
     this.details.instance.parent.remove(this.details.instance);
     this.details.element.remove();
     this.details = null;
-
-    // const property = "details";
-
-    // if (property in this.names) {
-    //   const label = this.names[property];
-    //   const hill = label.instance.parent;
-
-    //   console.log(label);
-    //   // console.log(label.instance);
-    //   // console.log(label.instance.parent);
-
-    //   if (hill) {
-    //     const { color } = hill.userData;
-
-    //     hill.material.color.set(color);
-
-    //     // TO FIX
-    //     hill.remove(label.instance);
-    //     label.instance.element.remove();
-    //   }
-    // }
   }
 
   createDetails(hill) {
@@ -76,6 +55,19 @@ export default class Labels {
     if (hill !== this.details.instance.parent) {
       this.clearDetails();
       this.createDetails(hill);
+    }
+  }
+
+  clearMost() {
+    for (let property in this.most) {
+      const label = this.most[property];
+
+      if ("parent" in label.instance) {
+        label.instance.parent.remove(label.instance);
+      }
+
+      label.element.remove();
+      delete this.most[property];
     }
   }
 
@@ -108,23 +100,21 @@ export default class Labels {
     }
 
     const label = new Label(property, content, hill.userData.heightOffset);
-    this.names[property] = label;
+    this.most[property] = label;
     hill.add(label.instance);
   }
 
   showMost(property) {
-    if (!this.names[property]) {
+    if (!this.most[property]) {
       this.createMost(property);
     }
 
-    // TODO: Make sure this.names[property].instance is shown
+    // TODO: Make sure this.most[property].instance is shown
   }
 
   clear() {
-    for (let name in this.names) {
-      this.names[name].element.remove();
-      delete this.names[name];
-    }
+    this.clearDetails();
+    this.clearMost();
   }
 
   setup() {
