@@ -19,6 +19,45 @@ export default class Labels {
     return teams.find((team) => team.id === id);
   }
 
+  getContent(hill) {
+    const score = hill.userData.teamScore;
+    const diff = hill.userData.pointDifference;
+    const gap = Math.abs(diff);
+
+    const teamId = this.world.app.filters.team;
+    const team = this.getTeam(teamId);
+
+    const opponentId = hill.parent.userData.opponent;
+    const opponent = this.getTeam(opponentId);
+
+    let situation = "";
+
+    if (diff > 0) {
+      situation = "leading";
+    } else if (diff < 0) {
+      situation = "trailing";
+    } else {
+      situation = "tied";
+    }
+
+    const content = `
+      ${team.initials}
+      <b class="${situation}">
+        ${situation === "tied" ? "is tied" : situation}
+      </b>
+      <br>
+      ${situation === "tied" ? `at ${score}` : `by ${gap}`} 
+      vs
+      ${opponent.initials}
+    `;
+
+    return content;
+  }
+
+  getOffset(hill) {
+    return hill.userData.heightOffset;
+  }
+
   var(property, value) {
     this.root.style.setProperty(`--${property}`, value);
   }
@@ -34,8 +73,8 @@ export default class Labels {
   }
 
   createDetails(hill) {
-    const content = "???";
-    const offset = 0;
+    const content = this.getContent(hill);
+    const offset = this.getOffset(hill);
     const label = new Label("details", content, offset);
     this.details = label;
     hill.add(label.instance);
@@ -76,33 +115,9 @@ export default class Labels {
 
   createMost(property) {
     const hill = this.world.hills.findByMost(property);
-    const group = hill.parent;
-    const id = this.world.app.filters.team;
-    const team = this.getTeam(id);
-
-    let content = ``;
-
-    switch (property) {
-      case "biggestLead":
-        content = `
-          ${team.initials}
-          <span class="leading">leading</span><br>
-          by ${Math.abs(hill.userData.pointDifference)}
-          vs ${group.userData.opponent}
-        `;
-        break;
-
-      case "biggestTrail":
-        content = `
-          ${team.initials}
-          <span class="trailing">trailing</span><br>
-          by ${Math.abs(hill.userData.pointDifference)}
-          vs ${group.userData.opponent}
-        `;
-        break;
-    }
-
-    const label = new Label(property, content, hill.userData.heightOffset);
+    const content = this.getContent(hill);
+    const offset = this.getOffset(hill);
+    const label = new Label(property, content, offset);
     this.most[property] = label;
     hill.add(label.instance);
   }
@@ -127,8 +142,8 @@ export default class Labels {
   }
 
   setup() {
-    this.var("leading", interpolateBlues(0.75));
-    this.var("trailing", interpolateReds(0.75));
+    this.var("leading", interpolateBlues(0.8));
+    this.var("trailing", interpolateReds(0.8));
   }
 
   update() {}

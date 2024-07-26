@@ -50,8 +50,11 @@ export default class Hill {
     // Store original y position
     this.mesh.userData.heightOffset = heightOffset;
 
-    // Store point diffrence
+    // Store point difference
     this.mesh.userData.pointDifference = play.pointDifference;
+
+    // Store absolute team points
+    this.mesh.userData.teamScore = play.teamScore;
 
     // Calculate period
     if (play.elapsedTime >= 2880) {

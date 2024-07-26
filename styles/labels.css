@@ -10,11 +10,11 @@
 }
 
 [data-label] .content {
+  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 4px;
   font-size: small;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
   line-height: 1.25;
   padding: 0.25em 0.5em;
   position: absolute;
@@ -23,34 +23,36 @@
   width: max-content;
 }
 
-[data-label="biggestLead"]::before {
-  content: "";
-  width: 1px;
-  height: var(--stem);
+[data-label]:has(.leading)::before,
+[data-label]:has(.tied)::before {
   background: Black;
-  position: absolute;
   bottom: var(--gap);
+  content: "";
+  height: var(--stem);
   left: 0;
+  position: absolute;
+  width: 1px;
 }
 
-[data-label="biggestLead"] .content {
+[data-label]:has(.leading) .content,
+[data-label]:has(.tied) .content {
+  bottom: calc(var(--stem) + var(--gap));
   content: "";
   top: unset;
-  bottom: calc(var(--stem) + var(--gap));
   translate: -50% var(--gap);
 }
 
-[data-label="biggestTrail"]::before {
-  content: "";
-  width: 1px;
-  height: var(--stem);
+[data-label]:has(.trailing)::before {
   background: Black;
+  content: "";
+  height: var(--stem);
+  left: 0;
   position: absolute;
   top: var(--gap);
-  left: 0;
+  width: 1px;
 }
 
-[data-label="biggestTrail"] .content {
+[data-label]:has(.trailing) .content {
   content: "";
   top: calc(var(--stem) + var(--gap));
   translate: -50% 0;

@@ -11,13 +11,6 @@ export default class Raycaster {
 
   get hovered() {
     return this.closest ? this.closest.object : null;
-    // if (this.instersections.length === 0) {
-    //   return null;
-    // }
-
-    // const hill = this.instersections.sort((a, b) => a.distance - b.distance)[0].object;
-
-    // return hill === undefined ? null : hill;
   }
 
   intersects(object) {
