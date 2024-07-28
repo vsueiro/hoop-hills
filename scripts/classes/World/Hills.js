@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import Hill from "./Hill.js";
-import Lines from "./Lines.js";
+// import Lines from "./Lines.js";
 
 export default class Hills {
   constructor(world, games) {
@@ -8,6 +8,7 @@ export default class Hills {
     this.games = games;
     this.groups = [];
     this.lines = [];
+    this.tags = [];
 
     this.depth = 2;
     this.gap = 0.4;
@@ -114,17 +115,84 @@ export default class Hills {
 
   createLines() {
     const depth = this.getDepthLines();
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const thickness = 0.25;
+    const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const thickness = 0.2;
 
-    for (let seconds of [0, 720, 1440, 2160, 2880]) {
-      const geometry = new THREE.CylinderGeometry(thickness, thickness, depth, 8);
-      const line = new THREE.Mesh(geometry, material);
-      line.rotation.x = Math.PI / 2;
-      line.position.x = this.getWidth(seconds) + this.getWidthOffset(2880);
+    const periods = [
+      {
+        seconds: 0,
+        tag: "Q1",
+      },
+      {
+        seconds: 720,
+        tag: "Q2",
+      },
+      {
+        seconds: 1440,
+        tag: "Q3",
+      },
+      {
+        seconds: 2160,
+        tag: "Q4",
+      },
+      {
+        seconds: 2880,
+        tag: "OT",
+      },
+    ];
 
+    for (let period of periods) {
+      // Line
+      const cylinder = new THREE.CylinderGeometry(thickness, thickness, depth, 8);
+      const line = new THREE.Mesh(cylinder, lineMaterial);
+      line.rotation.x = Math.PI * 0.5;
+      line.position.x = this.getWidth(period.seconds) + this.getWidthOffset(2880);
       this.world.scene.instance.add(line);
       this.lines.push(line);
+
+      // Tag
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      const width = 512;
+      const height = width * 0.25;
+      canvas.width = width;
+      canvas.height = height;
+
+      // Ensure the canvas has a transparent background
+      context.clearRect(0, 0, width, height);
+      context.fillStyle = "rgba(0, 0, 0, 0)"; // Transparent background
+      context.fillRect(0, 0, width, height);
+
+      // Draw the text with a stroke
+      context.fillStyle = "rgba(0,0,0,0)";
+      context.strokeStyle = "rgba(0,0,0,.5)";
+      context.lineWidth = 8;
+      context.fillStyle = "white";
+      context.font = "bold 72px Arial";
+      context.textAlign = "center";
+      context.textBaseline = "middle";
+      context.strokeText(period.tag, width * 0.5, height * 0.5);
+      context.fillText(period.tag, width * 0.5, height * 0.5);
+
+      // Use the canvas as a texture
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.anisotropy = this.world.renderer.instance.capabilities.getMaxAnisotropy(); // Apply anisotropic filtering
+      texture.needsUpdate = true;
+
+      const planeWidth = this.getWidth(720);
+      const planeHeight = planeWidth * 0.25;
+
+      // Create a plane geometry and apply the texture
+      const plane = new THREE.PlaneGeometry(planeWidth, planeHeight);
+      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide });
+
+      const tag = new THREE.Mesh(plane, planeMaterial);
+      tag.rotation.x = Math.PI * -0.5;
+      tag.position.x = this.getWidth(period.seconds) + this.getWidthOffset(2880) + planeWidth * 0.5;
+      tag.position.z = depth * 0.5 - planeHeight * 0.5;
+
+      this.world.scene.instance.add(tag);
+      this.tags.push(tag);
     }
   }
 
@@ -146,6 +214,12 @@ export default class Hills {
       const line = this.lines[i];
       this.world.scene.instance.remove(line);
       this.lines.splice(i, 1);
+    }
+
+    for (let i = this.tags.length - 1; i >= 0; i--) {
+      const tag = this.tags[i];
+      this.world.scene.instance.remove(tag);
+      this.tags.splice(i, 1);
     }
   }
 
