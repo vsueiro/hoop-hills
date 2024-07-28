@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import Hill from "./Hill.js";
+import Lines from "./Lines.js";
 
 export default class Hills {
   constructor(world, games) {
     this.world = world;
     this.games = games;
     this.groups = [];
+    this.lines = [];
 
     this.depth = 2;
     this.gap = 0.4;
@@ -22,8 +24,20 @@ export default class Hills {
     return this.depth * 0.5 + (this.depth + this.gap) * order;
   }
 
+  getDepthLines() {
+    return this.getDepth(this.games.length - 1) + this.depth * 0.5 + this.getDepth(8);
+  }
+
   getDepthOffset() {
     return (this.getDepth(this.games.length - 1) + this.depth * 0.5) * 0.5;
+  }
+
+  getWidth(seconds) {
+    return this.widthPerSecond * seconds;
+  }
+
+  getWidthOffset(seconds) {
+    return this.widthPerSecond * seconds * -0.5;
   }
 
   findByMost(property) {
@@ -55,7 +69,7 @@ export default class Hills {
 
       group.userData = game;
       group.position.z = 0;
-      group.position.x = this.widthPerSecond * 2880 * -0.5;
+      group.position.x = this.getWidthOffset(2880);
 
       this.groups.push(group);
       this.world.scene.instance.add(group);
@@ -98,11 +112,40 @@ export default class Hills {
     }
   }
 
+  createLines() {
+    const depth = this.getDepthLines();
+    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const thickness = 0.25;
+
+    for (let seconds of [0, 720, 1440, 2160, 2880]) {
+      const geometry = new THREE.CylinderGeometry(thickness, thickness, depth, 8);
+      const line = new THREE.Mesh(geometry, material);
+      line.rotation.x = Math.PI / 2;
+      line.position.x = this.getWidth(seconds) + this.getWidthOffset(2880);
+
+      this.world.scene.instance.add(line);
+      this.lines.push(line);
+    }
+  }
+
   clear() {
+    this.clearGroups();
+    this.clearLines();
+  }
+
+  clearGroups() {
     for (let i = this.groups.length - 1; i >= 0; i--) {
       const group = this.groups[i];
       this.world.scene.instance.remove(group);
       this.groups.splice(i, 1);
+    }
+  }
+
+  clearLines() {
+    for (let i = this.lines.length - 1; i >= 0; i--) {
+      const line = this.lines[i];
+      this.world.scene.instance.remove(line);
+      this.lines.splice(i, 1);
     }
   }
 
@@ -193,6 +236,7 @@ export default class Hills {
   setup() {
     this.createGroups();
     this.createHills();
+    this.createLines();
   }
 
   update() {
