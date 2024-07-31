@@ -8,6 +8,7 @@ export default class Camera {
     this.frustum = 200;
     this.near = 1;
     this.far = 2000;
+    this.snapTolerance = 0.1;
 
     this.isUserRotating = false;
     this.isUserZooming = false;
@@ -66,6 +67,28 @@ export default class Camera {
     return spherical;
   }
 
+  get closestView() {
+    const position = this.instance.position.clone().normalize();
+    const theta = Math.atan2(position.x, position.z);
+    const phi = Math.acos(position.y);
+
+    for (let key in this.views) {
+      if (key === "corner") {
+        continue;
+      }
+
+      const view = this.views[key];
+      const isThetaClose = Math.abs(theta - view.theta) < this.snapTolerance;
+      const isPhiClose = Math.abs(phi - view.phi) < this.snapTolerance;
+
+      if (isThetaClose && isPhiClose) {
+        return key;
+      }
+    }
+
+    return null;
+  }
+
   get origin() {
     return new THREE.Vector3(0, 0, 0);
   }
@@ -115,6 +138,17 @@ export default class Camera {
     this.instance.lookAt(this.origin);
 
     this.instance.updateProjectionMatrix();
+  }
+
+  snapToClosestView() {
+    const closestView = this.closestView;
+
+    if (closestView === null) {
+      return;
+    }
+
+    this.world.app.filters.setView(closestView);
+    this.world.app.filters.handleFormInput("view");
   }
 
   update() {

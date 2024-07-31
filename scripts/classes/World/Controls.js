@@ -22,6 +22,9 @@ export default class Controls {
 
     this.orbitInstance.addEventListener("end", () => {
       this.world.camera.isUserRotating = false;
+      setTimeout(() => {
+        this.world.camera.snapToClosestView();
+      }, 50);
     });
 
     // Trackball for smooth zooming

@@ -54,36 +54,38 @@ export default class Filters {
     }
   }
 
+  handleFormInput(name) {
+    this.update();
+
+    switch (name) {
+      case "view":
+        // Allow camera animation on view selection
+        this.app.world.camera.isUserRotating = false;
+        this.app.world.camera.isUserZooming = false;
+        break;
+
+      case "team":
+        this.app.world.hills.hideAll = true;
+
+        // Reload data when team changes
+        this.app.data.load("games", () => this.app.world.build());
+        // Prevent opponent from being the currently selected team
+        this.preventSameTeamSelection();
+        break;
+
+      case "season":
+        this.app.world.hills.hideAll = true;
+
+        // Reload data when season changes
+        this.app.data.load("games", () => this.app.world.build());
+        break;
+    }
+  }
+
   setup() {
-    // Handle form submission
     this.form.addEventListener("input", (event) => {
-      this.update();
-
       const name = event.target.name;
-
-      switch (name) {
-        case "view":
-          // Allow camera animation on view selection
-          this.app.world.camera.isUserRotating = false;
-          this.app.world.camera.isUserZooming = false;
-          break;
-
-        case "team":
-          this.app.world.hills.hideAll = true;
-
-          // Reload data when team changes
-          this.app.data.load("games", () => this.app.world.build());
-          // Prevent opponent from being the currently selected team
-          this.preventSameTeamSelection();
-          break;
-
-        case "season":
-          this.app.world.hills.hideAll = true;
-
-          // Reload data when season changes
-          this.app.data.load("games", () => this.app.world.build());
-          break;
-      }
+      this.handleFormInput(name);
     });
   }
 
