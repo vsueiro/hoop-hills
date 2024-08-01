@@ -4,10 +4,10 @@ import Scene from "./World/Scene.js";
 import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
 import Renderer from "./World/Renderer.js";
+import Environment from "./World/Environment.js";
 import Renderer2D from "./World/Renderer2D.js";
 import Mouse from "./World/Mouse.js";
 import Raycaster from "./World/Raycaster.js";
-
 import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
 import Labels from "./World/Labels.js";
@@ -36,6 +36,7 @@ export default class World {
     this.camera = new Camera(this);
     this.controls = new Controls(this);
     this.renderer = new Renderer(this);
+    this.environment = new Environment(this);
     this.renderer2D = new Renderer2D(this);
     this.mouse = new Mouse(this);
     this.raycaster = new Raycaster(this);
@@ -88,6 +89,7 @@ export default class World {
     this.renderer2D.update();
     this.mouse.update();
     this.raycaster.update();
+    this.environment.update();
 
     if (this.hills) {
       this.hills.update();

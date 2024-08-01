@@ -33,7 +33,7 @@ export default class Controls {
     this.trackallInstance.noPan = true;
     this.trackallInstance.noZoom = false;
     this.trackallInstance.zoomSpeed = 2;
-    this.trackallInstance.minZoom = 0.25;
+    this.trackallInstance.minZoom = 0.333;
     this.trackallInstance.maxZoom = 2;
     this.trackallInstance.dynamicDampingFactor = 0.2;
 
