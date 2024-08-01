@@ -11,7 +11,7 @@
 
 .label .content {
   backdrop-filter: blur(4px);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.666);
   border-radius: 4px;
   font-size: small;
   left: 0;

@@ -1,5 +1,3 @@
-import * as THREE from "three";
-import { interpolateBlues, interpolateReds } from "d3";
 import Label from "./Label.js";
 
 export default class Labels {
@@ -11,7 +9,6 @@ export default class Labels {
 
     // this.detailedHill = null;
 
-    this.root = document.querySelector(":root");
     this.setup();
   }
 
@@ -59,10 +56,6 @@ export default class Labels {
 
   getOffset(hill) {
     return hill.userData.heightOffset;
-  }
-
-  var(property, value) {
-    this.root.style.setProperty(`--${property}`, value);
   }
 
   clearDetails() {
@@ -159,10 +152,7 @@ export default class Labels {
     this.clearMost();
   }
 
-  setup() {
-    this.var("leading", interpolateBlues(0.8));
-    this.var("trailing", interpolateReds(0.8));
-  }
+  setup() {}
 
   update() {}
 }

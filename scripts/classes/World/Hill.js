@@ -1,9 +1,4 @@
 import * as THREE from "three";
-import { interpolateBlues, interpolateReds } from "d3";
-
-function normalize(value, min, max) {
-  return (value - min) / (max - min);
-}
 
 export default class Hill {
   constructor(world, hills, play, nextPlay) {
@@ -17,6 +12,10 @@ export default class Hill {
     this.setup();
   }
 
+  normalize(value, min, max) {
+    return (value - min) / (max - min);
+  }
+
   setup() {
     const { play, nextPlay } = this;
 
@@ -25,15 +24,17 @@ export default class Hill {
     const widthOffset = nextPlay.elapsedTime * this.hills.widthPerSecond + width * -0.5;
     const height = Math.abs(play.pointDifference) * this.hills.heightPerPoint;
 
-    let color = "#808080";
-    let heightOffset = 0;
+    let color = this.world.palette.legend.tied;
+    let heightOffset = height * 0.5;
 
     if (play.pointDifference > 0) {
-      color = interpolateBlues(normalize(play.pointDifference, 50, 1));
-      heightOffset = height * 0.5;
+      const value = this.normalize(play.pointDifference, 50, 1);
+      color = this.world.palette.leading(value);
+      heightOffset *= 1;
     } else if (play.pointDifference < 0) {
-      color = interpolateReds(normalize(play.pointDifference, -50, 1));
-      heightOffset = height * -0.5;
+      const value = this.normalize(play.pointDifference, -50, 1);
+      color = this.world.palette.trailing(value);
+      heightOffset *= -1;
     }
 
     this.geometry = new THREE.BoxGeometry(width, height, this.hills.depth);

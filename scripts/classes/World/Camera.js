@@ -14,8 +14,8 @@ export default class Camera {
     this.isUserZooming = false;
 
     this.views = {
-      bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5, zoom: 0.75 },
-      grid: { theta: 0, phi: 0, zoom: 0.666 },
+      bars: { theta: Math.PI * 0.5, phi: Math.PI * 0.5, zoom: 1 },
+      grid: { theta: 0, phi: 0, zoom: 0.8 },
       lines: { theta: 0, phi: Math.PI * 0.5, zoom: 1.5 },
       corner: { theta: Math.PI * 0.25, phi: Math.PI * 0.36, zoom: 1 },
     };

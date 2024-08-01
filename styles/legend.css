@@ -23,6 +23,11 @@
   font-weight: bold;
 }
 
+.tied {
+  color: var(--tied);
+  font-weight: bold;
+}
+
 .legend .leading::after {
   background: var(--leading);
 }

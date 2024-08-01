@@ -1,13 +1,4 @@
 import * as THREE from "three";
-import {
-  interpolateBlues,
-  interpolateReds,
-  interpolateHsl,
-  interpolateRgb,
-  interpolateHslLong,
-  interpolateHcl,
-  interpolateCubehelix,
-} from "d3";
 
 export default class Environment {
   constructor(world) {
@@ -26,11 +17,9 @@ export default class Environment {
 
     const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
 
-    const blue = interpolateBlues(0.333);
-    const red = interpolateReds(0.666);
-    const mixer = interpolateHcl(blue, red);
-
-    console.log(mixer(0.5));
+    const blue = this.world.palette.leading(0.333);
+    const red = this.world.palette.trailing(0.666);
+    const mixer = this.world.palette.interpolate(blue, red);
 
     gradient.addColorStop(0.4, mixer(0.05));
     gradient.addColorStop(0.6, mixer(0.25));
