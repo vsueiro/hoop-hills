@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import Hill from "./Hill.js";
+import Shadow from "./Shadow.js";
 // import Lines from "./Lines.js";
 
 export default class Hills {
@@ -11,7 +12,7 @@ export default class Hills {
     this.tags = [];
 
     this.depth = 2;
-    this.gap = 0.4;
+    this.gap = 0;
     this.widthPerSecond = 100 / 2880;
     this.heightPerPoint = 0.75;
     this.hideAll = true;
@@ -196,9 +197,17 @@ export default class Hills {
     }
   }
 
+  createShadow() {
+    const width = this.getWidth(2880);
+    const height = this.getDepth(this.games.length - 1);
+
+    this.shadow = new Shadow(this.world, width, height);
+  }
+
   clear() {
     this.clearGroups();
     this.clearLines();
+    this.clearShadow();
   }
 
   clearGroups() {
@@ -221,6 +230,10 @@ export default class Hills {
       this.world.scene.instance.remove(tag);
       this.tags.splice(i, 1);
     }
+  }
+
+  clearShadow() {
+    this.world.scene.instance.remove(this.shadow.instance);
   }
 
   expDecay(a, b, decay = 12, deltaTime = this.world.deltaTime) {
@@ -311,6 +324,7 @@ export default class Hills {
     this.createGroups();
     this.createHills();
     this.createLines();
+    this.createShadow();
   }
 
   update() {
