@@ -14,7 +14,10 @@ export default class App {
   }
 
   setup() {
+    this.data.load("periods");
     this.data.load("teams");
-    this.data.load("games", () => this.world.build());
+    this.data.load("games");
+
+    this.data.once("ready", () => this.world.build());
   }
 }
