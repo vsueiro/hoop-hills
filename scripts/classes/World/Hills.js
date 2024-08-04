@@ -301,12 +301,12 @@ export default class Hills {
       }
     }
 
-    // Hide label when rotating or zooming camera
+    // Hide tooltip when rotating or zooming camera
     if (this.world.camera.isUserControlling) {
-      this.world.labels.showDetails(null);
+      this.world.tooltips.showDetails(null);
     } else {
       const hill = this.world.raycaster.hovered;
-      this.world.labels.showDetails(hill);
+      this.world.tooltips.showDetails(hill);
     }
   }
 

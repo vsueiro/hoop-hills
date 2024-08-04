@@ -10,7 +10,7 @@ import Mouse from "./World/Mouse.js";
 import Raycaster from "./World/Raycaster.js";
 import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
-import Labels from "./World/Labels.js";
+import Tooltips from "./World/Tooltips.js";
 
 export default class World {
   constructor(app, canvas, canvas2D) {
@@ -41,7 +41,7 @@ export default class World {
     this.renderer2D = new Renderer2D(this);
     this.mouse = new Mouse(this);
     this.raycaster = new Raycaster(this);
-    this.labels = new Labels(this);
+    this.tooltips = new Tooltips(this);
 
     window.addEventListener("resize", () => {
       this.resize();
@@ -61,7 +61,7 @@ export default class World {
       this.hills.clear();
     }
 
-    this.labels.clear();
+    this.tooltips.clear();
   }
 
   build() {
@@ -74,8 +74,8 @@ export default class World {
       setTimeout(() => {
         this.hills.hideAll = false;
 
-        this.labels.showMost("biggestLead");
-        this.labels.showMost("biggestTrail");
+        this.tooltips.showMost("biggestLead");
+        this.tooltips.showMost("biggestTrail");
       }, 200);
     }, 200);
   }
@@ -96,8 +96,8 @@ export default class World {
       this.hills.update();
     }
 
-    if (this.labels) {
-      this.labels.update();
+    if (this.tooltips) {
+      this.tooltips.update();
     }
 
     requestAnimationFrame((ms) => this.update(ms));

@@ -1,7 +1,6 @@
-// import * as THREE from "three";
 import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 
-export default class Label {
+export default class Tooltip {
   constructor(hill, content, offset = 0) {
     // this.hill = hill;
     this.offset = offset;
@@ -14,7 +13,7 @@ export default class Label {
 
   createElement(content) {
     const element = document.createElement("div");
-    element.classList.add("label");
+    element.classList.add("tooltip");
     element.innerHTML = content;
     return element;
   }

@@ -1,6 +1,6 @@
-import Label from "./Label.js";
+import Tooltip from "./Tooltip.js";
 
-export default class Labels {
+export default class Tooltips {
   constructor(world) {
     this.world = world;
 
@@ -86,9 +86,9 @@ export default class Labels {
 
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
-    const label = new Label(hill, content, offset);
-    this.details = label;
-    hill.add(label.instance);
+    const tooltip = new Tooltip(hill, content, offset);
+    this.details = tooltip;
+    hill.add(tooltip.instance);
   }
 
   showDetails(hill) {
@@ -113,13 +113,13 @@ export default class Labels {
 
   clearMost() {
     for (let property in this.most) {
-      const label = this.most[property];
+      const tooltip = this.most[property];
 
-      if ("parent" in label.instance) {
-        label.instance.parent.remove(label.instance);
+      if ("parent" in tooltip.instance) {
+        tooltip.instance.parent.remove(tooltip.instance);
       }
 
-      label.element.remove();
+      tooltip.element.remove();
       delete this.most[property];
     }
   }
@@ -128,9 +128,9 @@ export default class Labels {
     const hill = this.world.hills.findByMost(property);
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
-    const label = new Label(hill, content, offset);
-    this.most[property] = label;
-    hill.add(label.instance);
+    const tooltip = new Tooltip(hill, content, offset);
+    this.most[property] = tooltip;
+    hill.add(tooltip.instance);
   }
 
   showMost(property) {

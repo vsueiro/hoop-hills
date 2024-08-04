@@ -1,4 +1,4 @@
-.label {
+.tooltip {
   --gap: 0px;
   --stem: 16px;
 
@@ -9,7 +9,7 @@
   width: 1px;
 }
 
-.label .content {
+.tooltip .content {
   backdrop-filter: blur(4px);
   background-color: rgba(255, 255, 255, 0.666);
   border-radius: 4px;
@@ -23,8 +23,8 @@
   width: max-content;
 }
 
-.label:has(.leading)::before,
-.label:has(.tied)::before {
+.tooltip:has(.leading)::before,
+.tooltip:has(.tied)::before {
   background: Black;
   bottom: var(--gap);
   content: "";
@@ -34,15 +34,15 @@
   width: 1px;
 }
 
-.label:has(.leading) .content,
-.label:has(.tied) .content {
+.tooltip:has(.leading) .content,
+.tooltip:has(.tied) .content {
   bottom: calc(var(--stem) + var(--gap));
   content: "";
   top: unset;
   translate: -50% var(--gap);
 }
 
-.label:has(.trailing)::before {
+.tooltip:has(.trailing)::before {
   background: Black;
   content: "";
   height: var(--stem);
@@ -52,7 +52,7 @@
   width: 1px;
 }
 
-.label:has(.trailing) .content {
+.tooltip:has(.trailing) .content {
   content: "";
   top: calc(var(--stem) + var(--gap));
   translate: -50% 0;
