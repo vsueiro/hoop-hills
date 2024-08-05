@@ -34,12 +34,30 @@ export default class Labels {
       this.groups.periodsFront.push(labelFront);
 
       this.world.scene.instance.add(labelBack.instance);
-      this.groups.periodsFront.push(labelBack);
+      this.groups.periodsBack.push(labelBack);
     }
   }
 
   create() {
     this.createPeriodLabels();
+  }
+
+  hideAll() {
+    for (let group in this.groups) {
+      this.hide(group);
+    }
+  }
+
+  show(group) {
+    for (let label of this.groups[group]) {
+      label.element.classList.remove("hidden");
+    }
+  }
+
+  hide(group) {
+    for (let label of this.groups[group]) {
+      label.element.classList.add("hidden");
+    }
   }
 
   clear() {
@@ -63,5 +81,19 @@ export default class Labels {
     if (this.isCleared) {
       this.create();
     }
+
+    this.hideAll();
+
+    const { PI } = Math;
+    const { theta, phi } = this.world.camera.currentView;
+    const tolerance = 0.05;
+
+    if (theta > PI * (-0.5 + tolerance) && theta < PI * (0.5 - tolerance)) {
+      this.show("periodsFront");
+    } else if (theta > PI * (0.5 + tolerance) || theta < PI * (-0.5 - tolerance)) {
+      this.show("periodsBack");
+    }
+
+    // console.log((theta / Math.PI).toFixed(1), (phi / Math.PI).toFixed(1));
   }
 }

@@ -1,10 +1,17 @@
 .label {
-  --stroke: rgba(0, 0, 0, 0.4);
+  --stroke: rgba(0, 0, 0, 0.66);
   --stroke-width: 2px;
   color: white;
 
-  font-size: small;
+  /* font-size: small; */
+
+  opacity: 1;
   paint-order: stroke fill;
   -webkit-text-stroke: var(--stroke-width) var(--stroke);
   text-stroke: var(--stroke-width) var(--stroke);
+  transition: opacity 0.2s;
+}
+
+.label.hidden {
+  opacity: 0;
 }
