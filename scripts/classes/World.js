@@ -10,6 +10,7 @@ import Mouse from "./World/Mouse.js";
 import Raycaster from "./World/Raycaster.js";
 import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
+import Labels from "./World/Labels.js";
 import Tooltips from "./World/Tooltips.js";
 
 export default class World {
@@ -41,6 +42,7 @@ export default class World {
     this.renderer2D = new Renderer2D(this);
     this.mouse = new Mouse(this);
     this.raycaster = new Raycaster(this);
+    this.labels = new Labels(this);
     this.tooltips = new Tooltips(this);
 
     window.addEventListener("resize", () => {
@@ -61,6 +63,7 @@ export default class World {
       this.hills.clear();
     }
 
+    this.labels.clear();
     this.tooltips.clear();
   }
 
@@ -96,9 +99,7 @@ export default class World {
       this.hills.update();
     }
 
-    if (this.tooltips) {
-      this.tooltips.update();
-    }
+    this.labels.update();
 
     requestAnimationFrame((ms) => this.update(ms));
   }
