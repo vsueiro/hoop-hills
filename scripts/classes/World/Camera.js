@@ -64,13 +64,13 @@ export default class Camera {
   get currentView() {
     const spherical = new THREE.Spherical();
     spherical.setFromVector3(this.instance.position);
-    return spherical;
+
+    const { theta, phi } = spherical;
+    return { theta, phi };
   }
 
   get closestView() {
-    const position = this.instance.position.clone().normalize();
-    const theta = Math.atan2(position.x, position.z);
-    const phi = Math.acos(position.y);
+    const { theta, phi } = this.currentView;
 
     for (let key in this.views) {
       if (key === "corner") {
