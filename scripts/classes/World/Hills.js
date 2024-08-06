@@ -111,6 +111,24 @@ export default class Hills {
 
       group.add(hill.mesh);
     }
+
+    // Add mark at final score
+    for (let group of this.groups) {
+      const last = group.children.at(-1);
+
+      const width = 0;
+      const height = 0.4;
+      const depth = this.depth;
+
+      const geometry = new THREE.BoxGeometry(width, height, depth);
+      const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+      const cube = new THREE.Mesh(geometry, material);
+
+      cube.position.x = (last.userData.width + (width === 0 ? 0.1 : width)) * 0.5;
+      cube.position.y = last.userData.heightOffset - height * 0.5;
+
+      last.add(cube);
+    }
   }
 
   createLines() {
@@ -232,6 +250,11 @@ export default class Hills {
       this.world.tooltips.showDetails(null);
     } else {
       const hill = this.world.raycaster.hovered;
+
+      // if (this.world.mouse.clicked) {
+      //   console.log("Clicked hill", hill);
+      // }
+
       this.world.tooltips.showDetails(hill);
     }
   }

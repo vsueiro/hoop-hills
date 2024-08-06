@@ -48,6 +48,9 @@ export default class Hill {
     // Store original color
     this.mesh.userData.color = color;
 
+    // Store width
+    this.mesh.userData.width = width;
+
     // Store original y position
     this.mesh.userData.heightOffset = heightOffset;
 
