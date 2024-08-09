@@ -251,9 +251,10 @@ export default class Hills {
     } else {
       const hill = this.world.raycaster.hovered;
 
-      // if (this.world.mouse.clicked) {
-      //   console.log("Clicked hill", hill);
-      // }
+      if (this.world.mouse.clicked) {
+        console.log("Clicked hill", hill);
+        this.world.mouse.clicked = false;
+      }
 
       this.world.tooltips.showDetails(hill);
     }

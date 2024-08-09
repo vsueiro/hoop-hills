@@ -6,8 +6,11 @@ export default class Mouse {
 
     this.coords = new THREE.Vector2(-1, -1);
 
+    this.downCoords = null;
+    this.clickTolerance = 0.01;
+
     this.clicked = false;
-    this.pressed = false;
+    // this.pressed = false;
 
     this.setup();
   }
@@ -21,18 +24,30 @@ export default class Mouse {
   }
 
   handleDown() {
-    this.clicked = true;
-    this.pressed = true;
+    this.downCoords = this.coords.clone();
   }
 
   handleUp() {
-    this.pressed = false;
+    const distance = this.downCoords.distanceTo(this.coords);
+
+    if (distance > this.clickTolerance) {
+      return;
+    }
+
+    console.log("clicked");
+    this.clicked = true;
+
+    // this.pressed = false;
   }
 
   setup() {
     window.addEventListener("mousemove", (event) => {
       this.handleMove(event);
     });
+
+    // window.addEventListener("click", (event) => {
+    //   this.handleClick(event);
+    // });
 
     window.addEventListener("mousedown", () => {
       this.handleDown();
@@ -44,6 +59,6 @@ export default class Mouse {
   }
 
   update() {
-    this.clicked = false;
+    // this.clicked = false;
   }
 }
