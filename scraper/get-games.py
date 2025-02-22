@@ -6,10 +6,14 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = [2024, 2022] # Seasons (ending year) to be scraped (newest to oldest works)
+options['year'] = [2025] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
 options['teams_path'] = './public/data/teams/2024-25.csv' # Location to read CSV file
 options['seasons_path'] = './public/data/seasons/' # Location to write games for team and season 
+
+# Create or clear error log file
+with open("errors.txt", "w") as error_file:
+  pass # This does nothing, effectively clearing the file
 
 # Dataframes
 teams = pd.read_csv(options['teams_path'])

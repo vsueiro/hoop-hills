@@ -11,12 +11,15 @@ def scrape_games_from_table(soup, table_id, game_type):
   if not table:
     print(f'No {game_type} table found')
     return game_ids
-  
+
   # Find all <td> elements with data-stat="box_score_text"
   tds = table.find_all('td', {'data-stat': 'box_score_text'})
 
   # Find all <td> elements with data-stat="game_remarks"
   remarks_tds = table.find_all('td', {'data-stat': 'game_remarks'})
+
+  # Find all <td> elements with data-stat="game_result"
+  result_tds = table.find_all('td', {'data-stat': 'game_result'})
   
   # Iterate over each <td> element to find <a> tags within them
   for index, td in enumerate(tds):
@@ -27,6 +30,10 @@ def scrape_games_from_table(soup, table_id, game_type):
       # Check Play-In Game
       if game_type == 'RS' and remarks_tds[index].get_text(strip=True) == "Play-In Game":
         game_type = 'PI'
+
+      # Include only if there is a game result 
+      if result_tds[index].get_text(strip=True) == "":
+        continue
 
       game_ids.append({'id': game_id, 'type': game_type})
     
@@ -187,9 +194,12 @@ def clean_play_by_play_data(df, team_location):
 
   return df
 
+# Keep track of retries
+retries = 0
 
 # Scrape play_by_play data based on game id and return df
 def get_play_by_play_data( team_id, team_location, game_id, game_type, index, location_to_id ):
+  global retries
 
   print(f'{index}. Getting play-by-play for {team_id} in game {game_id} ({game_type})')
 
@@ -201,7 +211,21 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
 
   # Check if the request was successful
   if response.status_code != 200:
-    print('Status was not 200. Retrying in 10s')
+
+    # Increase retry count
+    retries += 1
+
+    # Limit retries to 5
+    if retries >= 5:
+
+      # Add error to log
+      with open("errors.txt", "a") as error_file:
+        error_file.write(f"Error: {url}; Status: {response.status_code}\n")
+
+      # Return empty df
+      return pd.DataFrame()
+
+    print(f'Status was {response.status_code}. Retrying in 10s ({retries}×)')
 
     time.sleep(10)
 
@@ -334,5 +358,8 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
   })
   
   # print(df.head())
+
+  # Reset retry count
+  retries = 0
 
   return df
