@@ -114,6 +114,11 @@ export default class Hills {
 
     // Add mark at final score
     for (let group of this.groups) {
+      if (group.children.length === 0) {
+        console.log("No children in:", group);
+        continue;
+      }
+
       const last = group.children.at(-1);
 
       const width = 0;
