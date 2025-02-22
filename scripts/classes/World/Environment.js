@@ -21,7 +21,7 @@ export default class Environment {
     const red = this.world.palette.trailing(0.666);
     const mixer = this.world.palette.interpolate(blue, red);
 
-    gradient.addColorStop(0.4, mixer(0.05));
+    gradient.addColorStop(0.4, mixer(0.31));
     gradient.addColorStop(0.6, mixer(0.25));
 
     context.fillStyle = gradient;
