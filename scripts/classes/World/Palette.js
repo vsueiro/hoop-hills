@@ -31,8 +31,8 @@ export default class Palette {
   }
 
   setup() {
-    this.var("leading", this.legend.trailing);
-    this.var("trailing", this.legend.leading);
+    this.var("leading", this.legend.leading);
+    this.var("trailing", this.legend.trailing);
     this.var("tied", this.legend.tied);
   }
 
