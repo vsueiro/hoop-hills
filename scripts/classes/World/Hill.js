@@ -61,7 +61,7 @@ export default class Hill {
     this.mesh.userData.teamScore = play.teamScore;
 
     // Calculate period
-    if (play.elapsedTime >= 2880) {
+    if (play.elapsedTime > 2880) {
       this.mesh.userData.period = "OT";
     } else if (play.elapsedTime >= 2160) {
       this.mesh.userData.period = "Q4";

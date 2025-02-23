@@ -92,12 +92,20 @@ export default class Hills {
       // Get hills group
       const group = this.groups[groupIndex];
 
-      // Check if a next play exists for the current game
-      let nextPlay;
+      // Try to access next play
+      let nextPlay = plays[index + 1];
 
-      if (plays[index + 1] && play.id === plays[index + 1].id) {
-        nextPlay = plays[index + 1];
-      } else {
+      // If this is the last play of the game
+      const isLastPlay = !nextPlay || play.id !== nextPlay.id;
+      if (isLastPlay) {
+        // Check for buzzer beater
+        if (group.userData.buzzerBeater) {
+          // Pretend next play lasted 1s after clock expired
+          nextPlay = { elapsedTime: play.elapsedTime + 1 };
+          const hill = new Hill(this.world, this, play, nextPlay);
+          group.add(hill.mesh);
+        }
+
         continue;
       }
 
@@ -108,7 +116,6 @@ export default class Hills {
       }
 
       const hill = new Hill(this.world, this, play, nextPlay);
-
       group.add(hill.mesh);
     }
 

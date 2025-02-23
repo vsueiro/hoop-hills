@@ -12,6 +12,9 @@ export default class Summary {
     this.opponentScore = 0;
     this.pointDifference = 0;
 
+    // Has points scored after (or very near) end of game
+    this.buzzerBeater = false;
+
     this.result = "";
 
     this.orderByDate = gameIndex;
@@ -28,7 +31,7 @@ export default class Summary {
   }
   setup() {}
 
-  update(play) {
+  update(play, isLastPlay) {
     const diff = play.pointDifference;
 
     if (diff > this.biggestLead) {
@@ -51,5 +54,7 @@ export default class Summary {
         this.result = play.teamScore > play.opponentScore ? "won" : "lost";
         break;
     }
+
+    this.buzzerBeater = isLastPlay && play.event === "F";
   }
 }

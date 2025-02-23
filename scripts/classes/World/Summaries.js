@@ -13,8 +13,10 @@ export default class Summaries {
   createSummaries() {
     const ids = [];
 
-    for (let play of this.data) {
+    this.data.forEach((play, index) => {
       const isNewGame = !ids.includes(play.id);
+      const nextPlay = this.data[index + 1];
+      const isLastPlay = !nextPlay || play.id !== nextPlay.id;
 
       if (isNewGame) {
         ids.push(play.id);
@@ -24,8 +26,8 @@ export default class Summaries {
       }
 
       const summary = this.list.at(-1);
-      summary.update(play);
-    }
+      summary.update(play, isLastPlay);
+    });
   }
 
   defineSortingOrder() {
