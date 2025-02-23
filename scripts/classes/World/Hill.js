@@ -60,6 +60,9 @@ export default class Hill {
     // Store absolute team points
     this.mesh.userData.teamScore = play.teamScore;
 
+    // Store flag for being the last
+    this.mesh.userData.isLastPlay = play.event === "F";
+
     // Calculate period
     if (play.elapsedTime > 2880) {
       this.mesh.userData.period = "OT";

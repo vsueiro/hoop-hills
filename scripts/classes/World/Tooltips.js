@@ -18,6 +18,7 @@ export default class Tooltips {
   }
 
   getContent(hill) {
+    const isLastPlay = hill.userData.isLastPlay;
     const score = hill.userData.teamScore;
     const diff = hill.userData.pointDifference;
     const gap = Math.abs(diff);
@@ -28,21 +29,14 @@ export default class Tooltips {
     const opponentId = hill.parent.userData.opponent;
     const opponent = this.getTeam(opponentId);
 
-    let situation = "";
-
-    if (diff > 0) {
-      situation = "leading";
-    } else if (diff < 0) {
-      situation = "trailing";
-    } else {
-      situation = "tied";
-    }
+    const situation = diff === 0 ? "tied" : diff > 0 ? "leading" : "trailing";
+    const label = isLastPlay ? (situation === "leading" ? "won" : "lost") : false;
 
     const content = `
       <div class="content">
         ${team.initials}
         <b class="${situation}">
-          ${situation === "tied" ? "is tied" : situation}
+          ${situation === "tied" ? "is tied" : label || situation}
         </b>
         <br>
         ${situation === "tied" ? `at ${score}` : `by ${gap}`} 

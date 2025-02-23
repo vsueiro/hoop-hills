@@ -117,15 +117,11 @@ export default class Hills {
 
       // If game is tied and dragged into OT, split play into 2
       if (nextPlay && play.elapsedTime < 2880 && nextPlay.elapsedTime > 2880) {
-        console.log("Tied and dragged into OT", play);
-
-        // Until end of regulation
         // Pretend next play lasted until end of regulation
         const firstHill = new Hill(this.world, this, play, { elapsedTime: 2880 });
         group.add(firstHill.mesh);
 
-        // First play of OT
-        // Pretend next play started at the end of regulation
+        // Pretend first play of OT play started at the end of regulation
         play.elapsedTime = 2880.1;
         const secondHill = new Hill(this.world, this, play, nextPlay);
         group.add(secondHill.mesh);
@@ -282,7 +278,7 @@ export default class Hills {
       const hill = this.world.raycaster.hovered;
 
       if (this.world.mouse.clicked) {
-        console.log("Clicked hill", hill);
+        console.log(hill);
         this.world.mouse.clicked = false;
       }
 

@@ -34,7 +34,6 @@ export default class Mouse {
       return;
     }
 
-    console.log("clicked");
     this.clicked = true;
 
     // this.pressed = false;
