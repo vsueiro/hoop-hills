@@ -11,6 +11,18 @@ export default class Filters {
     this.update();
   }
 
+  setIDs(ids = "") {
+    const input = this.form.querySelector('[name="ids"]');
+
+    if (typeof ids === "string") {
+      input.value = ids;
+    } else if (Array.isArray(ids)) {
+      input.value = ids.join(",");
+    }
+
+    this.update();
+  }
+
   setView(value) {
     const radios = this.form.querySelectorAll('[name="view"]');
 
@@ -31,6 +43,7 @@ export default class Filters {
       games: ["RS", "PI", "PO"],
       results: ["won", "lost"],
       periods: ["Q1", "Q2", "Q3", "Q4", "OTs"],
+      ids: [],
     };
 
     if (typeof this[field] === "string") {
@@ -71,6 +84,9 @@ export default class Filters {
         this.app.data.load("games", () => this.app.world.build());
         // Prevent opponent from being the currently selected team
         this.preventSameTeamSelection();
+
+        // Clear Game ID filter
+        this.setIDs();
         break;
 
       case "season":
@@ -78,6 +94,14 @@ export default class Filters {
 
         // Reload data when season changes
         this.app.data.load("games", () => this.app.world.build());
+
+        // Clear Game ID filter
+        this.setIDs();
+        break;
+
+      case "opponent":
+        // Clear Game ID filter
+        this.setIDs();
         break;
     }
   }
@@ -101,6 +125,13 @@ export default class Filters {
     this.games = formData.getAll("games");
     this.results = formData.getAll("results");
     this.periods = formData.getAll("periods");
+
+    // TEMP: Comma separated list of game ids
+    this.ids = formData
+      .get("ids")
+      .split(",")
+      .map((id) => id.trim())
+      .filter((id) => id !== "");
 
     this.app.params.update(formData);
   }

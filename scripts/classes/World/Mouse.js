@@ -28,6 +28,10 @@ export default class Mouse {
   }
 
   handleUp() {
+    if (this.downCoords === null) {
+      return;
+    }
+
     const distance = this.downCoords.distanceTo(this.coords);
 
     if (distance > this.clickTolerance) {
@@ -48,11 +52,17 @@ export default class Mouse {
     //   this.handleClick(event);
     // });
 
-    window.addEventListener("mousedown", () => {
-      this.handleDown();
+    window.addEventListener("mousedown", (event) => {
+      // Only respond to clicks on canvas, not other UI elements
+      if (event.target === this.world.canvas) {
+        this.handleDown();
+        return;
+      }
+
+      this.downCoords = null;
     });
 
-    window.addEventListener("mouseup", () => {
+    window.addEventListener("mouseup", (event) => {
       this.handleUp();
     });
   }

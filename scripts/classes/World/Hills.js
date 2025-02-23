@@ -241,6 +241,7 @@ export default class Hills {
     some.games = !filters.isAll("games");
     some.results = !filters.isAll("results");
     some.periods = !filters.isAll("periods");
+    some.ids = !filters.isAll("ids");
 
     for (let group of this.groups) {
       for (let hill of group.children) {
@@ -255,6 +256,11 @@ export default class Hills {
         } else if (some.results && !filters.results.includes(group.userData.result)) {
           show = false;
         } else if (some.periods && !filters.periods.includes(hill.userData.period)) {
+          show = false;
+        }
+
+        // Apply game ID filter as an additional criteria
+        else if (some.ids && !filters.ids.includes(group.userData.id)) {
           show = false;
         }
 
@@ -274,16 +280,28 @@ export default class Hills {
     // Hide tooltip when rotating or zooming camera
     if (this.world.camera.isUserControlling) {
       this.world.tooltips.showDetails(null);
-    } else {
-      const hill = this.world.raycaster.hovered;
+      return;
+    }
 
-      if (this.world.mouse.clicked) {
-        console.log(hill);
-        this.world.mouse.clicked = false;
+    const hill = this.world.raycaster.hovered;
+
+    // Handle clicks
+    if (this.world.mouse.clicked) {
+      // If clicked a hill
+      if (hill) {
+        const { id } = hill.parent.userData;
+
+        // Highlight game hill belongs to
+        this.world.app.filters.setIDs(id);
+      } else {
+        // Show all games
+        this.world.app.filters.setIDs();
       }
 
-      this.world.tooltips.showDetails(hill);
+      this.world.mouse.clicked = false;
     }
+
+    this.world.tooltips.showDetails(hill);
   }
 
   sort(filters = this.world.app.filters) {
