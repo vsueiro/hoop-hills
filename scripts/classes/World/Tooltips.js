@@ -7,9 +7,7 @@ export default class Tooltips {
     this.most = {};
     this.details = null;
 
-    // this.detailedHill = null;
-
-    this.setup();
+    // this.setup();
   }
 
   getTeam(id) {
@@ -146,7 +144,7 @@ export default class Tooltips {
     this.clearMost();
   }
 
-  setup() {}
+  // setup() {}
 
-  update() {}
+  // update() {}
 }

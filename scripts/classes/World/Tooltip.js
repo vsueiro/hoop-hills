@@ -2,7 +2,7 @@ import { CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
 
 export default class Tooltip {
   constructor(hill, content, offset = 0) {
-    // this.hill = hill;
+    this.hill = hill;
     this.offset = offset;
 
     this.element = this.createElement(content);
@@ -25,6 +25,10 @@ export default class Tooltip {
   }
 
   show() {
+    if (this.hill.userData.hidden) {
+      return;
+    }
+
     this.element.style.opacity = 1;
   }
 

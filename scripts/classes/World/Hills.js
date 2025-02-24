@@ -18,6 +18,8 @@ export default class Hills {
 
     this.depthOffset = this.getDepthOffset();
 
+    // this.highlighted = false;
+
     this.setup();
   }
 
@@ -211,6 +213,8 @@ export default class Hills {
   }
 
   show(hill) {
+    hill.userData.hidden = false;
+
     hill.material.opacity = this.expDecay(hill.material.opacity, 1);
     hill.scale.y = this.expDecay(hill.scale.y, 1);
     hill.position.y = this.expDecay(hill.position.y, hill.userData.heightOffset);
@@ -223,6 +227,8 @@ export default class Hills {
   }
 
   hide(hill) {
+    hill.userData.hidden = true;
+
     hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.125 : 0.125);
     hill.scale.y = this.expDecay(hill.scale.y, 0);
     hill.position.y = this.expDecay(hill.position.y, 0);
@@ -232,6 +238,31 @@ export default class Hills {
         child.element.style.opacity = 0;
       }
     }
+  }
+
+  areFiltered(filters = this.world.app.filters) {
+    if (!filters.isAll("opponent")) {
+      return true;
+    }
+
+    if (!filters.isAll("games")) {
+      return true;
+    }
+
+    if (!filters.isAll("results")) {
+      return true;
+    }
+
+    if (!filters.isAll("ids")) {
+      return true;
+    }
+
+    const hasAllQuarters = ["Q1", "Q2", "Q3", "Q4"].every((q) => filters.periods.includes(q));
+    if (!hasAllQuarters) {
+      return true;
+    }
+
+    return false;
   }
 
   highlight(filters = this.world.app.filters) {
@@ -257,10 +288,7 @@ export default class Hills {
           show = false;
         } else if (some.periods && !filters.periods.includes(hill.userData.period)) {
           show = false;
-        }
-
-        // Apply game ID filter as an additional criteria
-        else if (some.ids && !filters.ids.includes(group.userData.id)) {
+        } else if (some.ids && !filters.ids.includes(group.userData.id)) {
           show = false;
         }
 
@@ -289,10 +317,8 @@ export default class Hills {
     if (this.world.mouse.clicked) {
       // If clicked a hill
       if (hill) {
-        const { id } = hill.parent.userData;
-
         // Highlight game hill belongs to
-        this.world.app.filters.setIDs(id);
+        this.world.app.filters.setIDs(hill.parent.userData.id);
       } else {
         // Show all games
         this.world.app.filters.setIDs();
@@ -301,6 +327,23 @@ export default class Hills {
       this.world.mouse.clicked = false;
     }
 
+    // If there are meaningful hills filtered out
+    if (this.world.hills.areFiltered()) {
+      if (hill) {
+        // Show currently-hovered hill
+        this.world.tooltips.showDetails(hill);
+        return;
+      }
+
+      // Hide last hovered tooltip
+      this.world.tooltips.showDetails(null);
+
+      // TODO: Calculate dynamic tooltips
+
+      return;
+    }
+
+    // Show currently-hovered hill
     this.world.tooltips.showDetails(hill);
   }
 
