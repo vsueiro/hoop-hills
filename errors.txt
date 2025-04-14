@@ -1,1 +1,0 @@
-Error: https://basketball-reference.com/boxscores/pbp/202412050MEM.html; Status: 502
