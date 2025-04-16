@@ -3,6 +3,58 @@
   padding: 1.6rem;
 }
 
+.filters h2 {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 0.5em;
+  user-select: none;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 0;
+    scale: 1;
+  }
+}
+
+.filters .collapse button {
+  appearance: none;
+  background: transparent;
+  border: none;
+  cursor: inherit;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  /* transition: rotate 0.4s; */
+
+  &::before {
+    animation: pulse 1.6s 5;
+    background: var(--accent);
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 4rem;
+    left: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    position: absolute;
+    scale: 0;
+    top: 50%;
+    translate: -50% -50%;
+    width: 4rem;
+  }
+}
+
+.filters.collapsed .collapse button {
+  rotate: 180deg;
+}
+
+.filters.collapsed form > label,
+.filters.collapsed form > fieldset:not(:has(.cube)) {
+  display: none;
+}
+
 form {
   /* border-bottom: .2rem solid black; */
   display: flex;
@@ -133,4 +185,10 @@ label:has(input[type="radio"]):active::before {
 label:has(input[type="radio"]:checked)::before {
   background: var(--accent);
   background: radial-gradient(black 0% 33.33%, var(--accent) 33.333% 100%);
+}
+
+@media (max-width: 360px) {
+  .filters fieldset:has(.cube) {
+    display: none;
+  }
 }
