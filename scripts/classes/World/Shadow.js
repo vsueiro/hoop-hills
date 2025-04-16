@@ -5,7 +5,7 @@ export default class Shadow {
     this.world = world;
     this.width = width;
     this.height = height;
-    this.path = "./shadow.png";
+    this.path = "./media/shadow.png";
     this.offset = -60;
     this.setup();
   }
