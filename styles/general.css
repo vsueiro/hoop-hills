@@ -1,6 +1,11 @@
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
 body {
   /* background: rgb(192, 192, 192); */
   color: #000;
+  font-size: 1.6rem;
   overflow: hidden;
 }
 
@@ -9,8 +14,8 @@ a {
 }
 
 header {
-  max-width: 360px;
-  padding: 16px;
+  max-width: 36rem;
+  padding: 1.6rem;
   pointer-events: none;
   position: relative;
   width: 100%;
@@ -23,7 +28,7 @@ h1 {
 }
 
 h2 {
-  font-size: medium;
+  font-size: 1.6rem;
   letter-spacing: 0.1em;
   margin-bottom: 1em;
   pointer-events: all;
@@ -37,11 +42,11 @@ p {
 
 header .heading {
   align-items: start;
-  border-bottom: 2px solid black;
+  border-bottom: 0.2rem solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100px;
+  min-height: 10rem;
 }
 
 main {
@@ -52,4 +57,10 @@ main {
 main select,
 main label {
   pointer-events: all;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 50%; /* 1rem = 8px */
+  }
 }

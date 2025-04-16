@@ -1,13 +1,13 @@
 .filters {
-  max-width: 360px;
-  padding: 16px;
+  max-width: 36rem;
+  padding: 1.6rem;
 }
 
 form {
-  /* border-bottom: 2px solid black; */
+  /* border-bottom: .2rem solid black; */
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.2rem;
 }
 
 label {
@@ -21,12 +21,12 @@ select {
   background-image: url('data:image/svg+xml,<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.70711 14.7071C9.07714 14.0771 9.52331 13 10.4142 13H21.5858C22.4767 13 22.9229 14.0771 22.2929 14.7071L16.7071 20.2929C16.3166 20.6834 15.6834 20.6834 15.2929 20.2929L9.70711 14.7071Z" fill="black"/></svg>');
   background-position: right center;
   background-repeat: no-repeat;
-  background-size: 32px;
-  border-radius: 16px;
-  box-shadow: 0 0 0 2px black, 0 3px 0 2px black;
+  background-size: 3.2rem;
+  border-radius: 1.6rem;
+  box-shadow: 0 0 0 0.2rem black, 0 0.3rem 0 0.2rem black;
   cursor: pointer;
-  margin-inline-start: 4px;
-  padding: 4px 32px 4px 12px;
+  margin-inline-start: 0.4rem;
+  padding: 0.4rem 3.2rem 0.4rem 1.2rem;
 }
 
 label:has(select) {
@@ -34,17 +34,17 @@ label:has(select) {
 }
 
 select:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: -2px;
+  outline: 0.2rem solid var(--accent);
+  outline-offset: -0.2rem;
 }
 
 fieldset {
+  align-items: start;
   align-items: start;
   all: unset;
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: start;
 }
 
 fieldset legend {
@@ -55,26 +55,26 @@ input[type="checkbox"],
 input[type="radio"] {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
-  height: 1px;
+  height: 0.1rem;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px;
+  width: 0.1rem;
 }
 
 label:has(input[type="checkbox"]:focus-visible),
 label:has(input[type="radio"]:focus-visible) {
-  outline: 2px solid white;
-  outline-offset: -3px;
+  outline: 0.2rem solid white;
+  outline-offset: -0.3rem;
   position: relative;
   z-index: 1;
 }
 
 label:has(input[type="checkbox"]) {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 3px 0 1px black;
-  padding: 4px 12px;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  box-shadow: 0 0 0 0.1rem black, inset 0 0 0 0.1rem black, 0 0.3rem 0 0.1rem black;
+  padding: 0.4rem 1.2rem;
 }
 
 label:has(input[type="checkbox"]:checked) {
@@ -82,43 +82,43 @@ label:has(input[type="checkbox"]:checked) {
 }
 
 label:has(input[type="checkbox"]):first-of-type {
-  border-bottom-left-radius: 16px;
-  border-top-left-radius: 16px;
+  border-bottom-left-radius: 1.6rem;
+  border-top-left-radius: 1.6rem;
 }
 
 label:has(input[type="checkbox"]):last-of-type {
-  border-bottom-right-radius: 16px;
-  border-top-right-radius: 16px;
+  border-bottom-right-radius: 1.6rem;
+  border-top-right-radius: 1.6rem;
 }
 
 label:has(input[type="checkbox"]):active {
-  box-shadow: 0 0 0 1px black, inset 0 0 0 1px black, 0 1px 0 1px black;
-  translate: 0 2px;
+  box-shadow: 0 0 0 0.1rem black, inset 0 0 0 0.1rem black, 0 0.1rem 0 0.1rem black;
+  translate: 0 0.2rem;
 }
 
 label:has(input[type="radio"]) {
   align-items: center;
-  border-radius: 16px;
+  border-radius: 1.6rem;
   display: flex;
-  margin-inline-end: 4px;
-  padding: 4px 8px 4px 8px;
+  margin-inline-end: 0.4rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 }
 
 label:has(input[type="radio"])::before {
   background: transparent;
-  border: 2px solid black;
-  border-radius: 16px;
-  box-shadow: 0 0.5px 0 0 black, 0 1px 0 0 black, 0 1.5px 0 0 black, 0 2px 0 0 black;
+  border: 0.2rem solid black;
+  border-radius: 1.6rem;
+  box-shadow: 0 0.05rem 0 0 black, 0 0.1rem 0 0 black, 0 0.15rem 0 0 black, 0 0.2rem 0 0 black;
   content: "";
   display: inline-block;
   height: 1em;
-  margin-inline-end: 4px;
+  margin-inline-end: 0.4rem;
   width: 1em;
 }
 
 label:has(input[type="radio"]):active::before {
   box-shadow: none;
-  translate: 0 2px;
+  translate: 0 0.2rem;
 }
 
 .cube label:has(input[type="radio"]) {

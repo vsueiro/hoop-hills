@@ -1,6 +1,6 @@
 .label {
   --stroke: rgba(0, 0, 0, 0.66);
-  --stroke-width: 2px;
+  --stroke-width: 0.2rem;
 
   color: white;
   opacity: 1;

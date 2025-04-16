@@ -4,7 +4,7 @@
 
 .legend .leading::after,
 .legend .trailing::after {
-  border-radius: 2px;
+  border-radius: 0.2rem;
   content: "";
   display: inline-block;
   height: 0.5em;

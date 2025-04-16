@@ -1,9 +1,9 @@
 .cube {
-  height: 100px;
+  height: 10rem;
   position: fixed;
-  right: 12px;
-  top: 16px;
-  width: 100px;
+  right: 1.2rem;
+  top: 1.6rem;
+  width: 10rem;
 }
 
 .cube label {
@@ -19,11 +19,11 @@
 .cube input {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
-  height: 1px;
+  height: 0.1rem;
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  width: 1px;
+  width: 0.1rem;
 }
 
 .cube svg {
@@ -48,7 +48,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  translate: 0 6px;
+  translate: 0 0.6rem;
 }
 
 .cube .cube-shadow path {
