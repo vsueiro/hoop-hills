@@ -38,6 +38,16 @@ for year in range(start, stop + step, step):
     # if team['id'] in ['MIA']:
     #   continue
 
+    # Get target filename
+    dir = f"{options['seasons_path']}{year}"
+    filename = f"{dir}/{team['id']}.csv"
+
+    # Check if file already exists
+    file_exists = os.path.exists(filename)
+    existing_games_df = False
+    if file_exists:
+      existing_games_df = pd.read_csv(filename)
+
     # Create empty dataframe
     columns = ['id', 'type', 'opponent', 'elapsedTime', 'event', 'teamScore', 'opponentScore', 'pointDifference']
     games_df = pd.DataFrame(columns=columns)
@@ -53,6 +63,11 @@ for year in range(start, stop + step, step):
       # Create a dictionary mapping from the 'location' to 'code'
       location_to_id = teams.set_index('location')['id'].to_dict()
 
+      # Skip scraping if game id is already in the dataset
+      if file_exists and game['id'] in existing_games_df['id'].values:
+        print(f"{game['id']} already exists in {filename}")
+        continue
+
       # Scrape play-by-play data
       play_by_play_df = get_play_by_play_data( team['id'], team['location'], game['id'], game['type'], index, location_to_id )
 
@@ -61,13 +76,16 @@ for year in range(start, stop + step, step):
 
       time.sleep(options['delay'])
 
+    # Combine existing games with newly scraped ones
+    if file_exists:
+      games_df = pd.concat([existing_games_df, games_df], ignore_index=True)
+
     # Sort by "id" and then by "ElapsedTime"
     games_df = games_df.sort_values(by=['id', 'elapsedTime'])
 
     print(games_df.head())
 
     # Save the dataframe for that team
-    dir = f"{options['seasons_path']}{year}"
     os.makedirs(dir, exist_ok=True)
-    games_df.to_csv(f"{dir}/{team['id']}.csv", index=False)
-    print(f"Saved {dir}/{team['id']}.csv")
+    games_df.to_csv(filename, index=False)
+    print(f"Saved {filename}")
