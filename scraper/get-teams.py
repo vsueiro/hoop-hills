@@ -85,7 +85,7 @@ locations = {
 teams_df['location'] = teams_df['id'].map(locations)
 
 # Define the output directory and file path
-output_dir = './public/data/teams/'
+output_dir = './data/teams/'
 os.makedirs(output_dir, exist_ok=True)
 output_file = os.path.join(output_dir, f'{current_season}.csv')
 

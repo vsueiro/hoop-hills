@@ -8,8 +8,8 @@ options = {}
 
 options['year'] = [2025] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
-options['teams_path'] = './public/data/teams/2024-25.csv' # Location to read CSV file
-options['seasons_path'] = './public/data/seasons/' # Location to write games for team and season 
+options['teams_path'] = './data/teams/2024-25.csv' # Location to read CSV file
+options['seasons_path'] = './data/seasons/' # Location to write games for team and season 
 
 # Create or clear error log file
 with open("errors.txt", "w") as error_file:
