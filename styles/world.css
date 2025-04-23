@@ -10,3 +10,12 @@
 .canvas2D {
   pointer-events: none;
 }
+
+.fps {
+  font-size: xx-small;
+  margin-inline: 0.5em;
+}
+
+.fps:not(:empty)::before {
+  content: "FPS ";
+}
