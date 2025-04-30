@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hoop Hills</title>
-    <meta name="description" content="This 3D data visualization shows every moment a team was leading or trailing" />
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles/index.css" />
-    <script type="importmap">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoop Hills</title>
+  <meta name="description" content="This 3D data visualization shows every moment a team was leading or trailing" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles/index.css" />
+  <script type="importmap">
       {
         "imports": {
           "three": "https://cdn.jsdelivr.net/npm/three@0.175/build/three.module.js",
@@ -16,228 +17,218 @@
         }
       }
     </script>
-    <script type="module" src="./scripts/index.js"></script>
-  </head>
-  <body>
-    <canvas class="canvas"></canvas>
-    <div class="canvas2D"></div>
-    <header>
-      <div class="heading">
-        <h1>Hoop Hills</h1>
-        <p style="white-space: nowrap"><strong>Explore the peaks and valleys of NBA games</strong></p>
-      </div>
-      <p class="legend">
-        This chart shows every moment a team was
-        <span class="leading">leading</span> or <span class="trailing">trailing</span>
-        during the season
-      </p>
-    </header>
-    <main>
-      <section class="filters">
-        <h2 class="collapse" onclick="this.parentElement.classList.toggle('collapsed')">
-          Filters
-          <button>
-            <svg
-              viewBox="0 0 24 24"
-              style="width: 2.4rem; height: 2.4rem"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polyline points="18 15 12 9 6 15"></polyline>
+  <script type="module" src="./scripts/index.js"></script>
+</head>
+
+<body>
+  <canvas class="canvas"></canvas>
+  <div class="canvas2D"></div>
+  <header>
+    <div class="heading">
+      <h1>Hoop Hills</h1>
+      <p style="white-space: nowrap"><strong>Explore the peaks and valleys of NBA games</strong></p>
+    </div>
+    <p class="legend">
+      This chart shows every moment a team was
+      <span class="leading">leading</span> or <span class="trailing">trailing</span>
+      during the season
+    </p>
+  </header>
+  <main>
+    <section class="filters">
+      <h2 class="collapse" onclick="this.parentElement.classList.toggle('collapsed')">
+        Filters
+        <button>
+          <svg viewBox="0 0 24 24" style="width: 2.4rem; height: 2.4rem" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </h2>
+
+      <form onsubmit="return false">
+        <label>
+          <span>Team</span>
+          <select name="team">
+            <option value="ATL">Atlanta Hawks</option>
+            <option value="BOS">Boston Celtics</option>
+            <option value="BRK">Brooklyn Nets</option>
+            <option value="CHO">Charlotte Hornets</option>
+            <option value="CHI">Chicago Bulls</option>
+            <option value="CLE">Cleveland Cavaliers</option>
+            <option value="DAL">Dallas Mavericks</option>
+            <option value="DEN">Denver Nuggets</option>
+            <option value="DET">Detroit Pistons</option>
+            <option value="GSW" selected>Golden State Warriors</option>
+            <option value="HOU">Houston Rockets</option>
+            <option value="IND">Indiana Pacers</option>
+            <option value="LAC">Los Angeles Clippers</option>
+            <option value="LAL">Los Angeles Lakers</option>
+            <option value="MEM">Memphis Grizzlies</option>
+            <option value="MIA">Miami Heat</option>
+            <option value="MIL">Milwaukee Bucks</option>
+            <option value="MIN">Minnesota Timberwolves</option>
+            <option value="NOP">New Orleans Pelicans</option>
+            <option value="NYK">New York Knicks</option>
+            <option value="OKC">Oklahoma City Thunder</option>
+            <option value="ORL">Orlando Magic</option>
+            <option value="PHI">Philadelphia 76ers</option>
+            <option value="PHO">Phoenix Suns</option>
+            <option value="POR">Portland Trail Blazers</option>
+            <option value="SAC">Sacramento Kings</option>
+            <option value="SAS">San Antonio Spurs</option>
+            <option value="TOR">Toronto Raptors</option>
+            <option value="UTA">Utah Jazz</option>
+            <option value="WAS">Washington Wizards</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Opponent</span>
+          <select name="opponent">
+            <option value="all" selected>All Teams</option>
+            <option value="ATL">Atlanta Hawks</option>
+            <option value="BOS">Boston Celtics</option>
+            <option value="BRK">Brooklyn Nets</option>
+            <option value="CHO">Charlotte Hornets</option>
+            <option value="CHI">Chicago Bulls</option>
+            <option value="CLE">Cleveland Cavaliers</option>
+            <option value="DAL">Dallas Mavericks</option>
+            <option value="DEN">Denver Nuggets</option>
+            <option value="DET">Detroit Pistons</option>
+            <option value="GSW">Golden State Warriors</option>
+            <option value="HOU">Houston Rockets</option>
+            <option value="IND">Indiana Pacers</option>
+            <option value="LAC">Los Angeles Clippers</option>
+            <option value="LAL">Los Angeles Lakers</option>
+            <option value="MEM">Memphis Grizzlies</option>
+            <option value="MIA" hidden>Miami Heat</option>
+            <option value="MIL">Milwaukee Bucks</option>
+            <option value="MIN">Minnesota Timberwolves</option>
+            <option value="NOP">New Orleans Pelicans</option>
+            <option value="NYK">New York Knicks</option>
+            <option value="OKC">Oklahoma City Thunder</option>
+            <option value="ORL">Orlando Magic</option>
+            <option value="PHI">Philadelphia 76ers</option>
+            <option value="PHO">Phoenix Suns</option>
+            <option value="POR">Portland Trail Blazers</option>
+            <option value="SAC">Sacramento Kings</option>
+            <option value="SAS">San Antonio Spurs</option>
+            <option value="TOR">Toronto Raptors</option>
+            <option value="UTA">Utah Jazz</option>
+            <option value="WAS">Washington Wizards</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Season</span>
+          <select name="season">
+            <option value="2025" selected>2024-25</option>
+            <option value="2024">2023-24</option>
+            <option value="2023">2022-23</option>
+            <option value="2022">2021-22</option>
+            <option value="2021">2020-21</option>
+            <option value="2020">2019-20</option>
+            <option value="2019">2018-19</option>
+            <option value="2018">2017-18</option>
+            <option value="2017">2016-17</option>
+            <option value="2016">2015-16</option>
+            <option value="2015">2014-15</option>
+          </select>
+        </label>
+
+        <label hidden>
+          <span>Game IDs</span>
+          <input name="ids" type="hidden" placeholder="ID1, ID2…" />
+        </label>
+
+        <fieldset>
+          <legend>Games</legend>
+          <label><input type="checkbox" name="games" value="RS" checked />Regular Season</label>
+          <label><input type="checkbox" name="games" value="PI" checked />Play-In</label>
+          <label><input type="checkbox" name="games" value="PO" checked />Playoffs</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Periods</legend>
+          <label><input type="checkbox" name="periods" value="Q1" checked />Q1</label>
+          <label><input type="checkbox" name="periods" value="Q2" checked />Q2</label>
+          <label><input type="checkbox" name="periods" value="Q3" checked />Q3</label>
+          <label><input type="checkbox" name="periods" value="Q4" checked />Q4</label>
+          <label><input type="checkbox" name="periods" value="OT" />OTs</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Result</legend>
+          <label><input type="checkbox" name="results" value="won" checked />Won</label>
+          <label><input type="checkbox" name="results" value="lost" checked />Lost</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Sort by</legend>
+          <label><input type="radio" name="sorting" value="margin" checked />Win Margin</label>
+          <label><input type="radio" name="sorting" value="date" />Date</label>
+        </fieldset>
+
+        <fieldset>
+          <legend class="screen-reader">View</legend>
+          <div class="cube">
+            <svg viewBox="0 0 100 100" class="cube-shadow">
+              <path d="M13.6259 71.0002L49.9998 92L86.3735 71L91.5698 74L49.9998 98L8.42969 74.0002L13.6259 71.0002Z" />
             </svg>
-          </button>
-        </h2>
-
-        <form onsubmit="return false">
-          <label>
-            <span>Team</span>
-            <select name="team">
-              <option value="ATL">Atlanta Hawks</option>
-              <option value="BOS">Boston Celtics</option>
-              <option value="BRK">Brooklyn Nets</option>
-              <option value="CHO">Charlotte Hornets</option>
-              <option value="CHI">Chicago Bulls</option>
-              <option value="CLE">Cleveland Cavaliers</option>
-              <option value="DAL">Dallas Mavericks</option>
-              <option value="DEN">Denver Nuggets</option>
-              <option value="DET">Detroit Pistons</option>
-              <option value="GSW">Golden State Warriors</option>
-              <option value="HOU">Houston Rockets</option>
-              <option value="IND">Indiana Pacers</option>
-              <option value="LAC">Los Angeles Clippers</option>
-              <option value="LAL">Los Angeles Lakers</option>
-              <option value="MEM">Memphis Grizzlies</option>
-              <option value="MIA" selected>Miami Heat</option>
-              <option value="MIL">Milwaukee Bucks</option>
-              <option value="MIN">Minnesota Timberwolves</option>
-              <option value="NOP">New Orleans Pelicans</option>
-              <option value="NYK">New York Knicks</option>
-              <option value="OKC">Oklahoma City Thunder</option>
-              <option value="ORL">Orlando Magic</option>
-              <option value="PHI">Philadelphia 76ers</option>
-              <option value="PHO">Phoenix Suns</option>
-              <option value="POR">Portland Trail Blazers</option>
-              <option value="SAC">Sacramento Kings</option>
-              <option value="SAS">San Antonio Spurs</option>
-              <option value="TOR">Toronto Raptors</option>
-              <option value="UTA">Utah Jazz</option>
-              <option value="WAS">Washington Wizards</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Opponent</span>
-            <select name="opponent">
-              <option value="all" selected>All Teams</option>
-              <option value="ATL">Atlanta Hawks</option>
-              <option value="BOS">Boston Celtics</option>
-              <option value="BRK">Brooklyn Nets</option>
-              <option value="CHO">Charlotte Hornets</option>
-              <option value="CHI">Chicago Bulls</option>
-              <option value="CLE">Cleveland Cavaliers</option>
-              <option value="DAL">Dallas Mavericks</option>
-              <option value="DEN">Denver Nuggets</option>
-              <option value="DET">Detroit Pistons</option>
-              <option value="GSW">Golden State Warriors</option>
-              <option value="HOU">Houston Rockets</option>
-              <option value="IND">Indiana Pacers</option>
-              <option value="LAC">Los Angeles Clippers</option>
-              <option value="LAL">Los Angeles Lakers</option>
-              <option value="MEM">Memphis Grizzlies</option>
-              <option value="MIA" hidden>Miami Heat</option>
-              <option value="MIL">Milwaukee Bucks</option>
-              <option value="MIN">Minnesota Timberwolves</option>
-              <option value="NOP">New Orleans Pelicans</option>
-              <option value="NYK">New York Knicks</option>
-              <option value="OKC">Oklahoma City Thunder</option>
-              <option value="ORL">Orlando Magic</option>
-              <option value="PHI">Philadelphia 76ers</option>
-              <option value="PHO">Phoenix Suns</option>
-              <option value="POR">Portland Trail Blazers</option>
-              <option value="SAC">Sacramento Kings</option>
-              <option value="SAS">San Antonio Spurs</option>
-              <option value="TOR">Toronto Raptors</option>
-              <option value="UTA">Utah Jazz</option>
-              <option value="WAS">Washington Wizards</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Season</span>
-            <select name="season">
-              <option value="2025" selected>2024-25</option>
-              <option value="2024">2023-24</option>
-              <option value="2023">2022-23</option>
-              <option value="2022">2021-22</option>
-              <option value="2021">2020-21</option>
-              <option value="2020">2019-20</option>
-              <option value="2019">2018-19</option>
-              <option value="2018">2017-18</option>
-              <option value="2017">2016-17</option>
-              <option value="2016">2015-16</option>
-              <option value="2015">2014-15</option>
-            </select>
-          </label>
-
-          <label hidden>
-            <span>Game IDs</span>
-            <input name="ids" type="hidden" placeholder="ID1, ID2…" />
-          </label>
-
-          <fieldset>
-            <legend>Games</legend>
-            <label><input type="checkbox" name="games" value="RS" checked />Regular Season</label>
-            <label><input type="checkbox" name="games" value="PI" checked />Play-In</label>
-            <label><input type="checkbox" name="games" value="PO" checked />Playoffs</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Periods</legend>
-            <label><input type="checkbox" name="periods" value="Q1" checked />Q1</label>
-            <label><input type="checkbox" name="periods" value="Q2" checked />Q2</label>
-            <label><input type="checkbox" name="periods" value="Q3" checked />Q3</label>
-            <label><input type="checkbox" name="periods" value="Q4" checked />Q4</label>
-            <label><input type="checkbox" name="periods" value="OT" />OTs</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Result</legend>
-            <label><input type="checkbox" name="results" value="won" checked />Won</label>
-            <label><input type="checkbox" name="results" value="lost" checked />Lost</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Sort by</legend>
-            <label><input type="radio" name="sorting" value="margin" checked />Win Margin</label>
-            <label><input type="radio" name="sorting" value="date" />Date</label>
-          </fieldset>
-
-          <fieldset>
-            <legend class="screen-reader">View</legend>
-            <div class="cube">
-              <svg viewBox="0 0 100 100" class="cube-shadow">
-                <path
-                  d="M13.6259 71.0002L49.9998 92L86.3735 71L91.5698 74L49.9998 98L8.42969 74.0002L13.6259 71.0002Z"
-                />
+            <label>
+              <input type="radio" name="view" value="user" />
+            </label>
+            <label>
+              <input type="radio" name="view" value="corner" checked />
+              <svg viewBox="0 0 100 100">
+                <path d="M70.7823 37.9995H29.2129L50.0026 73.999L70.7823 37.9995Z" />
               </svg>
-              <label>
-                <input type="radio" name="view" value="user" />
-              </label>
-              <label>
-                <input type="radio" name="view" value="corner" checked />
-                <svg viewBox="0 0 100 100">
-                  <path d="M70.7823 37.9995H29.2129L50.0026 73.999L70.7823 37.9995Z" />
-                </svg>
-                <span class="screen-reader">Corner</span>
-              </label>
-              <label>
-                <input type="radio" name="view" value="lines" />
-                <svg viewBox="0 0 100 100">
-                  <path
-                    d="M29.2147 37.9993L8.43066 25.9995L8.43129 73.9994L50.0003 97.9997L50.0001 73.9984L29.2101 37.9993H29.2147Z"
-                  />
-                </svg>
-                <span class="screen-reader">Lines</span>
-              </label>
-              <label>
-                <input type="radio" name="view" value="bars" />
-                <svg viewBox="0 0 100 100">
-                  <path
-                    d="M91.5678 25.9995L91.5675 73.9996L49.9985 97.9999L49.9987 73.9976L70.7746 38.0048L91.5678 25.9995Z"
-                  />
-                </svg>
-                <span class="screen-reader">Bars</span>
-              </label>
-              <label>
-                <input type="radio" name="view" value="grid" />
-                <svg viewBox="0 0 100 100">
-                  <path
-                    d="M8.43066 25.9998L50.0001 2L91.5694 25.9996L70.7769 38.004L70.7795 37.9994H29.2152L8.43066 25.9998Z"
-                  />
-                </svg>
-                <span class="screen-reader">Grid</span>
-              </label>
-            </div>
-          </fieldset>
+              <span class="screen-reader">Corner</span>
+            </label>
+            <label>
+              <input type="radio" name="view" value="lines" />
+              <svg viewBox="0 0 100 100">
+                <path
+                  d="M29.2147 37.9993L8.43066 25.9995L8.43129 73.9994L50.0003 97.9997L50.0001 73.9984L29.2101 37.9993H29.2147Z" />
+              </svg>
+              <span class="screen-reader">Lines</span>
+            </label>
+            <label>
+              <input type="radio" name="view" value="bars" />
+              <svg viewBox="0 0 100 100">
+                <path
+                  d="M91.5678 25.9995L91.5675 73.9996L49.9985 97.9999L49.9987 73.9976L70.7746 38.0048L91.5678 25.9995Z" />
+              </svg>
+              <span class="screen-reader">Bars</span>
+            </label>
+            <label>
+              <input type="radio" name="view" value="grid" />
+              <svg viewBox="0 0 100 100">
+                <path
+                  d="M8.43066 25.9998L50.0001 2L91.5694 25.9996L70.7769 38.004L70.7795 37.9994H29.2152L8.43066 25.9998Z" />
+              </svg>
+              <span class="screen-reader">Grid</span>
+            </label>
+          </div>
+        </fieldset>
 
-          <!-- <div class="actions"> -->
-          <!-- <input type="submit" value="Filter" /> -->
-          <!-- <input type="reset" value="Reset" /> -->
-          <!-- </div> -->
-        </form>
-      </section>
-    </main>
-    <footer>
-      <p>
-        <small>
-          Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a>. Data from
-          <a href="https://basketball-reference.com/" target="_blank">basketball-reference.com</a>
-          <span class="fps"></span>
-        </small>
-      </p>
-    </footer>
-  </body>
+        <!-- <div class="actions"> -->
+        <!-- <input type="submit" value="Filter" /> -->
+        <!-- <input type="reset" value="Reset" /> -->
+        <!-- </div> -->
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>
+      <small>
+        Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a>. Data from
+        <a href="https://basketball-reference.com/" target="_blank">basketball-reference.com</a>
+        <span class="fps"></span>
+      </small>
+    </p>
+  </footer>
+</body>
+
 </html>
