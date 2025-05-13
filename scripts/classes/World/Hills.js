@@ -146,7 +146,7 @@ export default class Hills {
 
       const height = 0.4;
 
-      const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+      const material = this.world.materials.getBasic(0x000000);
       const cube = new THREE.Mesh(this.world.geometries.getMark(height), material);
 
       cube.position.x = 0.5 + 0.01;
@@ -158,7 +158,7 @@ export default class Hills {
 
   createLines() {
     const depth = this.getDepthLines();
-    const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const lineMaterial = this.world.materials.getBasic(0xffffff);
 
     for (let period of this.world.app.data.periods) {
       // Line
