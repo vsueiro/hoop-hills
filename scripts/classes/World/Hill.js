@@ -37,7 +37,7 @@ export default class Hill {
       heightOffset *= -1;
     }
 
-    this.geometry = this.world.geometries.getBox(height);
+    this.geometry = this.world.geometries.getHill(height);
     this.material = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0 });
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 

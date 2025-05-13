@@ -4,35 +4,45 @@ export default class Geometries {
   constructor(world) {
     this.world = world;
 
-    this.cylinders = {};
-    this.boxes = {};
+    this.hillDepth = 2;
+
+    this.lines = {};
+    this.hills = {};
+    this.marks = {};
 
     this.setup();
   }
 
-  getCylinder() {
-    const thickness = 0.2;
-    const segments = 8;
-    const depth = 1; // To be scaled on mesh
-
-    return new THREE.CylinderGeometry(thickness, thickness, depth, segments);
-  }
-
-  getBox(height) {
-    if (!this.boxes[height]) {
-      const depth = 2;
-      const width = 1; // To be scale on mesh
-
-      this.boxes[height] = new THREE.BoxGeometry(width, height, depth);
+  getLine(thickness = 0.2) {
+    if (!this.lines[thickness]) {
+      const segments = 8;
+      const depth = 1; // To be scaled on mesh
+      this.lines[thickness] = new THREE.CylinderGeometry(thickness, thickness, depth, segments);
     }
 
-    return this.boxes[height];
+    return this.lines[thickness];
   }
 
-  setup() {
-    this.cylinder = this.getCylinder();
-    this.box = this.getBox();
+  getHill(height) {
+    if (!this.hills[height]) {
+      const width = 1; // To be scale on mesh
+      this.hills[height] = new THREE.BoxGeometry(width, height, this.hillDepth);
+    }
+
+    return this.hills[height];
   }
+
+  getMark(height = 0.4) {
+    if (!this.marks[height]) {
+      const width = 0;
+
+      this.marks[height] = new THREE.BoxGeometry(width, height, this.hillDepth);
+    }
+
+    return this.marks[height];
+  }
+
+  setup() {}
 
   update() {}
 }

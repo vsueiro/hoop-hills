@@ -10,7 +10,7 @@ export default class Hills {
     this.groups = [];
     this.lines = [];
 
-    this.depth = 2;
+    this.depth = this.world.geometries.hillDepth;
     this.gap = 0;
     this.widthPerSecond = 100 / 2880;
     this.heightPerPoint = 0.75;
@@ -144,16 +144,12 @@ export default class Hills {
 
       const last = group.children.at(-1);
 
-      const width = 0;
       const height = 0.4;
-      const depth = this.depth;
 
-      const geometry = new THREE.BoxGeometry(width, height, depth);
       const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-      const cube = new THREE.Mesh(geometry, material);
+      const cube = new THREE.Mesh(this.world.geometries.getMark(height), material);
 
-      // cube.position.x = (last.userData.width + (width === 0 ? 0.1 : width)) * 0.5;
-      cube.position.x = 0.5 + 0.1;
+      cube.position.x = 0.5 + 0.01;
       cube.position.y = last.userData.heightOffset - height * 0.5;
 
       last.add(cube);
@@ -166,8 +162,7 @@ export default class Hills {
 
     for (let period of this.world.app.data.periods) {
       // Line
-      const cylinder = this.world.geometries.cylinder;
-      const line = new THREE.Mesh(cylinder, lineMaterial);
+      const line = new THREE.Mesh(this.world.geometries.getLine(), lineMaterial);
       line.rotation.x = Math.PI * 0.5;
       line.position.x = this.getWidth(period.seconds) + this.getWidthOffset(2880);
       line.scale.y = depth;
