@@ -315,6 +315,11 @@ export default class Hills {
 
     const hill = this.world.raycaster.hovered;
 
+    if (hill) {
+      // Apply color to hovered hill
+      this.world.tooltips.activate(hill);
+    }
+
     // Handle clicks
     if (this.world.mouse.clicked) {
       // If clicked a hill
