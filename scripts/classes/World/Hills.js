@@ -152,7 +152,8 @@ export default class Hills {
       const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
       const cube = new THREE.Mesh(geometry, material);
 
-      cube.position.x = (last.userData.width + (width === 0 ? 0.1 : width)) * 0.5;
+      // cube.position.x = (last.userData.width + (width === 0 ? 0.1 : width)) * 0.5;
+      cube.position.x = 0.5 + 0.1;
       cube.position.y = last.userData.heightOffset - height * 0.5;
 
       last.add(cube);
