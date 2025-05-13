@@ -7,6 +7,7 @@ export default class Labels {
     this.groups = {
       periodsFront: [],
       periodsBack: [],
+      dates: [],
     };
   }
 
@@ -38,8 +39,41 @@ export default class Labels {
     }
   }
 
+  createDateLabels() {
+    const { hills } = this.world;
+    const { games } = hills;
+
+    const first = games.at(0);
+    const last = games.at(-1);
+
+    const offsetZ = hills.depth * 4;
+
+    {
+      const content = first.date.replace(/\d+?, 20/, "’");
+      const x = hills.getWidthOffset(2880 + 720);
+      const y = 0;
+      const z = hills.depthOffset + offsetZ;
+      const firstDate = new Label(content, x, y, z);
+      this.world.scene.instance.add(firstDate.instance);
+      this.groups.dates.push(firstDate);
+    }
+
+    {
+      const content = last.date.replace(/\d+?, 20/, "’");
+      const x = hills.getWidthOffset(2880 + 720);
+      const y = 0;
+      const z = -(hills.depthOffset + offsetZ);
+      const lastDate = new Label(content, x, y, z);
+      this.world.scene.instance.add(lastDate.instance);
+      this.groups.dates.push(lastDate);
+    }
+
+    // console.log(first.date, last.date);
+  }
+
   create() {
     this.createPeriodLabels();
+    this.createDateLabels();
   }
 
   hideAll() {
@@ -92,6 +126,23 @@ export default class Labels {
       this.show("periodsFront");
     } else if (theta > PI * (0.5 + tolerance) || theta < PI * (-0.5 - tolerance)) {
       this.show("periodsBack");
+    }
+
+    console.log((theta / PI).toFixed(2), (phi / PI).toFixed(2));
+
+    if (this.world.app.filters.sorting === "date") {
+      if (theta > 0 + tolerance || theta < 0 - tolerance || phi > PI * 0.5 + tolerance || phi < PI * 0.5 - tolerance) {
+        this.show("dates");
+      }
+
+      // if (theta > 0 + tolerance || theta < 0 - tolerance) {
+      //   console.log("theta matches");
+
+      //   if (phi > PI * 0.5 + tolerance || phi < PI * 0.5 - tolerance) {
+      //     console.log("phi matches");
+      //     this.show("dates");
+      //   }
+      // }
     }
 
     // console.log((theta / Math.PI).toFixed(1), (phi / Math.PI).toFixed(1));

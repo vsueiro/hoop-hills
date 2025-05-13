@@ -27,8 +27,30 @@ export default class Summary {
     this.most.biggestLead = false;
     this.most.biggestTrail = false;
 
+    this.date = this.formatDate(this.id);
+
     this.setup();
   }
+
+  formatDate(id) {
+    if (!this.formatter) {
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+      };
+      this.formatter = new Intl.DateTimeFormat("en-US", options);
+    }
+
+    const year = id.slice(0, 4);
+    const month = id.slice(4, 6) - 1;
+    const day = id.slice(6, 8);
+    const date = new Date(Date.UTC(year, month, day));
+
+    return this.formatter.format(date);
+  }
+
   setup() {}
 
   update(play, isLastPlay) {
