@@ -350,12 +350,23 @@ export default class Hills {
   }
 
   sort(filters = this.world.app.filters) {
-    const property = filters.sorting === "margin" ? "orderByMargin" : "orderByDate";
+    if (filters.sorting === "margin") {
+      for (let group of this.groups) {
+        const order = group.userData.orderByMargin;
+        const z = this.getDepth(order) - this.depthOffset;
+        group.position.z = this.expDecay(group.position.z, z);
+      }
+      return;
+    }
 
-    for (let group of this.groups) {
-      const order = group.userData[property];
-      const z = this.getDepth(order) - this.depthOffset;
-      group.position.z = this.expDecay(group.position.z, z);
+    if (filters.sorting === "date") {
+      for (let group of this.groups) {
+        const total = this.groups.length - 1;
+        const order = total - group.userData.orderByDate;
+        const z = this.getDepth(order) - this.depthOffset;
+        group.position.z = this.expDecay(group.position.z, z);
+      }
+      return;
     }
   }
 
