@@ -162,14 +162,14 @@ export default class Hills {
   createLines() {
     const depth = this.getDepthLines();
     const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const thickness = 0.2;
 
     for (let period of this.world.app.data.periods) {
       // Line
-      const cylinder = new THREE.CylinderGeometry(thickness, thickness, depth, 8);
+      const cylinder = this.world.geometries.cylinder;
       const line = new THREE.Mesh(cylinder, lineMaterial);
       line.rotation.x = Math.PI * 0.5;
       line.position.x = this.getWidth(period.seconds) + this.getWidthOffset(2880);
+      line.scale.y = depth;
       this.world.scene.instance.add(line);
       this.lines.push(line);
     }
