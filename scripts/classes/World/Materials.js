@@ -6,13 +6,8 @@ export default class Materials {
 
     this.basics = {};
     this.hills = {}; // hills[color][opacity]
-
     this.opacitySteps = 16;
     this.opacityStep = 1 / this.opacitySteps;
-
-    for (let opacity = 0; opacity <= 1; opacity += this.opacityStep) {
-      console.log(opacity);
-    }
 
     this.setup();
   }
