@@ -38,7 +38,7 @@ export default class Hill {
     }
 
     this.geometry = this.world.geometries.getHill(height);
-    this.material = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0 });
+    this.material = this.world.materials.getHill(color, 0);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
     this.mesh.position.x = widthOffset;
@@ -51,6 +51,9 @@ export default class Hill {
 
     // Store width
     this.mesh.userData.width = width;
+
+    // Store opacity for transition calculations
+    this.mesh.userData.opacity = 0;
 
     // Store original y position
     this.mesh.userData.heightOffset = heightOffset;

@@ -211,9 +211,12 @@ export default class Hills {
   show(hill) {
     hill.userData.hidden = false;
 
-    hill.material.opacity = this.expDecay(hill.material.opacity, 1);
     hill.scale.y = this.expDecay(hill.scale.y, 1);
     hill.position.y = this.expDecay(hill.position.y, hill.userData.heightOffset);
+    hill.userData.opacity = this.expDecay(hill.userData.opacity, 1);
+
+    const { color, opacity } = hill.userData;
+    hill.material = this.world.materials.getHill(color, opacity);
 
     for (let child of hill.children) {
       if (child.isCSS2DObject) {
@@ -225,9 +228,12 @@ export default class Hills {
   hide(hill) {
     hill.userData.hidden = true;
 
-    hill.material.opacity = this.expDecay(hill.material.opacity, this.hideAll ? 0.125 : 0.125);
     hill.scale.y = this.expDecay(hill.scale.y, 0);
     hill.position.y = this.expDecay(hill.position.y, 0);
+    hill.userData.opacity = this.expDecay(hill.userData.opacity, this.hideAll ? 0.125 : 0.125);
+
+    const { color, opacity } = hill.userData;
+    hill.material = this.world.materials.getHill(color, opacity);
 
     for (let child of hill.children) {
       if (child.isCSS2DObject) {

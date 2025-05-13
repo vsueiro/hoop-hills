@@ -65,12 +65,12 @@ export default class Tooltips {
   }
 
   activate(hill) {
-    hill.material.color.set(0x000000);
+    hill.material = this.world.materials.getBasic(0x000000);
   }
 
   deactivate(hill) {
     const { color } = hill.userData;
-    hill.material.color.set(color);
+    hill.material = this.world.materials.getHill(color, 1);
   }
 
   createDetails(hill) {
