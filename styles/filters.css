@@ -26,6 +26,7 @@
   overflow: visible;
   padding: 0;
   position: relative;
+  color: inherit;
   /* transition: rotate 0.4s; */
 
   &::before {
@@ -52,7 +53,7 @@
 
 .filters.collapsed form > label,
 .filters.collapsed form > fieldset:not(:has(.cube)) {
-  display: none;
+  visibility: hidden;
 }
 
 form {
