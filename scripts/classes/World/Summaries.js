@@ -4,7 +4,7 @@ export default class Summaries {
   constructor(world, data) {
     this.world = world;
     this.data = data;
-
+    this.season = {};
     this.list = [];
 
     this.setup();
@@ -27,6 +27,20 @@ export default class Summaries {
 
       const summary = this.list.at(-1);
       summary.update(play, isLastPlay);
+    });
+  }
+
+  createSeasonSummary() {
+    this.season.games = this.list.length;
+
+    this.list.forEach((summary) => {
+      const { result } = summary;
+
+      if (!this.season[result]) {
+        this.season[result] = 0;
+      }
+
+      this.season[result]++;
     });
   }
 
@@ -58,6 +72,7 @@ export default class Summaries {
 
   setup() {
     this.createSummaries();
+    this.createSeasonSummary();
     this.defineSortingOrder();
     this.defineMostBiggestLead();
     this.defineMostBiggestTrail();

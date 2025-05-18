@@ -67,8 +67,6 @@ export default class Labels {
       this.world.scene.instance.add(lastDate.instance);
       this.groups.dates.push(lastDate);
     }
-
-    // console.log(first.date, last.date);
   }
 
   create() {
@@ -128,23 +126,10 @@ export default class Labels {
       this.show("periodsBack");
     }
 
-    console.log((theta / PI).toFixed(2), (phi / PI).toFixed(2));
-
     if (this.world.app.filters.sorting === "date") {
       if (theta > 0 + tolerance || theta < 0 - tolerance || phi > PI * 0.5 + tolerance || phi < PI * 0.5 - tolerance) {
         this.show("dates");
       }
-
-      // if (theta > 0 + tolerance || theta < 0 - tolerance) {
-      //   console.log("theta matches");
-
-      //   if (phi > PI * 0.5 + tolerance || phi < PI * 0.5 - tolerance) {
-      //     console.log("phi matches");
-      //     this.show("dates");
-      //   }
-      // }
     }
-
-    // console.log((theta / Math.PI).toFixed(1), (phi / Math.PI).toFixed(1));
   }
 }
