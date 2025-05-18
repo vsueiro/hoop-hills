@@ -6,6 +6,11 @@ export default class Renderer {
     this.setup();
   }
 
+  get aspectRatio() {
+    const canvas = this.instance.domElement;
+    return canvas.width / canvas.height;
+  }
+
   get pixelRatio() {
     return Math.min(window.devicePixelRatio, 2);
   }

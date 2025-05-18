@@ -61,6 +61,31 @@ export default class Camera {
     return this.views[value];
   }
 
+  get targetZoom() {
+    const value = this.world.app.filters.view;
+
+    if (value === "user") {
+      return null;
+    }
+
+    const zoom = this.views[value].zoom;
+
+    if (!this.world.renderer) {
+      return zoom;
+    }
+
+    const margin = 0.15;
+    const aspect = this.world.renderer.aspectRatio;
+    const multiplier = aspect - margin;
+
+    // Adjust zoom to fit flat views on portrait viewports
+    if (multiplier < 1 && multiplier > 0) {
+      return zoom * multiplier;
+    }
+
+    return zoom;
+  }
+
   get currentView() {
     const spherical = new THREE.Spherical();
     spherical.setFromVector3(this.instance.position);
@@ -105,7 +130,7 @@ export default class Camera {
   setup() {
     this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, this.near, this.far);
     this.instance.position.setFromSphericalCoords(this.distance, this.targetView.phi, this.targetView.theta);
-    this.instance.zoom = this.targetView.zoom;
+    this.instance.zoom = this.targetZoom;
     this.instance.lookAt(this.origin);
     this.world.scene.instance.add(this.instance);
   }
@@ -132,7 +157,7 @@ export default class Camera {
 
     this.instance.position.setFromSphericalCoords(this.distance, phi, theta);
 
-    const zoom = this.expDecay(this.instance.zoom, target.zoom);
+    const zoom = this.expDecay(this.instance.zoom, this.targetZoom);
     this.instance.zoom = zoom;
 
     this.instance.lookAt(this.origin);
