@@ -36,7 +36,7 @@
   fill: var(--accent);
   fill-opacity: 0.1;
   pointer-events: all;
-  stroke: black;
+  stroke: var(--neutral-900);
   stroke-linejoin: round;
   stroke-width: 2;
 }
@@ -52,10 +52,10 @@
 }
 
 .cube .cube-shadow path {
-  fill: black;
+  fill: var(--neutral-900);
   fill-opacity: 1;
   pointer-events: none;
-  stroke: black;
+  stroke: var(--neutral-900);
 }
 
 @media (hover: hover) {

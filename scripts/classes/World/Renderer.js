@@ -22,7 +22,7 @@ export default class Renderer {
 
   setup() {
     this.instance = new THREE.WebGLRenderer({ canvas: this.world.canvas });
-    this.instance.setClearColor(0x000000, 0);
+    this.instance.setClearColor(0x201853, 0);
     this.resize();
     this.update();
   }

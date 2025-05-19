@@ -7,4 +7,18 @@
   --trailing: #000;
   --leading: #000;
   --tied: #000;
+
+  --neutral-0: #ffffff;
+
+  --neutral-100: #fbfbff;
+  --neutral-200: #eeecff;
+  --neutral-300: #dbd6ff;
+  --neutral-400: #bfb7f2;
+  --neutral-500: #9f97d2;
+  --neutral-600: #837bb6;
+  --neutral-700: #615994;
+  --neutral-800: #3f3772;
+  --neutral-900: #201853;
+
+  --neutral-1000: #000000;
 }

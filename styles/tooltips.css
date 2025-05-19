@@ -11,7 +11,8 @@
 
 .tooltip .content {
   backdrop-filter: blur(0.4rem);
-  background-color: rgba(255, 255, 255, 0.666);
+  background-color: var(--neutral-100);
+  background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
   border-radius: 0.4rem;
   font-size: small;
   left: 0;
@@ -25,7 +26,7 @@
 
 .tooltip:has(.leading)::before,
 .tooltip:has(.tied)::before {
-  background: Black;
+  background: var(--neutral-900);
   bottom: var(--gap);
   content: "";
   height: var(--stem);
@@ -43,7 +44,7 @@
 }
 
 .tooltip:has(.trailing)::before {
-  background: Black;
+  background: var(--neutral-900);
   content: "";
   height: var(--stem);
   left: 0;

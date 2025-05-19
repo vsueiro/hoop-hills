@@ -65,7 +65,7 @@ export default class Tooltips {
   }
 
   activate(hill) {
-    hill.material = this.world.materials.getBasic(0x000000);
+    hill.material = this.world.materials.getBasic(0x201853);
   }
 
   deactivate(hill) {

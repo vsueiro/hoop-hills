@@ -53,7 +53,7 @@ export default class Floor {
 
     ctx.clearRect(0, 0, width, height);
 
-    ctx.fillStyle = "#38306B";
+    ctx.fillStyle = "#3F3772";
     ctx.font = "bold 96px Outfit";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -75,7 +75,7 @@ export default class Floor {
 
     const height = (this.width / repeat) * (1 / 2);
     const geometry = new THREE.PlaneGeometry(this.width, height);
-    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.666 * 0.1 });
+    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.05 });
 
     [-1, +1].forEach((direction) => {
       const sideline = new THREE.Mesh(geometry, material);
@@ -96,7 +96,7 @@ export default class Floor {
     }
 
     const texture = this.createTexture();
-    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.666 * 0.1 });
+    const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.05 });
 
     this.sidelines.forEach((sideline) => {
       sideline.material = material;
@@ -105,13 +105,13 @@ export default class Floor {
     this.team = this.world.app.filters.team;
   }
 
-  async setup() {
-    this.font = new FontFace("Outfit", "url(./Outfit-Bold.ttf)");
+  setup() {
+    this.fontface = new FontFace("Outfit", "url(./Outfit-Bold.ttf)");
 
-    this.font.load();
-
-    this.createCourt();
-    this.createSideline();
+    this.fontface.load().then(() => {
+      this.createCourt();
+      this.createSideline();
+    });
   }
 
   update() {
