@@ -14,6 +14,7 @@ import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
 import Labels from "./World/Labels.js";
 import Tooltips from "./World/Tooltips.js";
+import Floor from "./World/Floor.js";
 
 export default class World {
   constructor(app, canvas, canvas2D) {
@@ -46,6 +47,8 @@ export default class World {
     this.raycaster = new Raycaster(this);
     this.labels = new Labels(this);
     this.tooltips = new Tooltips(this);
+    this.floor = new Floor(this);
+
     window.addEventListener("resize", () => {
       this.resize();
     });
@@ -92,6 +95,8 @@ export default class World {
     this.mouse.update();
     this.raycaster.update();
     this.environment.update();
+    this.floor.update();
+
     if (this.hills) {
       this.hills.update();
     }
