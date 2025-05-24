@@ -58,11 +58,17 @@
   border: none;
   color: inherit;
   cursor: inherit;
+  letter-spacing: inherit;
   overflow: visible;
   padding: 0;
   position: relative;
+  text-transform: uppercase;
 
   &::before {
+    content: "Hide";
+  }
+
+  /* &::after {
     animation: pulse 1.6s 5;
     background: var(--accent);
     border-radius: 50%;
@@ -77,11 +83,11 @@
     top: 50%;
     translate: -50% -50%;
     width: 4rem;
-  }
+  } */
 }
 
-.filters.collapsed .collapse button {
-  rotate: 180deg;
+.filters.collapsed .collapse button::before {
+  content: "Show";
 }
 
 .filters.collapsed form > label,

@@ -29,9 +29,8 @@ h1 {
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   letter-spacing: 0.1em;
-  margin-bottom: 1em;
   pointer-events: all;
   text-transform: uppercase;
   width: fit-content;
