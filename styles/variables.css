@@ -1,13 +1,4 @@
 :root {
-  --background: var(--neutral-100);
-  --accent: var(--neutral-900);
-  --outline: #e7298a;
-
-  /* Overwritten via JS */
-  --trailing: #000;
-  --leading: #000;
-  --tied: #000;
-
   --neutral-0: #ffffff;
 
   --neutral-100: #fbfbff;
@@ -21,4 +12,13 @@
   --neutral-900: #201853;
 
   --neutral-1000: #000000;
+
+  --outline: #e7298a;
+  --background: var(--neutral-100);
+  --accent: var(--neutral-900);
+
+  /* Overwritten via JS */
+  --trailing: var(--neutral-900);
+  --leading: var(--neutral-900);
+  --tied: var(--neutral-900);
 }
