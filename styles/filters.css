@@ -1,6 +1,40 @@
 .filters {
+  margin-inline: 0.8rem;
   max-width: 36rem;
   padding: 1.6rem;
+}
+
+.filter-teams {
+  display: flex;
+  gap: 0.8rem;
+  left: 50%;
+  position: fixed;
+  top: 3.6rem;
+  translate: -50% 0;
+}
+
+.filter-teams .versus {
+  align-items: end;
+  display: flex;
+  font-size: 3.2rem;
+  line-height: 3.6rem;
+}
+
+.filter-games {
+  bottom: 4.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  left: 2.4rem;
+  position: fixed;
+}
+
+.filter-season-and-sorting {
+  bottom: 4.8rem;
+  display: flex;
+  gap: 1.2rem;
+  position: fixed;
+  right: 2.4rem;
 }
 
 .filters h2 {
@@ -22,12 +56,11 @@
   appearance: none;
   background: transparent;
   border: none;
+  color: inherit;
   cursor: inherit;
   overflow: visible;
   padding: 0;
   position: relative;
-  color: inherit;
-  /* transition: rotate 0.4s; */
 
   &::before {
     animation: pulse 1.6s 5;
@@ -52,12 +85,12 @@
 }
 
 .filters.collapsed form > label,
+.filters.collapsed form > div,
 .filters.collapsed form > fieldset:not(:has(.cube)) {
   visibility: hidden;
 }
 
 form {
-  /* border-bottom: .2rem solid var(--neutral-900); */
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -75,10 +108,9 @@ select {
   background-position: right center;
   background-repeat: no-repeat;
   background-size: 3.2rem;
-  border-radius: 1.6rem;
-  box-shadow: 0 0 0 0.2rem var(--neutral-900), 0 0.3rem 0 0.2rem var(--neutral-900);
+  border: 0.2rem solid var(--neutral-900);
+  border-radius: 999px;
   cursor: pointer;
-  margin-inline-start: 0.4rem;
   padding: 0.4rem 3.2rem 0.4rem 1.2rem;
 }
 
@@ -87,8 +119,8 @@ label:has(select) {
 }
 
 select:focus-visible {
-  outline: 0.2rem solid var(--accent);
-  outline-offset: -0.2rem;
+  outline: 0.2rem solid var(--outline);
+  outline-offset: 0.2rem;
 }
 
 fieldset {
@@ -102,6 +134,23 @@ fieldset {
 
 fieldset legend {
   all: unset;
+  padding-block: 0.4rem;
+  padding-inline: 0.2em;
+}
+
+label span {
+  padding-block: 0.4rem;
+  padding-inline: 0.2em;
+}
+
+fieldset:has(input[type="checkbox"]) {
+  display: flex;
+  gap: 0.2rem;
+}
+
+label:not(.screen-reader, [hidden]) {
+  display: flex;
+  flex-direction: column;
 }
 
 input[type="checkbox"],
@@ -117,64 +166,51 @@ input[type="radio"] {
 
 label:has(input[type="checkbox"]:focus-visible),
 label:has(input[type="radio"]:focus-visible) {
-  outline: 0.2rem solid var(--neutral-100);
-  outline-offset: -0.3rem;
+  outline: 0.2rem solid var(--outline);
+  outline-offset: 0.2rem;
   position: relative;
   z-index: 1;
 }
 
 label:has(input[type="checkbox"]) {
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
-  box-shadow: 0 0 0 0.1rem var(--neutral-900), inset 0 0 0 0.1rem var(--neutral-900),
-    0 0.3rem 0 0.1rem var(--neutral-900);
+  background-color: var(--neutral-100);
+  border: 0.2rem solid var(--neutral-900);
+  border-radius: 999px;
   padding: 0.4rem 1.2rem;
 }
 
 label:has(input[type="checkbox"]:checked) {
-  background-color: var(--accent);
+  background-color: var(--neutral-900);
+  color: var(--neutral-100);
 }
 
-label:has(input[type="checkbox"]):first-of-type {
-  border-bottom-left-radius: 1.6rem;
-  border-top-left-radius: 1.6rem;
-}
-
-label:has(input[type="checkbox"]):last-of-type {
-  border-bottom-right-radius: 1.6rem;
-  border-top-right-radius: 1.6rem;
-}
-
-label:has(input[type="checkbox"]):active {
-  box-shadow: 0 0 0 0.1rem var(--neutral-900), inset 0 0 0 0.1rem var(--neutral-900),
-    0 0.1rem 0 0.1rem var(--neutral-900);
-  translate: 0 0.2rem;
-}
-
-label:has(input[type="radio"]) {
-  align-items: center;
-  border-radius: 1.6rem;
-  display: flex;
-  margin-inline-end: 0.4rem;
-  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
-}
-
-label:has(input[type="radio"])::before {
-  background: transparent;
+.track:has(input[type="radio"]) {
+  background: var(--neutral-100);
   border: 0.2rem solid var(--neutral-900);
-  border-radius: 1.6rem;
-  box-shadow: 0 0.05rem 0 0 var(--neutral-900), 0 0.1rem 0 0 var(--neutral-900), 0 0.15rem 0 0 var(--neutral-900),
-    0 0.2rem 0 0 var(--neutral-900);
-  content: "";
-  display: inline-block;
-  height: 1em;
-  margin-inline-end: 0.4rem;
-  width: 1em;
+  border-radius: 999px;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
 }
 
-label:has(input[type="radio"]):active::before {
-  box-shadow: none;
-  translate: 0 0.2rem;
+div:not(.cube) label:has(input[type="radio"]) {
+  align-items: center;
+  border-radius: 999px;
+  display: flex;
+  padding: 0.2rem 0.8rem;
+}
+
+div:not(.cube) label:has(input[type="radio"]):hover {
+  background: var(--neutral-300);
+}
+
+div:not(.cube) label:has(input[type="radio"]:checked) {
+  background: var(--neutral-900);
+  color: var(--neutral-100);
+}
+
+.cube label {
+  border-radius: 1.8rem;
 }
 
 .cube label:has(input[type="radio"]) {

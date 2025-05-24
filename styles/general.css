@@ -1,9 +1,9 @@
 html {
   font-size: 62.5%; /* 1rem = 10px */
+  background: var(--background);
 }
 
 body {
-  /* background: rgb(192, 192, 192); */
   color: var(--neutral-900);
   font-size: 1.6rem;
   overflow: hidden;
@@ -19,6 +19,7 @@ header {
   pointer-events: none;
   position: relative;
   width: 100%;
+  margin-inline: 0.8rem;
 }
 
 h1 {
@@ -57,6 +58,11 @@ main {
 main select,
 main label {
   pointer-events: all;
+}
+
+*:focus-visible {
+  outline: 0.2rem solid var(--outline);
+  outline-offset: 0.2rem;
 }
 
 @media (max-width: 640px) {

@@ -1,7 +1,7 @@
 :root {
-  /* --background: #38306b; */
-  --background: rgb(192, 192, 192);
-  --accent: #f48042;
+  --background: var(--neutral-100);
+  --accent: var(--neutral-900);
+  --outline: #e7298a;
 
   /* Overwritten via JS */
   --trailing: #000;
