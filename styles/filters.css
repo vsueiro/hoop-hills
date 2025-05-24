@@ -1,7 +1,6 @@
 .filters {
   margin-inline: 0.8rem;
   max-width: 36rem;
-  padding: 1.6rem;
 }
 
 .filter-teams {
@@ -43,6 +42,7 @@
   display: flex;
   gap: 0.5em;
   user-select: none;
+  padding: 1.6rem;
 }
 
 @keyframes pulse {
@@ -67,7 +67,6 @@
   &::before {
     content: "Hide";
   }
-
   /* &::after {
     animation: pulse 1.6s 5;
     background: var(--accent);
@@ -96,10 +95,16 @@
   visibility: hidden;
 }
 
+.filters.collapsed form {
+  height: 0;
+  background: transparent;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 0.8rem;
+  padding: 2.4rem 1.6rem;
 }
 
 label {
@@ -215,6 +220,10 @@ div:not(.cube) label:has(input[type="radio"]:checked) {
   color: var(--neutral-100);
 }
 
+fieldset:has(.cube) {
+  position: absolute;
+}
+
 .cube label {
   border-radius: 1.8rem;
 }
@@ -231,6 +240,38 @@ div:not(.cube) label:has(input[type="radio"]:checked) {
 label:has(input[type="radio"]:checked)::before {
   background: var(--accent);
   background: radial-gradient(var(--neutral-900) 0% 33.33%, var(--accent) 33.333% 100%);
+}
+
+@media (max-width: 1280px) {
+  .filter-teams {
+    left: initial;
+    position: fixed;
+    right: 16.8rem;
+    translate: 0 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .filter-teams,
+  .filter-games,
+  .filter-season-and-sorting {
+    position: static;
+  }
+
+  .filter-teams {
+    flex-direction: column;
+  }
+
+  .filter-teams .versus {
+    display: none;
+  }
+
+  form {
+    border-radius: 1.6rem;
+    /* backdrop-filter: blur(0.8rem); */
+    background-color: var(--neutral-100);
+    background-color: color-mix(in srgb, var(--neutral-100), transparent 12.5%);
+  }
 }
 
 @media (max-width: 360px) {
