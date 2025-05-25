@@ -36,7 +36,7 @@
   </header>
   <main>
     <section class="filters">
-      <h2 class="collapse" onclick="this.parentElement.classList.toggle('collapsed')">
+      <h2 class="collapse" onclick="app.filters.collapse()">
         <button>
           <!--
           <svg viewBox="0 0 24 24" style="width: 2.4rem; height: 2.4rem" fill="none" stroke="currentColor"
@@ -44,8 +44,8 @@
             <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
           -->
+          Filters
         </button>
-        Filters
       </h2>
 
       <form onsubmit="return false">

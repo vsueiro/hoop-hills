@@ -28,14 +28,6 @@ h1 {
   width: fit-content;
 }
 
-h2 {
-  font-size: 1.4rem;
-  letter-spacing: 0.1em;
-  pointer-events: all;
-  text-transform: uppercase;
-  width: fit-content;
-}
-
 p {
   pointer-events: all;
 }

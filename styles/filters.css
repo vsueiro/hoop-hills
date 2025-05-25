@@ -1,5 +1,6 @@
 .filters {
   margin-inline: 0.8rem;
+  margin-block: 1.6rem;
   max-width: 36rem;
 }
 
@@ -41,8 +42,8 @@
   cursor: pointer;
   display: flex;
   gap: 0.5em;
+  margin-inline: 1.6rem;
   user-select: none;
-  padding: 1.6rem;
 }
 
 @keyframes pulse {
@@ -54,15 +55,23 @@
 
 .filters .collapse button {
   appearance: none;
-  background: transparent;
+  backdrop-filter: blur(0.8rem);
+  background-color: var(--neutral-100);
+  background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
   border: none;
+  border-radius: 0.4rem;
   color: inherit;
+  content: "";
   cursor: inherit;
-  letter-spacing: inherit;
-  overflow: visible;
-  padding: 0;
-  position: relative;
+  display: block;
+  font-size: 1.4rem;
+  inset: 0;
+  letter-spacing: 0.1em;
+  padding: 0.8rem 1.6rem;
+  pointer-events: all;
   text-transform: uppercase;
+  width: fit-content;
+  z-index: 1;
 
   &::before {
     content: "Hide";
@@ -97,6 +106,11 @@
 
 .filters.collapsed form {
   height: 0;
+  padding: 0;
+}
+
+.filters.collapsed form::before {
+  backdrop-filter: initial;
   background: transparent;
 }
 
@@ -105,6 +119,7 @@ form {
   flex-direction: column;
   gap: 0.8rem;
   padding: 2.4rem 1.6rem;
+  position: relative;
 }
 
 label {
@@ -255,7 +270,8 @@ label:has(input[type="radio"]:checked)::before {
   .filter-teams,
   .filter-games,
   .filter-season-and-sorting {
-    position: static;
+    inset: initial;
+    position: relative;
   }
 
   .filter-teams {
@@ -266,11 +282,20 @@ label:has(input[type="radio"]:checked)::before {
     display: none;
   }
 
-  form {
-    border-radius: 1.6rem;
-    /* backdrop-filter: blur(0.8rem); */
+  .filters:not(.collapsed) .collapse button {
+    border-radius: 0.4rem 0.5rem 0 0;
+  }
+
+  form::before {
+    backdrop-filter: blur(0.8rem);
     background-color: var(--neutral-100);
-    background-color: color-mix(in srgb, var(--neutral-100), transparent 12.5%);
+    background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
+    border-radius: 0.4rem;
+    content: "";
+    display: block;
+    inset: 0;
+    position: absolute;
+    z-index: 0;
   }
 }
 

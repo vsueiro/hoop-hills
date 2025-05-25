@@ -3,6 +3,7 @@ export default class Filters {
     this.app = app;
 
     this.form = typeof form === "string" ? document.querySelector(form) : form;
+    this.element = this.form.closest(".filters");
 
     this.teamSelector = this.form.querySelector('[name="team"]');
     this.opponentSelector = this.form.querySelector('[name="opponent"]');
@@ -106,7 +107,15 @@ export default class Filters {
     }
   }
 
+  collapse(force = undefined) {
+    this.element.classList.toggle("collapsed", force);
+  }
+
   setup() {
+    if (window.innerWidth <= 480) {
+      this.collapse(true);
+    }
+
     this.form.addEventListener("input", (event) => {
       const name = event.target.name;
       this.handleFormInput(name);
