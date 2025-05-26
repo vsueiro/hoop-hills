@@ -10,7 +10,6 @@ export default class Pointer {
     this.clickTolerance = 0.01;
 
     this.clicked = false;
-    // this.pressed = false;
 
     this.setup();
   }
@@ -25,38 +24,32 @@ export default class Pointer {
 
   handleMove(event) {
     this.updateCoords(event);
+
+    this.world.idle.reset();
   }
 
   handleDown(event) {
     this.updateCoords(event);
-
     this.downCoords = this.coords.clone();
+
+    this.world.idle.reset();
   }
 
   handleUp(event) {
-    if (this.downCoords === null) {
-      return;
-    }
+    if (this.downCoords === null) return;
 
     const distance = this.downCoords.distanceTo(this.coords);
-
-    if (distance > this.clickTolerance) {
-      return;
-    }
+    if (distance > this.clickTolerance) return;
 
     this.clicked = true;
 
-    // this.pressed = false;
+    this.world.idle.reset();
   }
 
   setup() {
     window.addEventListener("pointermove", (event) => {
       this.handleMove(event);
     });
-
-    // window.addEventListener("click", (event) => {
-    //   this.handleClick(event);
-    // });
 
     window.addEventListener("pointerdown", (event) => {
       // Only respond to clicks on canvas, not other UI elements
@@ -73,7 +66,5 @@ export default class Pointer {
     });
   }
 
-  update() {
-    // this.clicked = false;
-  }
+  update() {}
 }

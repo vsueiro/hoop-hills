@@ -105,6 +105,8 @@ export default class Filters {
         this.setIDs();
         break;
     }
+
+    this.app.world.idle.reset();
   }
 
   collapse(force = undefined) {

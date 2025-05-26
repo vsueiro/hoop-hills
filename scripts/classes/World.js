@@ -1,4 +1,5 @@
 import DeltaTime from "./World/DeltaTime.js";
+import Idle from "./World/Idle.js";
 import Scene from "./World/Scene.js";
 import Camera from "./World/Camera.js";
 import Controls from "./World/Controls.js";
@@ -21,6 +22,7 @@ export default class World {
     this.app = app;
     this.canvas = document.querySelector(canvas);
     this.canvas2D = document.querySelector(canvas2D);
+
     this.setup();
   }
 
@@ -34,6 +36,7 @@ export default class World {
 
   setup() {
     this.deltaTime = new DeltaTime();
+    this.idle = new Idle(this);
     this.scene = new Scene(this);
     this.camera = new Camera(this);
     this.controls = new Controls(this);
@@ -52,6 +55,7 @@ export default class World {
     window.addEventListener("resize", () => {
       this.resize();
     });
+
     requestAnimationFrame((ms) => this.update(ms));
   }
 
@@ -73,8 +77,10 @@ export default class World {
   build() {
     setTimeout(() => {
       this.clear();
+      this.idle.reset();
       this.summaries = new Summaries(this, this.app.data.games);
       this.hills = new Hills(this, this.summaries.list);
+
       setTimeout(() => {
         this.hills.hideAll = false;
         this.tooltips.showMost("biggestLead");
@@ -85,23 +91,28 @@ export default class World {
 
   update(ms) {
     this.deltaTime.update(ms);
-    this.scene.update();
-    this.camera.update();
-    this.controls.update();
-    this.renderer.update();
-    this.renderer2D.update();
-    this.materials.update();
-    this.geometries.update();
-    this.pointer.update();
-    this.raycaster.update();
-    this.environment.update();
-    this.floor.update();
+    this.idle.update();
 
-    if (this.hills) {
-      this.hills.update();
+    if (this.idle.state === false) {
+      this.scene.update();
+      this.camera.update();
+      this.controls.update();
+      this.renderer.update();
+      this.renderer2D.update();
+      this.materials.update();
+      this.geometries.update();
+      this.pointer.update();
+      this.raycaster.update();
+      this.environment.update();
+      this.floor.update();
+
+      if (this.hills) {
+        this.hills.update();
+      }
+
+      this.labels.update();
     }
 
-    this.labels.update();
     requestAnimationFrame((ms) => this.update(ms));
   }
 }
