@@ -122,6 +122,8 @@ export default class Filters {
       const name = event.target.name;
       this.handleFormInput(name);
     });
+
+    this.preventSameTeamSelection();
   }
 
   update() {
