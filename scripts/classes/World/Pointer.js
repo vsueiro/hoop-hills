@@ -15,7 +15,7 @@ export default class Pointer {
     this.setup();
   }
 
-  handleMove(event) {
+  updateCoords(event) {
     const { clientX, clientY } = event;
     const { width, height } = this.world;
 
@@ -23,11 +23,17 @@ export default class Pointer {
     this.coords.y = -(clientY / height) * 2 + 1;
   }
 
-  handleDown() {
+  handleMove(event) {
+    this.updateCoords(event);
+  }
+
+  handleDown(event) {
+    this.updateCoords(event);
+
     this.downCoords = this.coords.clone();
   }
 
-  handleUp() {
+  handleUp(event) {
     if (this.downCoords === null) {
       return;
     }
@@ -55,7 +61,7 @@ export default class Pointer {
     window.addEventListener("pointerdown", (event) => {
       // Only respond to clicks on canvas, not other UI elements
       if (event.target === this.world.canvas) {
-        this.handleDown();
+        this.handleDown(event);
         return;
       }
 
@@ -63,7 +69,7 @@ export default class Pointer {
     });
 
     window.addEventListener("pointerup", (event) => {
-      this.handleUp();
+      this.handleUp(event);
     });
   }
 
