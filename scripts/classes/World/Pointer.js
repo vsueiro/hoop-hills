@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-export default class Mouse {
+export default class Pointer {
   constructor(world) {
     this.world = world;
 
@@ -44,7 +44,7 @@ export default class Mouse {
   }
 
   setup() {
-    window.addEventListener("mousemove", (event) => {
+    window.addEventListener("pointermove", (event) => {
       this.handleMove(event);
     });
 
@@ -52,7 +52,7 @@ export default class Mouse {
     //   this.handleClick(event);
     // });
 
-    window.addEventListener("mousedown", (event) => {
+    window.addEventListener("pointerdown", (event) => {
       // Only respond to clicks on canvas, not other UI elements
       if (event.target === this.world.canvas) {
         this.handleDown();
@@ -62,7 +62,7 @@ export default class Mouse {
       this.downCoords = null;
     });
 
-    window.addEventListener("mouseup", (event) => {
+    window.addEventListener("pointerup", (event) => {
       this.handleUp();
     });
   }

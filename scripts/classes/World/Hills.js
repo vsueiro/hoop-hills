@@ -321,7 +321,7 @@ export default class Hills {
     }
 
     // Handle clicks
-    if (this.world.mouse.clicked) {
+    if (this.world.pointer.clicked) {
       // If clicked a hill
       if (hill) {
         // Highlight game hill belongs to
@@ -331,7 +331,7 @@ export default class Hills {
         this.world.app.filters.setIDs();
       }
 
-      this.world.mouse.clicked = false;
+      this.world.pointer.clicked = false;
     }
 
     // If there are meaningful hills filtered out

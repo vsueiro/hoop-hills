@@ -8,7 +8,7 @@ import Materials from "./World/Materials.js";
 import Geometries from "./World/Geometries.js";
 import Environment from "./World/Environment.js";
 import Renderer2D from "./World/Renderer2D.js";
-import Mouse from "./World/Mouse.js";
+import Pointer from "./World/Pointer.js";
 import Raycaster from "./World/Raycaster.js";
 import Summaries from "./World/Summaries.js";
 import Hills from "./World/Hills.js";
@@ -43,7 +43,7 @@ export default class World {
     this.geometries = new Geometries(this);
     this.environment = new Environment(this);
     this.renderer2D = new Renderer2D(this);
-    this.mouse = new Mouse(this);
+    this.pointer = new Pointer(this);
     this.raycaster = new Raycaster(this);
     this.labels = new Labels(this);
     this.tooltips = new Tooltips(this);
@@ -92,7 +92,7 @@ export default class World {
     this.renderer2D.update();
     this.materials.update();
     this.geometries.update();
-    this.mouse.update();
+    this.pointer.update();
     this.raycaster.update();
     this.environment.update();
     this.floor.update();

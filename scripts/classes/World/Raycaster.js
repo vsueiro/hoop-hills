@@ -37,6 +37,6 @@ export default class Raycaster {
   update() {
     this.closest = null;
 
-    this.instance.setFromCamera(this.world.mouse.coords, this.world.camera.instance);
+    this.instance.setFromCamera(this.world.pointer.coords, this.world.camera.instance);
   }
 }
