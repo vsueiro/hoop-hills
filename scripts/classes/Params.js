@@ -5,7 +5,7 @@ export default class Params {
 
   update(formData) {
     // TODO: Make it shorter
-    const params = new URLSearchParams(formData);
-    history.replaceState(null, "", "?" + params.toString());
+    // const params = new URLSearchParams(formData);
+    // history.replaceState(null, "", "?" + params.toString());
   }
 }
