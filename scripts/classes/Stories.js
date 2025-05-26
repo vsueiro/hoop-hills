@@ -48,6 +48,7 @@ export default class Stories {
   setup() {
     this.setupMarkers();
 
+    this.element.addEventListener("click", () => this.next());
     this.prevButton.addEventListener("click", () => this.prev());
     this.nextButton.addEventListener("click", () => this.next());
 

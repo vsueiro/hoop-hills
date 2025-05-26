@@ -1,7 +1,7 @@
 .filters {
-  margin-inline: 0.8rem;
   margin-block: 1.6rem;
-  max-width: 36rem;
+  margin-inline: 0.8rem;
+  max-width: calc(36rem + 1.6rem);
 }
 
 .filter-teams {
@@ -258,6 +258,10 @@ label:has(input[type="radio"]:checked)::before {
 }
 
 @media (max-width: 1280px) {
+  form {
+    margin-inline-start: 1.6rem;
+  }
+
   .filter-teams {
     left: initial;
     position: fixed;
@@ -290,12 +294,18 @@ label:has(input[type="radio"]:checked)::before {
     backdrop-filter: blur(0.8rem);
     background-color: var(--neutral-100);
     background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
-    border-radius: 0.4rem;
+    border-radius: 0 0.4rem 0.4rem 0.4rem;
     content: "";
     display: block;
     inset: 0;
     position: absolute;
     z-index: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    padding: 1.2rem 1.6rem 1.6rem;
   }
 }
 
