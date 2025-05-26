@@ -18,6 +18,8 @@ export default class Renderer {
   resize() {
     this.instance.setSize(this.world.width, this.world.height);
     this.instance.setPixelRatio(this.pixelRatio);
+
+    this.world.idle.reset();
   }
 
   setup() {
