@@ -71,3 +71,14 @@
   fill: var(--neutral-600);
   fill-opacity: 1;
 }
+
+@media (max-width: 480px) {
+  .cube {
+    scale: 0.9;
+    transform-origin: center right;
+  }
+
+  .cube path {
+    stroke-width: calc(2px / 0.9);
+  }
+}

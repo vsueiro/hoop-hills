@@ -3,6 +3,7 @@
   background-color: var(--neutral-100);
   background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
   border-radius: 0.4rem;
+  cursor: pointer;
   margin-block-end: 2.4rem;
   margin-inline: 2.4rem 0.8rem;
   max-width: 36rem;
@@ -22,7 +23,7 @@
   appearance: none;
   background: transparent;
   border: none;
-  border-radius: 0;
+  border-radius: 0.4rem;
   color: var(--neutral-900);
   color: color-mix(in srgb, var(--neutral-900), 66.666% transparent);
   display: block;
@@ -34,16 +35,14 @@
   pointer-events: all;
   position: absolute;
   right: 0%;
-  top: 50%;
+  bottom: 0.4rem;
   touch-action: manipulation;
-  translate: 0 -50%;
+  /* translate: 0 -50%; */
+  height: calc(100% - 0.8rem);
+  cursor: pointer;
 }
 
 @media (hover: hover) {
-  .stories:hover {
-    cursor: pointer;
-  }
-
   .stories:hover .controls button.next {
     color: var(--neutral-900);
   }
@@ -69,7 +68,7 @@
   padding-block: 1.2rem;
   padding-inline-end: 0.8rem;
   pointer-events: all;
-  text-wrap: balance;
+  text-wrap: pretty;
 }
 
 .stories .progress {
@@ -80,6 +79,7 @@
   height: 0.4rem;
   inset: 0 0 0 auto;
   overflow: hidden;
+  pointer-events: none;
   position: absolute;
   width: 100%;
 }
@@ -99,6 +99,6 @@
 
 @media (max-width: 480px) {
   .stories {
-    margin-block: -1.6rem 2.4rem;
+    margin-block: 0 1.6rem;
   }
 }

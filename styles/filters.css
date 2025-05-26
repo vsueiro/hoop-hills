@@ -44,6 +44,7 @@
   gap: 0.5em;
   margin-inline: 1.6rem;
   user-select: none;
+  width: fit-content;
 }
 
 @keyframes pulse {
