@@ -68,7 +68,7 @@ export default class Hill {
     this.mesh.userData.isLastPlay = play.event === "F";
 
     // Calculate period
-    if (play.elapsedTime > 2880) {
+    if (play.elapsedTime > 2880 || (play.elapsedTime === 2880 && play.event === "T")) {
       this.mesh.userData.period = "OT";
     } else if (play.elapsedTime >= 2160) {
       this.mesh.userData.period = "Q4";
