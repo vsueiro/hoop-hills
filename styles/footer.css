@@ -11,3 +11,10 @@ footer {
 footer p {
   pointer-events: all;
 }
+
+@media (max-width: 480px) {
+  footer {
+    right: initial;
+    left: 0;
+  }
+}
