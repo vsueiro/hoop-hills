@@ -1,0 +1,75 @@
+.stories {
+  margin-block-end: 2.4rem;
+  margin-inline: 0.8rem;
+  max-width: 36rem;
+  padding-inline: 1.6rem;
+}
+
+.stories .controls {
+  align-items: center;
+  display: flex;
+  justify-content: stretch;
+}
+
+.stories .controls button {
+  appearance: none;
+  backdrop-filter: blur(0.8rem);
+  background-color: var(--neutral-100);
+  background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
+  border: none;
+  border-radius: 999px;
+  color: inherit;
+  color: var(--neutral-900);
+  display: block;
+  font-family: inherit;
+  font-size: 1.4rem;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.2rem;
+  pointer-events: all;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) {
+  .stories .controls button.next:hover {
+    background-color: var(--neutral-100);
+  }
+  .stories .controls button:hover {
+    cursor: pointer;
+  }
+}
+
+.stories .controls button.prev {
+  border-radius: 999px 0 0 999px;
+  opacity: 0.5;
+  margin-inline-end: 0.2rem;
+}
+
+.stories .controls button.next {
+  border-radius: 0 999px 999px 0;
+}
+
+.stories .content {
+  pointer-events: all;
+  text-wrap: balance;
+  padding-block: 1.6rem;
+}
+
+.stories .progress {
+  display: flex;
+  gap: 0.8rem;
+  height: 0.2rem;
+  width: 100%;
+  margin-inline: 1.6rem;
+}
+
+.stories .progress .marker {
+  height: 100%;
+  width: 100%;
+  background-color: var(--neutral-900);
+  opacity: 0.25;
+  border-radius: 999px;
+}
+
+.stories .progress .marker.current {
+  opacity: 1;
+}

@@ -2,6 +2,7 @@ import Params from "./Params.js";
 import Filters from "./Filters.js";
 import Data from "./Data.js";
 import World from "./World.js";
+import Stories from "./Stories.js";
 
 export default class App {
   constructor() {
@@ -9,6 +10,7 @@ export default class App {
     this.filters = new Filters(this, "form");
     this.data = new Data(this);
     this.world = new World(this, ".canvas", ".canvas2D");
+    this.stories = new Stories(this, ".stories");
 
     this.setup();
   }

@@ -34,7 +34,7 @@ p {
 
 header .heading {
   align-items: start;
-  border-bottom: 0.2rem solid var(--neutral-900);
+  /* border-bottom: 0.2rem solid var(--neutral-900); */
   display: flex;
   flex-direction: column;
   justify-content: center;
