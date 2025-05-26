@@ -75,28 +75,12 @@
   z-index: 1;
 
   &::before {
-    content: "Hide";
+    content: "Hide ";
   }
-  /* &::after {
-    animation: pulse 1.6s 5;
-    background: var(--accent);
-    border-radius: 50%;
-    content: "";
-    display: block;
-    height: 4rem;
-    left: 50%;
-    opacity: 0.5;
-    pointer-events: none;
-    position: absolute;
-    scale: 0;
-    top: 50%;
-    translate: -50% -50%;
-    width: 4rem;
-  } */
 }
 
 .filters.collapsed .collapse button::before {
-  content: "Show";
+  content: "Show ";
 }
 
 .filters.collapsed form > label,
