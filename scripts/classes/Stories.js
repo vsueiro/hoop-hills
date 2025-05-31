@@ -67,6 +67,26 @@ export default class Stories {
     });
   }
 
+  // Separate update allows filter to collapse on general chapter, when called from Tooltips
+  updateAnnotations() {
+    const { annotation } = this.chapters[this.current].dataset;
+
+    switch (annotation) {
+      case "general":
+      case undefined:
+        this.app.world.tooltips.showAnnotation(["biggestLead", "biggestTrail"]);
+        break;
+
+      case "biggestComeback":
+        this.app.world.tooltips.showAnnotation("biggestComeback");
+        break;
+
+      default:
+        this.app.world.tooltips.showAnnotation();
+        break;
+    }
+  }
+
   update() {
     this.app.world.idle.reset();
 
@@ -80,6 +100,8 @@ export default class Stories {
     const { annotation } = this.chapters[this.current].dataset;
     const { annotations } = this.app.world.summaries;
 
+    this.updateAnnotations();
+
     // Filter and highlight hills based on current chapter
     switch (annotation) {
       case "general":
@@ -88,9 +110,6 @@ export default class Stories {
         this.app.filters.collapse(false);
         this.app.filters.setView("corner");
         this.app.filters.setPeriods(["Q1", "Q2", "Q3", "Q4"]);
-
-        // this.app.world.tooltips.clearAnnotations();
-        this.app.world.tooltips.showAnnotation(["biggestLead", "biggestTrail"]);
         break;
 
       case "biggestComeback":
@@ -98,8 +117,6 @@ export default class Stories {
         this.app.filters.collapse(true);
         this.app.filters.setView("corner");
         this.app.filters.setPeriods();
-        // this.app.world.tooltips.clearAnnotations();
-        this.app.world.tooltips.showAnnotation("biggestComeback");
         break;
 
       case "mostLeadChanges":
@@ -107,9 +124,6 @@ export default class Stories {
         this.app.filters.collapse(true);
         this.app.filters.setView("corner");
         this.app.filters.setPeriods();
-        this.app.world.tooltips.showAnnotation();
-
-        // this.app.world.tooltips.clearAnnotations();
         break;
 
       case "biggestLead":
@@ -117,8 +131,7 @@ export default class Stories {
         this.app.filters.collapse(true);
         this.app.filters.setView("corner");
         this.app.filters.setPeriods();
-        this.app.world.tooltips.showAnnotation();
-        // this.app.world.tooltips.clearAnnotations();
+
         break;
 
       case "finalScore":
@@ -126,8 +139,7 @@ export default class Stories {
         this.app.filters.collapse(true);
         this.app.filters.setView("bars");
         this.app.filters.setPeriods();
-        this.app.world.tooltips.showAnnotation();
-        // this.app.world.tooltips.clearAnnotations();
+
         break;
     }
   }

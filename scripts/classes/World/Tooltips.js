@@ -89,7 +89,7 @@ export default class Tooltips {
     if (hill === null) {
       this.clearDetails();
 
-      this.world.app.stories.update();
+      this.world.app.stories.updateAnnotations();
       return;
     }
 
