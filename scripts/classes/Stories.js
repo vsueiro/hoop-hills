@@ -63,10 +63,30 @@ export default class Stories {
   }
 
   update() {
+    // Toggle visibility of chapters
     this.chapters.forEach((chapter, index) => {
       const isCurrent = index === this.current;
       chapter.hidden = !isCurrent;
       this.markers[index].classList.toggle("current", isCurrent);
     });
+
+    const { annotation } = this.chapters[this.current].dataset;
+    const { annotations } = this.app.world.summaries;
+
+    // Filter and highlight hills based on current chapter
+    switch (annotation) {
+      case "general":
+      case undefined:
+        this.app.filters.setIDs();
+        break;
+
+      case "mostLeadChanges":
+        this.app.filters.setIDs(annotations.mostLeadChanges.id);
+        break;
+
+      case "biggestLead":
+        this.app.filters.setIDs(annotations.biggestLead.id);
+        break;
+    }
   }
 }
