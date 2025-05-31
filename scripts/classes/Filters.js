@@ -38,12 +38,22 @@ export default class Filters {
     }
   }
 
+  setPeriods(list = ["Q1", "Q2", "Q3", "Q4", "OT"]) {
+    const checkboxes = this.form.querySelectorAll('[name="periods"]');
+
+    for (let checkbox of checkboxes) {
+      checkbox.checked = list.includes(checkbox.value);
+    }
+
+    this.update();
+  }
+
   isAll(field) {
     const values = {
       opponent: "all",
       games: ["RS", "PI", "PO"],
       results: ["won", "lost"],
-      periods: ["Q1", "Q2", "Q3", "Q4", "OTs"],
+      periods: ["Q1", "Q2", "Q3", "Q4", "OT"],
       ids: [],
     };
 
@@ -110,7 +120,11 @@ export default class Filters {
   }
 
   collapse(force = undefined) {
-    this.element.classList.toggle("collapsed", force);
+    const collapsed = this.element.classList.toggle("collapsed", force);
+
+    if (collapsed === false && this.app.stories.current !== 0) {
+      this.app.stories.set(0);
+    }
   }
 
   setup() {

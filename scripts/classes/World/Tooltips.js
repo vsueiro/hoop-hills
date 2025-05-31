@@ -89,8 +89,7 @@ export default class Tooltips {
     if (hill === null) {
       this.clearDetails();
 
-      this.showAnnotation("biggestLead");
-      this.showAnnotation("biggestTrail");
+      this.world.app.stories.update();
       return;
     }
 
@@ -98,6 +97,7 @@ export default class Tooltips {
       this.createDetails(hill);
     } else if (hill !== this.details.instance.parent) {
       this.clearDetails();
+
       this.createDetails(hill);
     }
 
@@ -119,6 +119,8 @@ export default class Tooltips {
   }
 
   createAnnotations(property) {
+    if (!this.world.hills) return;
+
     const { hill } = this.world.hills.findByAnnotation(property);
 
     if (!hill) return;
@@ -130,16 +132,41 @@ export default class Tooltips {
     hill.add(tooltip.instance);
   }
 
-  showAnnotation(property) {
-    if (!this.annotations[property]) {
-      this.createAnnotations(property);
+  showAnnotation(properties) {
+    this.hideAnnotations();
+
+    if (!properties) return;
+
+    // Single property
+    if (typeof properties === "string") {
+      const property = properties;
+
+      if (!this.annotations[property]) {
+        this.createAnnotations(property);
+      }
+      this.annotations[property]?.show();
+      return;
     }
 
-    this.annotations[property]?.show();
+    // List of properties
+    if (Array.isArray(properties)) {
+      for (let property of properties) {
+        if (!this.annotations[property]) {
+          this.createAnnotations(property);
+        }
+        this.annotations[property]?.show();
+      }
+    }
   }
 
   hideAnnotation(property) {
     if (this.annotations[property]) {
+      this.annotations[property]?.hide();
+    }
+  }
+
+  hideAnnotations() {
+    for (let property in this.annotations) {
       this.annotations[property]?.hide();
     }
   }

@@ -14,6 +14,14 @@ export default class Stories {
     this.setup();
   }
 
+  set(index = 0) {
+    if ((this.current = index)) return;
+
+    this.current = index;
+
+    this.update();
+  }
+
   prev() {
     this.current -= 1;
 
@@ -60,6 +68,8 @@ export default class Stories {
   }
 
   update() {
+    this.app.world.idle.reset();
+
     // Toggle visibility of chapters
     this.chapters.forEach((chapter, index) => {
       const isCurrent = index === this.current;
@@ -75,14 +85,49 @@ export default class Stories {
       case "general":
       case undefined:
         this.app.filters.setIDs();
+        this.app.filters.collapse(false);
+        this.app.filters.setView("corner");
+        this.app.filters.setPeriods(["Q1", "Q2", "Q3", "Q4"]);
+
+        // this.app.world.tooltips.clearAnnotations();
+        this.app.world.tooltips.showAnnotation(["biggestLead", "biggestTrail"]);
+        break;
+
+      case "biggestComeback":
+        this.app.filters.setIDs(annotations.biggestComeback.id);
+        this.app.filters.collapse(true);
+        this.app.filters.setView("corner");
+        this.app.filters.setPeriods();
+        // this.app.world.tooltips.clearAnnotations();
+        this.app.world.tooltips.showAnnotation("biggestComeback");
         break;
 
       case "mostLeadChanges":
         this.app.filters.setIDs(annotations.mostLeadChanges.id);
+        this.app.filters.collapse(true);
+        this.app.filters.setView("corner");
+        this.app.filters.setPeriods();
+        this.app.world.tooltips.showAnnotation();
+
+        // this.app.world.tooltips.clearAnnotations();
         break;
 
       case "biggestLead":
         this.app.filters.setIDs(annotations.biggestLead.id);
+        this.app.filters.collapse(true);
+        this.app.filters.setView("corner");
+        this.app.filters.setPeriods();
+        this.app.world.tooltips.showAnnotation();
+        // this.app.world.tooltips.clearAnnotations();
+        break;
+
+      case "finalScore":
+        this.app.filters.setView("bars");
+        this.app.filters.collapse(true);
+        this.app.filters.setView("bars");
+        this.app.filters.setPeriods();
+        this.app.world.tooltips.showAnnotation();
+        // this.app.world.tooltips.clearAnnotations();
         break;
     }
   }

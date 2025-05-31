@@ -25,10 +25,7 @@ export default class Tooltip {
   }
 
   show() {
-    if (this.hill.userData.hidden) {
-      return;
-    }
-
+    if (this.hill.userData.hidden) return;
     this.element.style.opacity = 1;
   }
 

@@ -6,6 +6,7 @@ export default class Summaries {
     this.data = data;
     this.season = {};
     this.list = [];
+    this.blanks = document.querySelectorAll("[data-fill]");
 
     this.annotations = {
       // Whole games
@@ -35,7 +36,7 @@ export default class Summaries {
       },
       biggestComeback: {
         id: null,
-        value: 0,
+        value: 0, // biggest trail, but won at the end
         hill: null,
       },
       longestRun: {
@@ -94,7 +95,14 @@ export default class Summaries {
 
   defineAnnotations() {
     for (let summary of this.list) {
-      const { id, biggestLead, biggestTrail, leadChanges } = summary;
+      console.log(summary);
+
+      const { id, leadChanges, biggestLead, biggestTrail, result } = summary;
+
+      if (leadChanges > this.annotations.mostLeadChanges.value) {
+        this.annotations.mostLeadChanges.id = id;
+        this.annotations.mostLeadChanges.value = leadChanges;
+      }
 
       if (biggestLead > this.annotations.biggestLead.value) {
         this.annotations.biggestLead.id = id;
@@ -106,34 +114,33 @@ export default class Summaries {
         this.annotations.biggestTrail.value = biggestTrail;
       }
 
-      if (leadChanges > this.annotations.mostLeadChanges.value) {
-        this.annotations.mostLeadChanges.id = id;
-        this.annotations.mostLeadChanges.value = leadChanges;
+      if (biggestTrail < this.annotations.biggestComeback.value && result === "won") {
+        this.annotations.biggestComeback.id = id;
+        this.annotations.biggestComeback.value = biggestTrail;
       }
     }
   }
 
-  // defineBiggestLead() {
-  //   // const indexed = this.list
-  //   //   .map((summary, index) => ({ ...summary, index }))
-  //   //   .sort((a, b) => b.biggestLead - a.biggestLead);
-  //   // this.list[indexed[0].index].most.biggestLead = true;
-  // }
+  fillBlanks() {
+    for (let blank of this.blanks) {
+      const { fill } = blank.dataset;
 
-  // defineBiggestTrail() {
-  //   // const indexed = this.list
-  //   //   .map((summary, index) => ({ ...summary, index }))
-  //   //   .sort((a, b) => a.biggestTrail - b.biggestTrail);
-  //   // this.list[indexed[0].index].most.biggestTrail = true;
-  // }
+      switch (fill) {
+        case "team":
+          blank.textContent = this.world.app.filters.team;
+          break;
+        case "comeback-deficit":
+          blank.textContent = Math.abs(this.annotations.biggestComeback.value);
+          break;
+      }
+    }
+  }
 
   setup() {
     this.createSummaries();
     this.createSeasonSummary();
     this.defineSortingOrder();
     this.defineAnnotations();
-
-    // this.defineBiggestLead();
-    // this.defineBiggestTrail();
+    this.fillBlanks();
   }
 }

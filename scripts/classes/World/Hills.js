@@ -55,6 +55,7 @@ export default class Hills {
     switch (property) {
       case "biggestLead":
       case "biggestTrail":
+      case "biggestComeback":
         if (annotation.id && annotation.value !== 0) {
           const group = this.groups.find((group) => group.userData.id === annotation.id);
           const hill = group.children.findLast((child) => child.userData.pointDifference === annotation.value);

@@ -84,8 +84,8 @@ export default class World {
 
       setTimeout(() => {
         this.hills.hideAll = false;
-        this.tooltips.showAnnotation("biggestLead");
-        this.tooltips.showAnnotation("biggestTrail");
+        // this.tooltips.showAnnotation("biggestLead");
+        // this.tooltips.showAnnotation("biggestTrail");
       }, 200);
     }, 200);
   }
