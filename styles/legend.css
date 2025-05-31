@@ -4,13 +4,13 @@
 
 .legend .leading::after,
 .legend .trailing::after {
-  border-radius: 0.2rem;
+  border-radius: 0rem;
   content: "";
   display: inline-block;
-  height: 0.5em;
+  height: 0.666em;
   margin-inline-end: 0.25em;
   margin-inline-start: 0.25em;
-  width: 1em;
+  width: 0.666em;
 }
 
 .leading {
