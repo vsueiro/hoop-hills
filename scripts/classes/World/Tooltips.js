@@ -101,8 +101,7 @@ export default class Tooltips {
       this.createDetails(hill);
     }
 
-    this.hideAnnotation("biggestLead");
-    this.hideAnnotation("biggestTrail");
+    this.hideAnnotations();
   }
 
   clearAnnotations() {
