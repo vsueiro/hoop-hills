@@ -83,6 +83,12 @@ export default class Summaries {
     });
   }
 
+  getSummary(id) {
+    if (!id) return;
+
+    return this.list.find((summary) => summary.id === id);
+  }
+
   defineSortingOrder() {
     const indexedSummaries = this.list
       .map((summary, index) => ({ ...summary, index }))
@@ -129,8 +135,23 @@ export default class Summaries {
         case "team":
           blank.textContent = this.world.app.filters.team;
           break;
+        case "opponent":
+          blank.textContent = this.world.app.filters.opponent;
+          break;
         case "comeback-deficit":
           blank.textContent = Math.abs(this.annotations.biggestComeback.value);
+          break;
+        case "lead-changes":
+          blank.textContent = this.annotations.mostLeadChanges.value;
+          break;
+        case "lead-changes-opponent":
+          blank.textContent = this.getSummary(this.annotations.mostLeadChanges.id).opponent;
+          break;
+        case "lead-changes-result":
+          blank.textContent = this.getSummary(this.annotations.mostLeadChanges.id).result;
+          break;
+        case "lead-changes-point-difference":
+          blank.textContent = Math.abs(this.getSummary(this.annotations.mostLeadChanges.id).pointDifference);
           break;
       }
     }

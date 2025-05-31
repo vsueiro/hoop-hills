@@ -127,7 +127,7 @@ export default class Stories {
         break;
 
       case "biggestLead":
-        this.app.filters.setIDs(annotations.biggestLead.id);
+        this.app.filters.setIDs();
         this.app.filters.collapse(true);
         this.app.filters.setView("corner");
         this.app.filters.setPeriods();
