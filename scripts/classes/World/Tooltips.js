@@ -4,7 +4,7 @@ export default class Tooltips {
   constructor(world) {
     this.world = world;
 
-    this.most = {};
+    this.annotations = {};
     this.details = null;
 
     // this.setup();
@@ -74,6 +74,8 @@ export default class Tooltips {
   }
 
   createDetails(hill) {
+    if (!hill) return;
+
     this.activate(hill);
 
     const content = this.getContent(hill);
@@ -87,8 +89,8 @@ export default class Tooltips {
     if (hill === null) {
       this.clearDetails();
 
-      this.showMost("biggestLead");
-      this.showMost("biggestTrail");
+      this.showAnnotation("biggestLead");
+      this.showAnnotation("biggestTrail");
       return;
     }
 
@@ -99,49 +101,52 @@ export default class Tooltips {
       this.createDetails(hill);
     }
 
-    this.hideMost("biggestLead");
-    this.hideMost("biggestTrail");
+    this.hideAnnotation("biggestLead");
+    this.hideAnnotation("biggestTrail");
   }
 
-  clearMost() {
-    for (let property in this.most) {
-      const tooltip = this.most[property];
+  clearAnnotations() {
+    for (let property in this.annotations) {
+      const tooltip = this.annotations[property];
 
       if ("parent" in tooltip.instance) {
         tooltip.instance.parent.remove(tooltip.instance);
       }
 
       tooltip.element.remove();
-      delete this.most[property];
+      delete this.annotations[property];
     }
   }
 
-  createMost(property) {
-    const hill = this.world.hills.findByMost(property);
+  createAnnotations(property) {
+    const { hill } = this.world.hills.findByAnnotation(property);
+
+    if (!hill) return;
+
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
     const tooltip = new Tooltip(hill, content, offset);
-    this.most[property] = tooltip;
+    this.annotations[property] = tooltip;
     hill.add(tooltip.instance);
   }
 
-  showMost(property) {
-    if (!this.most[property]) {
-      this.createMost(property);
+  showAnnotation(property) {
+    if (!this.annotations[property]) {
+      this.createAnnotations(property);
     }
 
-    this.most[property].show();
+    this.annotations[property]?.show();
   }
 
-  hideMost(property) {
-    if (this.most[property]) {
-      this.most[property].hide();
+  hideAnnotation(property) {
+    if (this.annotations[property]) {
+      this.annotations[property]?.hide();
     }
   }
 
   clear() {
     this.clearDetails();
-    this.clearMost();
+    this.clearAnnotations();
   }
 
   // setup() {}

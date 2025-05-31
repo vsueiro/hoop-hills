@@ -7,6 +7,44 @@ export default class Summaries {
     this.season = {};
     this.list = [];
 
+    this.annotations = {
+      // Whole games
+      mostLeadChanges: {
+        id: null,
+        value: 0,
+      },
+      longestWinningStreak: {
+        id: null,
+        value: 0,
+      },
+      longestLosingStreak: {
+        id: null,
+        value: 0,
+      },
+
+      // Moment (hill) in a game
+      biggestLead: {
+        id: null,
+        value: 0,
+        hill: null,
+      },
+      biggestTrail: {
+        id: null,
+        value: 0,
+        hill: null,
+      },
+      biggestComeback: {
+        id: null,
+        value: 0,
+        hill: null,
+      },
+      longestRun: {
+        id: null,
+        value: 0,
+        hill: null,
+      },
+    };
+
     this.setup();
   }
 
@@ -54,27 +92,48 @@ export default class Summaries {
     });
   }
 
-  defineMostBiggestLead() {
-    const indexed = this.list
-      .map((summary, index) => ({ ...summary, index }))
-      .sort((a, b) => b.biggestLead - a.biggestLead);
+  defineAnnotations() {
+    for (let summary of this.list) {
+      const { id, biggestLead, biggestTrail, leadChanges } = summary;
 
-    this.list[indexed[0].index].most.biggestLead = true;
+      if (biggestLead > this.annotations.biggestLead.value) {
+        this.annotations.biggestLead.id = id;
+        this.annotations.biggestLead.value = biggestLead;
+      }
+
+      if (biggestTrail < this.annotations.biggestTrail.value) {
+        this.annotations.biggestTrail.id = id;
+        this.annotations.biggestTrail.value = biggestTrail;
+      }
+
+      if (leadChanges > this.annotations.mostLeadChanges.value) {
+        this.annotations.mostLeadChanges.id = id;
+        this.annotations.mostLeadChanges.value = leadChanges;
+      }
+    }
   }
 
-  defineMostBiggestTrail() {
-    const indexed = this.list
-      .map((summary, index) => ({ ...summary, index }))
-      .sort((a, b) => a.biggestTrail - b.biggestTrail);
+  // defineBiggestLead() {
+  //   // const indexed = this.list
+  //   //   .map((summary, index) => ({ ...summary, index }))
+  //   //   .sort((a, b) => b.biggestLead - a.biggestLead);
+  //   // this.list[indexed[0].index].most.biggestLead = true;
+  // }
 
-    this.list[indexed[0].index].most.biggestTrail = true;
-  }
+  // defineBiggestTrail() {
+  //   // const indexed = this.list
+  //   //   .map((summary, index) => ({ ...summary, index }))
+  //   //   .sort((a, b) => a.biggestTrail - b.biggestTrail);
+  //   // this.list[indexed[0].index].most.biggestTrail = true;
+  // }
 
   setup() {
     this.createSummaries();
     this.createSeasonSummary();
     this.defineSortingOrder();
-    this.defineMostBiggestLead();
-    this.defineMostBiggestTrail();
+    this.defineAnnotations();
+
+    // this.defineBiggestLead();
+    // this.defineBiggestTrail();
   }
 }

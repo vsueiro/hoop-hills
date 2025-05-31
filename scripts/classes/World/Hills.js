@@ -43,27 +43,28 @@ export default class Hills {
     return this.widthPerSecond * seconds * -0.5;
   }
 
-  findByMost(property) {
-    const pairs = {
-      biggestTrail: "pointDifference",
-      biggestLead: "pointDifference",
-    };
+  findByAnnotation(property) {
+    // if (!(property in this.world.summaries.annotations)) return { hill: null };
 
-    for (let group of this.groups) {
-      if (group.userData.most[property] === false) {
-        continue;
-      }
+    const annotation = this.world.summaries.annotations[property];
 
-      for (let hill of group.children) {
-        const value = hill.userData[pairs[property]];
-
-        if (value === group.userData[property]) {
-          return hill;
-        }
-      }
+    if ("hill" in annotation && annotation.hill) {
+      return annotation.hill;
     }
 
-    return null;
+    switch (property) {
+      case "biggestLead":
+      case "biggestTrail":
+        if (annotation.id && annotation.value !== 0) {
+          const group = this.groups.find((group) => group.userData.id === annotation.id);
+          const hill = group.children.findLast((child) => child.userData.pointDifference === annotation.value);
+          annotation.hill = hill;
+          return { hill };
+        }
+
+      default:
+        return { hill: null };
+    }
   }
 
   createGroups() {

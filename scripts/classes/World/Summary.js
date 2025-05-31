@@ -21,11 +21,11 @@ export default class Summary {
     this.orderByMargin = 0;
 
     // Used for highlighting
-    this.most = {};
-    this.most.leadChanges = false; // TODO
-    this.most.timesTied = false; // TODO
-    this.most.biggestLead = false;
-    this.most.biggestTrail = false;
+    // this.most = {};
+    // this.most.leadChanges = false; // TODO
+    // this.most.timesTied = false; // TODO
+    // this.most.biggestLead = false;
+    // this.most.biggestTrail = false;
 
     this.date = this.formatDate(this.id);
 
