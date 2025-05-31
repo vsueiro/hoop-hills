@@ -20,6 +20,9 @@ export default class App {
     this.data.load("teams");
     this.data.load("games");
 
-    this.data.once("ready", () => this.world.build());
+    this.data.once("ready", () => {
+      this.world.build();
+      this.stories.update();
+    });
   }
 }

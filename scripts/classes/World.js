@@ -75,10 +75,11 @@ export default class World {
   }
 
   build() {
+    this.summaries = new Summaries(this, this.app.data.games);
+
     setTimeout(() => {
       this.clear();
       this.idle.reset();
-      this.summaries = new Summaries(this, this.app.data.games);
       this.hills = new Hills(this, this.summaries.list);
 
       setTimeout(() => {

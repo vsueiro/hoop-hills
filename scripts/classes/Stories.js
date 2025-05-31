@@ -12,7 +12,6 @@ export default class Stories {
     this.current = 0;
 
     this.setup();
-    this.update();
   }
 
   prev() {
@@ -58,8 +57,6 @@ export default class Stories {
       event.stopPropagation();
       this.next();
     });
-
-    this.update();
   }
 
   update() {
