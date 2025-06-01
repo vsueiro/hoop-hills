@@ -6,8 +6,9 @@ export default class Hills {
   constructor(world, games) {
     this.world = world;
     this.games = games;
-    this.groups = [];
     this.lines = [];
+    this.groups = [];
+    this.highlightedGroups = new Set();
 
     this.depth = this.world.geometries.hillDepth;
     this.gap = 0;
@@ -227,7 +228,7 @@ export default class Hills {
 
     hill.scale.y = this.expDecay(hill.scale.y, 0);
     hill.position.y = this.expDecay(hill.position.y, 0);
-    hill.userData.opacity = this.expDecay(hill.userData.opacity, this.hideAll ? 0.125 : 0.125);
+    hill.userData.opacity = this.expDecay(hill.userData.opacity, 0.125);
 
     const { color, opacity } = hill.userData;
     hill.material = this.world.materials.getHill(color, opacity);
@@ -238,6 +239,23 @@ export default class Hills {
       }
     }
   }
+
+  // dim(hill, targetOpacity = 0.125) {
+  //   // hill.userData.hidden = false;
+
+  //   // hill.scale.y = this.expDecay(hill.scale.y, 1);
+  //   // hill.position.y = this.expDecay(hill.position.y, hill.userData.heightOffset);
+  //   hill.userData.opacity = this.expDecay(hill.userData.opacity, targetOpacity);
+
+  //   const { color, opacity } = hill.userData;
+  //   hill.material = this.world.materials.getHill(color, opacity);
+
+  //   for (let child of hill.children) {
+  //     if (child.isCSS2DObject) {
+  //       child.element.style.opacity = opacity === 1 ? 1 : 0;
+  //     }
+  //   }
+  // }
 
   areFiltered(filters = this.world.app.filters) {
     if (!filters.isAll("opponent")) {
@@ -265,6 +283,9 @@ export default class Hills {
   }
 
   highlight(filters = this.world.app.filters) {
+    // Keep track of groups with highlighted hills for calculating filtered stats
+    this.highlightedGroups.clear();
+
     const some = {};
 
     some.opponent = !filters.isAll("opponent");
@@ -293,6 +314,7 @@ export default class Hills {
 
         if (show) {
           this.show(hill);
+          this.highlightedGroups.add(group);
 
           // Don’t check hover when rotating or zooming camera
           if (!this.world.camera.isUserControlling) {

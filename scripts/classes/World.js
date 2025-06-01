@@ -110,6 +110,7 @@ export default class World {
       }
 
       this.labels.update();
+      this.app.stats.update();
     }
 
     requestAnimationFrame((ms) => this.update(ms));
