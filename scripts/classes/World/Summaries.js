@@ -101,8 +101,6 @@ export default class Summaries {
 
   defineAnnotations() {
     for (let summary of this.list) {
-      console.log(summary);
-
       const { id, leadChanges, biggestLead, biggestTrail, result } = summary;
 
       if (leadChanges > this.annotations.mostLeadChanges.value) {
