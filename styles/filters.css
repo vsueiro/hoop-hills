@@ -195,6 +195,12 @@ label:has(input[type="checkbox"]:checked) {
   color: var(--neutral-100);
 }
 
+label:has(input[type="checkbox"]:disabled) {
+  border-color: transparent;
+  opacity: 0.333;
+  pointer-events: none;
+}
+
 .track:has(input[type="radio"]) {
   background: var(--neutral-100);
   border: 0.2rem solid var(--neutral-900);

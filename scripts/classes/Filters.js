@@ -51,7 +51,7 @@ export default class Filters {
   isAll(field) {
     const values = {
       opponent: "all",
-      games: ["RS", "PI", "PO"],
+      rounds: ["RS", "PI", "PO"],
       results: ["won", "lost"],
       periods: ["Q1", "Q2", "Q3", "Q4", "OT"],
       ids: [],
@@ -68,14 +68,44 @@ export default class Filters {
     return isArrayEqual;
   }
 
-  preventSameTeamSelection() {
+  disableSameTeam() {
     for (let option of this.opponentSelector.options) {
-      option.hidden = option.value === this.teamSelector.value;
+      option.disabled = option.value === this.teamSelector.value;
     }
 
     if (this.opponentSelector.value === this.teamSelector.value) {
       this.opponentSelector.value = "all";
     }
+  }
+
+  disableUnplayedRound() {
+    const checkboxes = this.form.querySelectorAll('[name="rounds"]');
+
+    const played = {
+      PI: false,
+      PO: false,
+    };
+
+    const { list } = this.app.world.summaries;
+
+    for (let i = list.length - 1; i >= 0; i--) {
+      const game = list[i];
+      if (game.type === "RS") break;
+      played[game.type] = true;
+    }
+
+    for (let checkbox of checkboxes) {
+      const round = checkbox.value;
+      if (round in played) {
+        checkbox.checked = played[round];
+        checkbox.disabled = !played[round];
+      }
+    }
+  }
+
+  disableUnavailables() {
+    this.disableSameTeam();
+    this.disableUnplayedRound();
   }
 
   handleFormInput(name) {
@@ -92,9 +122,10 @@ export default class Filters {
         this.app.world.hills.hideAll = true;
 
         // Reload data when team changes
-        this.app.data.load("games", () => this.app.world.build());
-        // Prevent opponent from being the currently selected team
-        this.preventSameTeamSelection();
+        this.app.data.load("games", () => {
+          this.app.world.build();
+          this.disableUnavailables();
+        });
 
         // Clear Game ID filter
         this.setIDs();
@@ -104,7 +135,10 @@ export default class Filters {
         this.app.world.hills.hideAll = true;
 
         // Reload data when season changes
-        this.app.data.load("games", () => this.app.world.build());
+        this.app.data.load("games", () => {
+          this.app.world.build();
+          this.disableUnavailables();
+        });
 
         // Clear Game ID filter
         this.setIDs();
@@ -136,8 +170,6 @@ export default class Filters {
       const name = event.target.name;
       this.handleFormInput(name);
     });
-
-    this.preventSameTeamSelection();
   }
 
   update() {
@@ -149,7 +181,7 @@ export default class Filters {
     this.sorting = formData.get("sorting");
     this.view = formData.get("view");
 
-    this.games = formData.getAll("games");
+    this.rounds = formData.getAll("rounds");
     this.results = formData.getAll("results");
     this.periods = formData.getAll("periods");
 
