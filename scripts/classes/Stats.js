@@ -8,7 +8,7 @@ export default class Stats {
   }
 
   setup() {
-    this.element.textContent = "Stats for the current filters will appear here";
+    this.element.textContent = "";
   }
 
   update() {
