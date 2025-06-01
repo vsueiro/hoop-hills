@@ -199,6 +199,7 @@ label:has(input[type="checkbox"]:disabled) {
   border-color: transparent;
   opacity: 0.333;
   pointer-events: none;
+  display: none;
 }
 
 .track:has(input[type="radio"]) {

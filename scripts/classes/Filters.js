@@ -106,6 +106,8 @@ export default class Filters {
   disableUnavailables() {
     this.disableSameTeam();
     this.disableUnplayedRound();
+
+    this.update();
   }
 
   handleFormInput(name) {

@@ -22,8 +22,8 @@ export default class App {
 
     this.data.once("ready", () => {
       this.world.build();
-      this.stories.update();
       this.filters.disableUnavailables();
+      this.stories.update();
     });
   }
 }
