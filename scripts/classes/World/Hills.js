@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import Hill from "./Hill.js";
 import Shadow from "./Shadow.js";
-// import Lines from "./Lines.js";
 
 export default class Hills {
   constructor(world, games) {
@@ -17,8 +16,6 @@ export default class Hills {
     this.hideAll = true;
 
     this.depthOffset = this.getDepthOffset();
-
-    // this.highlighted = false;
 
     this.setup();
   }
@@ -44,8 +41,6 @@ export default class Hills {
   }
 
   findByAnnotation(property) {
-    // if (!(property in this.world.summaries.annotations)) return { hill: null };
-
     const annotation = this.world.summaries.annotations[property];
 
     if ("hill" in annotation && annotation.hill) {
@@ -249,7 +244,7 @@ export default class Hills {
       return true;
     }
 
-    if (!filters.isAll("games")) {
+    if (!filters.isAll("rounds")) {
       return true;
     }
 
@@ -273,7 +268,7 @@ export default class Hills {
     const some = {};
 
     some.opponent = !filters.isAll("opponent");
-    some.games = !filters.isAll("games");
+    some.rounds = !filters.isAll("rounds");
     some.results = !filters.isAll("results");
     some.periods = !filters.isAll("periods");
     some.ids = !filters.isAll("ids");
@@ -286,7 +281,7 @@ export default class Hills {
           show = false;
         } else if (some.opponent && group.userData.opponent !== filters.opponent) {
           show = false;
-        } else if (some.games && !filters.games.includes(group.userData.type)) {
+        } else if (some.rounds && !filters.rounds.includes(group.userData.type)) {
           show = false;
         } else if (some.results && !filters.results.includes(group.userData.result)) {
           show = false;
