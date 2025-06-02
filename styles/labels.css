@@ -2,11 +2,10 @@
   --stroke: var(--neutral-900);
   --stroke: color-mix(in srgb, var(--neutral-900), transparent 33.333%);
   --stroke-width: 0.2rem;
-
+  -webkit-text-stroke: var(--stroke-width) var(--stroke);
   color: var(--neutral-100);
   opacity: 1;
   paint-order: stroke fill;
-  -webkit-text-stroke: var(--stroke-width) var(--stroke);
   text-stroke: var(--stroke-width) var(--stroke);
   transition: opacity 0.2s;
 }
