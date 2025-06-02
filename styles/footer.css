@@ -1,8 +1,8 @@
 footer {
   bottom: 0;
-  right: 0;
+  right: 2.4rem;
   max-width: 100%;
-  padding: 0.8rem 1.6rem;
+  padding: 0.8rem 0.2em;
   pointer-events: none;
   position: fixed;
   width: fit-content;

@@ -1,17 +1,17 @@
-/* body:has(.filters.collapsed) .stats {
-  display: none;
-} */
+body:has(.filters.collapsed) .stats {
+  bottom: 5.6rem;
+}
 
 .stats {
   bottom: 4rem;
-  bottom: 14.4rem;
+  bottom: 15.2rem;
   display: flex;
   flex-wrap: wrap;
   line-height: 1;
+  padding: 0.2rem;
   position: fixed;
   right: calc(2.4rem + 0.2rem);
   width: 15.6rem;
-  padding-inline: 0.2rem;
 }
 
 .stats .total {
@@ -53,9 +53,9 @@
 .stats .lost {
   color: var(--trailing);
   font-weight: bold;
+  padding-block-start: 0.4rem;
   text-align: start;
   width: 50%;
-  padding-block: 0.4rem;
 }
 
 .stats .lost::after {
@@ -68,9 +68,9 @@
 .stats .won {
   color: var(--leading);
   font-weight: bold;
+  padding-block-start: 0.4rem;
   text-align: end;
   width: 50%;
-  padding-block: 0.4rem;
 }
 
 .stats .won::after {
@@ -78,4 +78,10 @@
   content: "won";
   display: block;
   font-weight: 400;
+}
+
+@media (max-width: 1024px) {
+  .stats {
+    bottom: 5.6rem;
+  }
 }
