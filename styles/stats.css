@@ -32,10 +32,10 @@ body:has(.filters.collapsed) .stats {
 
   background-image: linear-gradient(
     to right,
-    var(--trailing) var(--start),
+    var(--leading) var(--start),
     transparent var(--start),
     transparent var(--end),
-    var(--leading) var(--end)
+    var(--trailing) var(--end)
   );
 }
 
@@ -54,7 +54,7 @@ body:has(.filters.collapsed) .stats {
   color: var(--trailing);
   font-weight: bold;
   padding-block-start: 0.4rem;
-  text-align: start;
+  text-align: end;
   width: 50%;
 }
 
@@ -69,7 +69,7 @@ body:has(.filters.collapsed) .stats {
   color: var(--leading);
   font-weight: bold;
   padding-block-start: 0.4rem;
-  text-align: end;
+  text-align: start;
   width: 50%;
 }
 

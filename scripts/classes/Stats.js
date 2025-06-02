@@ -12,14 +12,23 @@ export default class Stats {
     this.setup();
   }
 
+  areSetsEqual(a, b) {
+    return a.size === b.size && [...a].every((value) => b.has(value));
+  }
+
   setup() {
-    //
+    // Used to only update UI when filtered groups changed
+    this.previousGroups = new Set();
   }
 
   update() {
     if (!this.app.world.hills) return;
 
     const groups = this.app.world.hills.highlightedGroups;
+
+    if (this.areSetsEqual(groups, this.previousGroups)) return;
+
+    this.previousGroups = new Set(groups);
 
     if (groups.size === 0) {
       this.element.hidden = true;
@@ -43,11 +52,18 @@ export default class Stats {
       results[group.userData.result]++;
     });
 
-    this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+    if (!this.app.filters.isAll("opponent")) {
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} vs ${this.app.filters.opponent}`;
+    } else if (!this.app.filters.isAll("results")) {
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} ${this.app.filters.results}`;
+    } else {
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+    }
+
     this.lost.textContent = results.lost;
     this.won.textContent = results.won;
 
-    let percentage = (results.lost / groups.size) * 100;
+    let percentage = (results.won / groups.size) * 100;
 
     if (percentage < 4) percentage = 4;
     else if (percentage > 96) percentage = 96;
