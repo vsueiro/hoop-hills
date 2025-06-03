@@ -21,22 +21,43 @@ body:has(.filters.collapsed) .stats {
 }
 
 .stats .bar {
-  --end: calc(var(--percentage) + 0.1rem);
-  --percentage: 50%;
-  --start: calc(var(--percentage) - 0.1rem);
+  --percent-lost: 50%;
+  --percent-won: 50%;
   border-radius: 0.2rem;
+  display: flex;
+  gap: 0;
   height: 0.4rem;
+  justify-content: space-between;
   margin-block-end: 0.25em;
+  overflow: hidden;
   position: relative;
   width: 100%;
 
-  background-image: linear-gradient(
+  &::before {
+    background: var(--leading);
+    content: "";
+    display: block;
+    height: 100%;
+    width: var(--percent-won);
+  }
+
+  &::after {
+    background: var(--trailing);
+    content: "";
+    display: block;
+    height: 100%;
+    width: var(--percent-lost);
+  }
+  /* --end: calc(var(--percentage) + 0.1rem); */
+  /* --start: calc(var(--percentage) - 0.1rem); */
+  /* gap: 0.2rem; */
+  /* background-image: linear-gradient(
     to right,
     var(--leading) var(--start),
     transparent var(--start),
     transparent var(--end),
     var(--trailing) var(--end)
-  );
+  ); */
 }
 
 /* .stats .bar::after {
@@ -49,6 +70,21 @@ body:has(.filters.collapsed) .stats {
   top: -0.2rem;
   width: 0.2rem;
 } */
+
+.stats .won {
+  color: var(--leading);
+  font-weight: bold;
+  padding-block-start: 0.4rem;
+  text-align: start;
+  width: 50%;
+}
+
+.stats .won::after {
+  color: var(--neutral-900);
+  content: "won";
+  display: block;
+  font-weight: 400;
+}
 
 .stats .lost {
   color: var(--trailing);
@@ -65,19 +101,11 @@ body:has(.filters.collapsed) .stats {
   font-weight: 400;
 }
 
-.stats .won {
-  color: var(--leading);
-  font-weight: bold;
-  padding-block-start: 0.4rem;
-  text-align: start;
-  width: 50%;
-}
-
-.stats .won::after {
-  color: var(--neutral-900);
-  content: "won";
-  display: block;
-  font-weight: 400;
+.stats .won:empty:before,
+.stats .won:empty:after,
+.stats .lost:empty::before,
+.stats .lost:empty::after {
+  content: "\00a0";
 }
 
 @media (max-width: 1024px) {

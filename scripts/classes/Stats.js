@@ -52,24 +52,33 @@ export default class Stats {
       results[group.userData.result]++;
     });
 
-    if (!this.app.filters.isAll("opponent")) {
-      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} vs ${this.app.filters.opponent}`;
-    } else if (!this.app.filters.isAll("results")) {
+    // Only wins or only losses
+    if (!this.app.filters.isAll("results")) {
       this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} ${this.app.filters.results}`;
-    } else {
-      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+      this.lost.textContent = "";
+      this.won.textContent = "";
     }
 
-    this.lost.textContent = results.lost;
-    this.won.textContent = results.won;
+    // Specific opponent selected
+    else if (!this.app.filters.isAll("opponent")) {
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} vs ${this.app.filters.opponent}`;
+      this.lost.textContent = results.lost;
+      this.won.textContent = results.won;
+    }
 
-    let percentage = (results.won / groups.size) * 100;
+    // Every other scenario
+    else {
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+      this.lost.textContent = results.lost;
+      this.won.textContent = results.won;
+    }
 
-    if (percentage < 4) percentage = 4;
-    else if (percentage > 96) percentage = 96;
+    const percentWon = (results.won / groups.size) * 100;
+    const percentLost = 100 - percentWon;
+    this.bar.style.setProperty("--percent-won", `calc(${percentWon}% - ${percentWon < 100 ? 0.1 : 0}rem)`);
+    this.bar.style.setProperty("--percent-lost", `calc(${percentLost}% - ${percentLost < 100 ? 0.1 : 0}rem)`);
 
-    this.bar.style.setProperty("--percentage", `${percentage}%`);
-
-    // , ${this.app.filters.team} won ${results.won} and lost ${results.lost}`;
+    // if (percentage < 4) percentage = 4;
+    // else if (percentage > 96) percentage = 96;
   }
 }
