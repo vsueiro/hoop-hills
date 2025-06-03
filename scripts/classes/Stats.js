@@ -54,7 +54,8 @@ export default class Stats {
         signDisplay: "always",
       }).format(pointDifference);
 
-      this.total.textContent = `${date.split(",")[0]} game vs ${opponent}`;
+      // this.total.textContent = `${date.split(",")[0]} game vs ${opponent}`;
+      this.total.textContent = `game vs ${opponent}`;
       this.lost.textContent = result === "lost" ? `${pts} pts` : "";
       this.won.textContent = result === "won" ? `${pts} pts` : "";
     }

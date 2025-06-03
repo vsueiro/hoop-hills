@@ -37,6 +37,15 @@
   right: 2.4rem;
 }
 
+.filter-date {
+  bottom: 4.8rem;
+  display: flex;
+  left: 50%;
+  position: fixed;
+  translate: -50% 0;
+  width: calc(15.6rem + 16px);
+}
+
 .filters h2 {
   align-items: center;
   cursor: pointer;
@@ -176,7 +185,8 @@ input[type="radio"] {
 }
 
 label:has(input[type="checkbox"]:focus-visible),
-label:has(input[type="radio"]:focus-visible) {
+label:has(input[type="radio"]:focus-visible),
+label:has(input[type="range"]:focus-visible) {
   outline: 0.2rem solid var(--outline);
   outline-offset: 0.2rem;
   position: relative;
@@ -197,9 +207,9 @@ label:has(input[type="checkbox"]:checked) {
 
 label:has(input[type="checkbox"]:disabled) {
   border-color: transparent;
+  display: none;
   opacity: 0.333;
   pointer-events: none;
-  display: none;
 }
 
 .track:has(input[type="radio"]) {
@@ -249,6 +259,46 @@ label:has(input[type="radio"]:checked)::before {
   background: radial-gradient(var(--neutral-900) 0% 33.33%, var(--accent) 33.333% 100%);
 }
 
+.filter-date label {
+  cursor: default;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.filter-date input[type="range"] {
+  bottom: 0;
+  cursor: ew-resize;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+}
+
+.filter-date .timeline {
+  background: var(--neutral-100);
+  border: 0.2rem solid var(--neutral-900);
+  border-radius: 0.4rem;
+  height: 0.8rem;
+  margin: 1.6rem auto 0.4rem;
+  pointer-events: none;
+  position: relative;
+  width: calc(100% - 16px);
+  z-index: 1;
+}
+
+.filter-date .timeline .pin {
+  background-color: var(--neutral-900);
+  border-radius: 50% 50% 0 50%;
+  height: 1.2rem;
+  left: 0%;
+  position: absolute;
+  rotate: 45deg;
+  top: -1.3rem;
+  transform-origin: top left;
+  width: 1.2rem;
+}
+
 @media (max-width: 1280px) {
   form {
     margin-inline-start: 1.6rem;
@@ -292,6 +342,12 @@ label:has(input[type="radio"]:checked)::before {
     inset: 0;
     position: absolute;
     z-index: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .filter-date {
+    display: none;
   }
 }
 

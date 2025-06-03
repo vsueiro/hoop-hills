@@ -8,6 +8,10 @@ export default class Filters {
     this.teamSelector = this.form.querySelector('[name="team"]');
     this.opponentSelector = this.form.querySelector('[name="opponent"]');
 
+    this.dateInput = this.form.querySelector('[name="date"]');
+    this.dateOutput = this.dateInput.parentElement.querySelector("output");
+    this.dateInputPin = this.dateInput.parentElement.querySelector(".pin");
+
     this.setup();
     this.update();
   }
@@ -47,6 +51,23 @@ export default class Filters {
 
     this.update();
   }
+
+  // setDate(index = null) {
+  //   if (index === null) {
+  //     this.dateInput.value = 0;
+  //     this.dateInput.dataset.picked = false;
+  //     return;
+  //   }
+
+  //   this.setIDs(group.userData.id);
+
+  //   this.dateInput.value = index;
+  //   this.dateInput.dataset.picked = true;
+  //   const percentage = (index / this.dateInput.max) * 100;
+  //   this.dateInputPin.style.left = `${percentage}%`;
+  //   const group = this.app.world.hills.groups[index];
+
+  // }
 
   isAll(field) {
     const values = {
@@ -103,9 +124,14 @@ export default class Filters {
     }
   }
 
+  disableDates() {
+    this.dateInput.max = this.app.world.summaries.list.length - 1;
+  }
+
   disableUnavailables() {
     this.disableSameTeam();
     this.disableUnplayedRound();
+    this.disableDates();
 
     this.update();
   }
@@ -150,6 +176,14 @@ export default class Filters {
         // Clear Game ID filter
         this.setIDs();
         break;
+
+      case "date":
+        // Find hill group by index (sorted by date)
+        const index = parseInt(this.dateInput.value);
+        const group = this.app.world.hills.groups[index];
+        this.updateTimeline(index);
+        this.setIDs(group.userData.id);
+        break;
     }
 
     this.app.world.idle.reset();
@@ -161,6 +195,22 @@ export default class Filters {
     if (collapsed === false && this.app.stories.current !== 0) {
       this.app.stories.set(0);
     }
+  }
+
+  updateTimeline(index) {
+    const group = this.app.world.hills.groups[index];
+
+    // this.dateInput.dataset.picked = true;
+    const percentage = (index / this.dateInput.max) * 100;
+    this.dateInputPin.style.left = `${percentage}%`;
+    this.dateOutput.textContent = group.userData.date;
+    // this.setIDs(group.userData.id);
+  }
+
+  resetTimeline() {
+    this.dateInput.value = 0;
+    this.dateInputPin.style.left = "0%";
+    this.dateOutput.textContent = "";
   }
 
   setup() {
@@ -182,6 +232,7 @@ export default class Filters {
     this.season = formData.get("season");
     this.sorting = formData.get("sorting");
     this.view = formData.get("view");
+    this.date = formData.get("date");
 
     this.rounds = formData.getAll("rounds");
     this.results = formData.getAll("results");
@@ -193,6 +244,15 @@ export default class Filters {
       .split(",")
       .map((id) => id.trim())
       .filter((id) => id !== "");
+
+    // If showing a single game
+    if (this.ids.length === 1) {
+      const [id] = this.ids;
+      const index = this.app.world.summaries.list.findIndex((summary) => summary.id === id);
+      this.updateTimeline(index);
+    } else {
+      this.resetTimeline();
+    }
 
     this.app.params.update(formData);
   }
