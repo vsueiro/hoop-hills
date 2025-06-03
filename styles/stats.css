@@ -9,6 +9,7 @@ body:has(.filters.collapsed) .stats {
   flex-wrap: wrap;
   line-height: 1;
   padding: 0.2rem;
+  pointer-events: all;
   position: fixed;
   right: calc(2.4rem + 0.2rem);
   width: 15.6rem;
@@ -103,5 +104,11 @@ body:has(.filters.collapsed) .stats {
 @media (max-width: 1024px) {
   .stats {
     bottom: 5.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats {
+    display: none;
   }
 }

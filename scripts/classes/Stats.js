@@ -37,28 +37,33 @@ export default class Stats {
 
     this.element.hidden = false;
 
-    // if (groups.size === 1) {
-    //   const [group] = groups;
-
-    //   this.element.textContent = `In this 1 game, ${this.app.filters.team} ${group.userData.result} by ${Math.abs(
-    //     group.userData.pointDifference
-    //   )}`;
-    //   return;
-    // }
-
     const results = { won: 0, lost: 0 };
 
     groups.forEach((group) => {
       results[group.userData.result]++;
     });
 
-    console.log(this.app.filters.results);
+    // Only 1 game selected (clicked)
+    if (groups.size === 1) {
+      const result = results.won > results.lost ? "won" : "lost";
+
+      const [group] = groups;
+      const { date, opponent, pointDifference } = group.userData;
+
+      const pts = new Intl.NumberFormat("en-US", {
+        signDisplay: "always",
+      }).format(pointDifference);
+
+      this.total.textContent = `${date.split(",")[0]} game vs ${opponent}`;
+      this.lost.textContent = result === "lost" ? `${pts} pts` : "";
+      this.won.textContent = result === "won" ? `${pts} pts` : "";
+    }
 
     // Only wins or only losses
-    if (!this.app.filters.isAll("results")) {
-      const [result] = this.app.filters.results;
+    else if (!this.app.filters.isAll("results")) {
+      const result = results.won > results.lost ? "won" : "lost";
 
-      this.total.textContent = ""; //`${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+      this.total.textContent = "";
       this.lost.textContent = result === "lost" ? results.lost : "";
       this.won.textContent = result === "won" ? results.won : "";
     }
