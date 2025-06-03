@@ -52,11 +52,15 @@ export default class Stats {
       results[group.userData.result]++;
     });
 
+    console.log(this.app.filters.results);
+
     // Only wins or only losses
     if (!this.app.filters.isAll("results")) {
-      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} ${this.app.filters.results}`;
-      this.lost.textContent = "";
-      this.won.textContent = "";
+      const [result] = this.app.filters.results;
+
+      this.total.textContent = ""; //`${groups.size} ${groups.size === 1 ? "game" : "games"}`;
+      this.lost.textContent = result === "lost" ? results.lost : "";
+      this.won.textContent = result === "won" ? results.won : "";
     }
 
     // Specific opponent selected

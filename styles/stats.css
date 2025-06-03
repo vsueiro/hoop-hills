@@ -32,32 +32,24 @@ body:has(.filters.collapsed) .stats {
   overflow: hidden;
   position: relative;
   width: 100%;
+}
 
-  &::before {
-    background: var(--leading);
-    content: "";
-    display: block;
-    height: 100%;
-    width: var(--percent-won);
-  }
+.stats .bar::before {
+  background: var(--leading);
+  content: "";
+  display: block;
+  height: 100%;
+  transition: width 0.4s ease-in-out;
+  width: var(--percent-won);
+}
 
-  &::after {
-    background: var(--trailing);
-    content: "";
-    display: block;
-    height: 100%;
-    width: var(--percent-lost);
-  }
-  /* --end: calc(var(--percentage) + 0.1rem); */
-  /* --start: calc(var(--percentage) - 0.1rem); */
-  /* gap: 0.2rem; */
-  /* background-image: linear-gradient(
-    to right,
-    var(--leading) var(--start),
-    transparent var(--start),
-    transparent var(--end),
-    var(--trailing) var(--end)
-  ); */
+.stats .bar::after {
+  background: var(--trailing);
+  content: "";
+  display: block;
+  height: 100%;
+  transition: width 0.4s ease-in-out;
+  width: var(--percent-lost);
 }
 
 /* .stats .bar::after {
