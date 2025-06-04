@@ -266,6 +266,12 @@ label:has(input[type="radio"]:checked)::before {
   width: 100%;
 }
 
+.filter-date label span,
+.filter-date label output {
+  padding-block: 0.4rem;
+  padding-inline: 0.2em;
+}
+
 .filter-date input[type="range"] {
   bottom: 0;
   cursor: ew-resize;
@@ -276,11 +282,10 @@ label:has(input[type="radio"]:checked)::before {
 }
 
 .filter-date .timeline {
-  background: var(--neutral-100);
-  border: 0.2rem solid var(--neutral-900);
-  border-radius: 0.4rem;
-  height: 0.8rem;
-  margin: 1.6rem auto 0.4rem;
+  background: var(--neutral-900);
+  border-radius: 999px;
+  height: 0.4rem;
+  margin: 1.6rem auto;
   pointer-events: none;
   position: relative;
   width: calc(100% - 16px);
@@ -289,14 +294,20 @@ label:has(input[type="radio"]:checked)::before {
 
 .filter-date .timeline .pin {
   background-color: var(--neutral-900);
-  border-radius: 50% 50% 0 50%;
-  height: 1.2rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 transparent;
+  height: 1.6rem;
   left: 0%;
   position: absolute;
-  rotate: 45deg;
-  top: -1.3rem;
-  transform-origin: top left;
-  width: 1.2rem;
+  top: -0.6rem;
+  translate: -50% 0;
+  width: 1.6rem;
+}
+
+@media (hover: hover) {
+  .filter-date label:has(input:hover) .pin {
+    box-shadow: 0 0 0 0.8rem color-mix(in srgb, var(--neutral-900), transparent 75%);
+  }
 }
 
 @media (max-width: 1280px) {

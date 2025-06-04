@@ -210,7 +210,7 @@ export default class Filters {
   resetTimeline() {
     this.dateInput.value = 0;
     this.dateInputPin.style.left = "0%";
-    this.dateOutput.textContent = "";
+    this.dateOutput.textContent = "All dates";
   }
 
   setup() {
