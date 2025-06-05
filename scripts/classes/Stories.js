@@ -81,6 +81,14 @@ export default class Stories {
         this.app.world.tooltips.showAnnotation("biggestComeback");
         break;
 
+      case "mostLeadChanges":
+        this.app.world.tooltips.showAnnotation("mostLeadChanges");
+        break;
+
+      case "finalScores":
+        this.app.world.tooltips.showAnnotation(["biggestLead", "biggestTrail"]);
+        break;
+
       default:
         this.app.world.tooltips.showAnnotation();
         break;
@@ -126,20 +134,11 @@ export default class Stories {
         this.app.filters.setPeriods();
         break;
 
-      case "biggestLead":
+      case "finalScores":
         this.app.filters.setIDs();
-        this.app.filters.collapse(true);
-        this.app.filters.setView("corner");
-        this.app.filters.setPeriods();
-
-        break;
-
-      case "finalScore":
         this.app.filters.setView("bars");
         this.app.filters.collapse(true);
-        this.app.filters.setView("bars");
         this.app.filters.setPeriods();
-
         break;
     }
   }

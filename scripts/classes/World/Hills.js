@@ -58,7 +58,13 @@ export default class Hills {
           annotation.hill = hill;
           return { hill };
         }
-
+      case "mostLeadChanges":
+        if (annotation.id && annotation.value !== 0) {
+          const group = this.groups.find((group) => group.userData.id === annotation.id);
+          const hill = group.children.findLast((child) => child.userData.isLastPlay);
+          annotation.hill = hill;
+          return { hill };
+        }
       default:
         return { hill: null };
     }
@@ -348,6 +354,9 @@ export default class Hills {
       } else {
         // Show all games
         this.world.app.filters.setIDs();
+
+        // If currently in a story, reset to first one
+        this.world.app.stories.set(0);
       }
 
       this.world.pointer.clicked = false;

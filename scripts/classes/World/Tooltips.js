@@ -120,13 +120,20 @@ export default class Tooltips {
   createAnnotations(property) {
     if (!this.world.hills) return;
 
+    console.log(property);
+
     const { hill } = this.world.hills.findByAnnotation(property);
+
+    console.log(hill);
 
     if (!hill) return;
 
     const content = this.getContent(hill);
     const offset = this.getOffset(hill);
     const tooltip = new Tooltip(hill, content, offset);
+
+    console.log(tooltip);
+
     this.annotations[property] = tooltip;
     hill.add(tooltip.instance);
   }
