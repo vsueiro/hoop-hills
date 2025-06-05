@@ -28,6 +28,16 @@ export default class Filters {
     this.update();
   }
 
+  setPeriods(list = ["Q1", "Q2", "Q3", "Q4", "OT"]) {
+    const checkboxes = this.form.querySelectorAll('[name="periods"]');
+
+    for (let checkbox of checkboxes) {
+      checkbox.checked = list.includes(checkbox.value);
+    }
+
+    this.update();
+  }
+
   setView(value) {
     const radios = this.form.querySelectorAll('[name="view"]');
 
@@ -42,14 +52,8 @@ export default class Filters {
     }
   }
 
-  setPeriods(list = ["Q1", "Q2", "Q3", "Q4", "OT"]) {
-    const checkboxes = this.form.querySelectorAll('[name="periods"]');
-
-    for (let checkbox of checkboxes) {
-      checkbox.checked = list.includes(checkbox.value);
-    }
-
-    this.update();
+  setOpponent(value = "all") {
+    this.opponentSelector.value = value;
   }
 
   // setDate(index = null) {
@@ -183,6 +187,9 @@ export default class Filters {
         const group = this.app.world.hills.groups[index];
         this.updateTimeline(index);
         this.setIDs(group.userData.id);
+        // Ensure all opponents are selected
+        this.setOpponent();
+
         break;
     }
 
@@ -197,6 +204,12 @@ export default class Filters {
     }
   }
 
+  resetTimeline() {
+    this.dateInput.value = 0;
+    this.dateInputPin.style.left = "0%";
+    this.dateOutput.textContent = "All dates";
+  }
+
   updateTimeline(index) {
     const group = this.app.world.hills.groups[index];
 
@@ -207,10 +220,18 @@ export default class Filters {
     // this.setIDs(group.userData.id);
   }
 
-  resetTimeline() {
-    this.dateInput.value = 0;
-    this.dateInputPin.style.left = "0%";
-    this.dateOutput.textContent = "All dates";
+  updateVideoLink(index) {
+    const group = this.app.world.hills.groups[index];
+
+    const date = group.userData.date;
+    const home = this.app.world.summaries.getNick(group.userData.home ? this.team : group.userData.opponent);
+    const away = this.app.world.summaries.getNick(group.userData.home ? group.userData.opponent : this.team);
+    const query = `${away.toUpperCase()} at ${home.toUpperCase()} | FULL GAME HIGHLIGHTS | ${date}`;
+
+    const url = new URL("https://www.youtube.com/@NBA/search");
+    url.searchParams.set("query", query);
+
+    console.log(url.toString());
   }
 
   setup() {
@@ -250,6 +271,7 @@ export default class Filters {
       const [id] = this.ids;
       const index = this.app.world.summaries.list.findIndex((summary) => summary.id === id);
       this.updateTimeline(index);
+      this.updateVideoLink(index);
     } else {
       this.resetTimeline();
     }

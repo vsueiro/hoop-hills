@@ -2,6 +2,8 @@ export default class Summary {
   constructor(play, gameIndex) {
     this.id = play.id;
     this.opponent = play.opponent;
+    this.venue = this.id.slice(-3);
+    this.home = this.opponent !== this.venue;
     this.type = play.type;
 
     this.leadChanges = 0;

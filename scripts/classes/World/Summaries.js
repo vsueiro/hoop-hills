@@ -7,6 +7,8 @@ export default class Summaries {
     this.season = {};
     this.list = [];
     this.blanks = document.querySelectorAll("[data-fill]");
+    this.initials = {};
+    this.nicks = {};
 
     this.annotations = {
       // Whole games
@@ -89,6 +91,24 @@ export default class Summaries {
     return this.list.find((summary) => summary.id === id);
   }
 
+  getInitials(id) {
+    if (!(id in this.initials)) {
+      const team = this.world.app.data.teams.find((team) => team.id === id);
+      this.initials[id] = team.initials;
+    }
+
+    return this.initials[id];
+  }
+
+  getNick(id) {
+    if (!(id in this.nicks)) {
+      const team = this.world.app.data.teams.find((team) => team.id === id);
+      this.nicks[id] = team.nick;
+    }
+
+    return this.nicks[id];
+  }
+
   defineSortingOrder() {
     const indexedSummaries = this.list
       .map((summary, index) => ({ ...summary, index }))
@@ -134,7 +154,7 @@ export default class Summaries {
           blank.textContent = this.world.app.filters.team;
           break;
         case "opponent":
-          blank.textContent = this.world.app.filters.opponent;
+          blank.textContent = this.getInitials(this.world.app.filters.opponent); // Use initials instead of id
           break;
         case "comeback-deficit":
           blank.textContent = Math.abs(this.annotations.biggestComeback.value);
@@ -143,7 +163,7 @@ export default class Summaries {
           blank.textContent = this.annotations.mostLeadChanges.value;
           break;
         case "lead-changes-opponent":
-          blank.textContent = this.getSummary(this.annotations.mostLeadChanges.id).opponent;
+          blank.textContent = this.getInitials(this.getSummary(this.annotations.mostLeadChanges.id).opponent); // Use initials instead of id
           break;
         case "lead-changes-result":
           blank.textContent = this.getSummary(this.annotations.mostLeadChanges.id).result;

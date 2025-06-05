@@ -54,8 +54,9 @@ export default class Stats {
         signDisplay: "always",
       }).format(pointDifference);
 
+      const opponentInitials = this.app.world.summaries.getInitials(opponent);
       // this.total.textContent = `${date.split(",")[0]} game vs ${opponent}`;
-      this.total.textContent = `game vs ${opponent}`;
+      this.total.textContent = `game vs ${opponentInitials}`;
       this.lost.textContent = result === "lost" ? `${pts} pts` : "";
       this.won.textContent = result === "won" ? `${pts} pts` : "";
     }
@@ -71,7 +72,9 @@ export default class Stats {
 
     // Specific opponent selected
     else if (!this.app.filters.isAll("opponent")) {
-      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} vs ${this.app.filters.opponent}`;
+      const opponent = this.app.filters.opponent;
+      const opponentInitials = this.app.world.summaries.getInitials(opponent);
+      this.total.textContent = `${groups.size} ${groups.size === 1 ? "game" : "games"} vs ${opponentInitials}`;
       this.lost.textContent = results.lost;
       this.won.textContent = results.won;
     }
