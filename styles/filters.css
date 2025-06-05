@@ -43,7 +43,7 @@
   left: 50%;
   position: fixed;
   translate: -50% 0;
-  width: calc(15.6rem + 16px);
+  width: 15.6rem;
 }
 
 .filters h2 {
@@ -273,39 +273,42 @@ label:has(input[type="radio"]:checked)::before {
 }
 
 .filter-date input[type="range"] {
-  bottom: 0;
-  cursor: ew-resize;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-}
-
-.filter-date .timeline {
+  -webkit-appearance: none;
+  appearance: none;
   background: var(--neutral-900);
-  border-radius: 999px;
+  border-radius: 0.2rem;
+  cursor: pointer;
   height: 0.4rem;
   margin: 1.6rem auto;
-  pointer-events: none;
-  position: relative;
-  width: calc(100% - 16px);
-  z-index: 1;
+  opacity: 1;
+  outline: none;
+  width: 100%;
 }
 
-.filter-date .timeline .pin {
-  background-color: var(--neutral-900);
+.filter-date input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--neutral-900);
   border-radius: 50%;
   box-shadow: 0 0 0 0 transparent;
   height: 1.6rem;
-  left: 0%;
-  position: absolute;
-  top: -0.6rem;
-  translate: -50% 0;
+  width: 1.6rem;
+  transition: box-shadow 0.4s;
+}
+
+.filter-date input[type="range"]::-moz-range-thumb {
+  background: var(--neutral-900);
+  border-radius: 50%;
+  height: 1.6rem;
   width: 1.6rem;
 }
 
 @media (hover: hover) {
-  .filter-date label:has(input:hover) .pin {
+  .filter-date:hover input[type="range"]::-webkit-slider-thumb {
+    box-shadow: 0 0 0 0.8rem color-mix(in srgb, var(--neutral-900), transparent 75%);
+  }
+
+  .filter-date:hover input[type="range"]::-moz-range-thumb {
     box-shadow: 0 0 0 0.8rem color-mix(in srgb, var(--neutral-900), transparent 75%);
   }
 }

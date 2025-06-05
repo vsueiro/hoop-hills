@@ -206,18 +206,12 @@ export default class Filters {
 
   resetTimeline() {
     this.dateInput.value = 0;
-    this.dateInputPin.style.left = "0%";
     this.dateOutput.textContent = "All dates";
   }
 
   updateTimeline(index) {
     const group = this.app.world.hills.groups[index];
-
-    // this.dateInput.dataset.picked = true;
-    const percentage = (index / this.dateInput.max) * 100;
-    this.dateInputPin.style.left = `${percentage}%`;
     this.dateOutput.textContent = group.userData.date;
-    // this.setIDs(group.userData.id);
   }
 
   updateVideoLink(index) {
