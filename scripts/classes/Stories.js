@@ -114,31 +114,43 @@ export default class Stories {
     switch (annotation) {
       case "general":
       case undefined:
+        this.app.filters.setPeriods(["Q1", "Q2", "Q3", "Q4"]);
+        this.app.filters.setResults();
+        this.app.filters.setOpponent();
+        this.app.filters.setView("corner");
         this.app.filters.setIDs();
         this.app.filters.collapse(false);
-        this.app.filters.setView("corner");
-        this.app.filters.setPeriods(["Q1", "Q2", "Q3", "Q4"]);
+
         break;
 
       case "biggestComeback":
+        this.app.filters.setPeriods();
+        this.app.filters.setResults();
+        this.app.filters.setOpponent();
+        this.app.filters.setView("corner");
         this.app.filters.setIDs(annotations.biggestComeback.id);
         this.app.filters.collapse(true);
-        this.app.filters.setView("corner");
-        this.app.filters.setPeriods();
+
         break;
 
       case "mostLeadChanges":
+        this.app.filters.setPeriods();
+        this.app.filters.setResults();
+        this.app.filters.setOpponent();
+        this.app.filters.setView("corner");
         this.app.filters.setIDs(annotations.mostLeadChanges.id);
         this.app.filters.collapse(true);
-        this.app.filters.setView("corner");
-        this.app.filters.setPeriods();
+
         break;
 
       case "finalScores":
-        this.app.filters.setIDs();
-        this.app.filters.setView("bars");
-        this.app.filters.collapse(true);
         this.app.filters.setPeriods();
+        this.app.filters.setResults();
+        this.app.filters.setOpponent();
+        this.app.filters.setView("bars");
+        this.app.filters.setIDs();
+        this.app.filters.collapse(true);
+
         break;
     }
   }

@@ -38,6 +38,16 @@ export default class Filters {
     this.update();
   }
 
+  setResults(list = ["won", "lost"]) {
+    const checkboxes = this.form.querySelectorAll('[name="results"]');
+
+    for (let checkbox of checkboxes) {
+      checkbox.checked = list.includes(checkbox.value);
+    }
+
+    this.update();
+  }
+
   setView(value) {
     const radios = this.form.querySelectorAll('[name="view"]');
 
