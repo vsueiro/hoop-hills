@@ -117,6 +117,7 @@ export default class Stories {
         this.app.filters.setPeriods(["Q1", "Q2", "Q3", "Q4"]);
         this.app.filters.setResults();
         this.app.filters.setOpponent();
+        this.app.filters.setRounds();
         this.app.filters.setView("corner");
         this.app.filters.setIDs();
         this.app.filters.collapse(false);
@@ -127,6 +128,7 @@ export default class Stories {
         this.app.filters.setPeriods();
         this.app.filters.setResults();
         this.app.filters.setOpponent();
+        this.app.filters.setRounds();
         this.app.filters.setView("corner");
         this.app.filters.setIDs(annotations.biggestComeback.id);
         this.app.filters.collapse(true);
@@ -137,6 +139,7 @@ export default class Stories {
         this.app.filters.setPeriods();
         this.app.filters.setResults();
         this.app.filters.setOpponent();
+        this.app.filters.setRounds();
         this.app.filters.setView("corner");
         this.app.filters.setIDs(annotations.mostLeadChanges.id);
         this.app.filters.collapse(true);
@@ -147,6 +150,7 @@ export default class Stories {
         this.app.filters.setPeriods();
         this.app.filters.setResults();
         this.app.filters.setOpponent();
+        this.app.filters.setRounds();
         this.app.filters.setView("bars");
         this.app.filters.setIDs();
         this.app.filters.collapse(true);

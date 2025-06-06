@@ -45,7 +45,17 @@ export default class Filters {
       checkbox.checked = list.includes(checkbox.value);
     }
 
-    this.update();
+    // this.update();
+  }
+
+  setRounds(list = ["RS", "PI", "PO"]) {
+    const checkboxes = this.form.querySelectorAll('[name="rounds"]');
+
+    for (let checkbox of checkboxes) {
+      checkbox.checked = list.includes(checkbox.value);
+    }
+
+    // this.update();
   }
 
   setView(value) {
