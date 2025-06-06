@@ -47,13 +47,6 @@ export default class Summaries {
         value: 0,
         hill: null,
       },
-
-      // Updated dinamically when a single game is highlighted
-      // finalScore: {
-      //   id: null,
-      //   value: 0,
-      //   hill: null,
-      // },
     };
 
     this.setup();

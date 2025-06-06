@@ -356,7 +356,9 @@ export default class Hills {
         this.world.app.filters.setIDs();
 
         // If currently in a story, reset to first one
-        this.world.app.stories.set(0);
+        if (this.world.app.stories.current !== 0) {
+          this.world.app.stories.set(0);
+        }
       }
 
       this.world.pointer.clicked = false;
