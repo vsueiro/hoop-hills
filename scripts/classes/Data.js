@@ -5,13 +5,7 @@ export default class Data {
     this.app = app;
 
     this.dependencies = {
-      periods: {
-        loaded: false,
-      },
-      teams: {
-        loaded: false,
-      },
-      games: {
+      electionData: {
         loaded: false,
       },
     };
@@ -50,13 +44,8 @@ export default class Data {
 
   path(dependency) {
     switch (dependency) {
-      case "games":
-        const { season, team } = this.app.filters;
-        return `./data/seasons/${season}/${team}.csv`;
-      case "teams":
-        return "./data/teams/2024-25.csv";
-      case "periods":
-        return "./data/periods.csv";
+      case "electionData":
+        return "./data/election_data.csv";
     }
   }
 
@@ -66,7 +55,7 @@ export default class Data {
     }
 
     let path = this.path(property);
-    this[property] = await csv(path, autoType);
+    this.electionData = await csv(path, autoType);
 
     this.dependencies[property].loaded = true;
 

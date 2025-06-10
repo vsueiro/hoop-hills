@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hoop Hills: Peaks & Valleys of NBA Games</title>
+  <title>Spanish Election Data Explorer</title>
   <meta name="description" content="This 3D data visualization shows every moment a team was leading or trailing" />
   <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="./styles/index.css" />
@@ -21,71 +21,16 @@
 </head>
 
 <body>
-  <canvas class="canvas"></canvas>
-  <div class="canvas2D"></div>
   <header>
     <div class="heading">
-      <h1>Hoop Hills</h1>
-      <p style="white-space: nowrap"><strong>Explore the peaks and valleys of NBA games</strong></p>
+      <h1>Election Data Explorer</h1>
+      <p style="white-space: nowrap"><strong>Explore socio-economic and election data from Spain</strong></p>
     </div>
   </header>
   <main>
+    <div id="election-chart-container" style="width: 100%; min-height: 400px; border: 1px solid #ccc;"></div>
     <section class="stories">
-      <div class="controls">
-        <div class="progress"></div>
-        <button class="prev">
-          <svg width="24px" height="24px" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"
-            stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path d="M15 6L9 12L15 18"></path>
-          </svg></button>
-        <button class="next">
-          <svg width="24px" height="24px" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4"
-            stroke-linecap="round" stroke-linejoin="round" fill="none">
-            <path d="M9 6L15 12L9 18"></path>
-          </svg>
-        </button>
-      </div>
-      <div class="content">
-        <div class="chapter" data-annotation="general">
-          <p class="legend">
-            This chart shows every moment a team was
-            <span class="leading">leading</span> or <span class="trailing">trailing</span>
-            during the season
-          </p>
-        </div>
-        <div class="chapter" data-annotation="biggestComeback" hidden>
-          <p class="legend">
-            <!--
-            <svg style="width: 4.8rem; display: inline-block" viewBox="0 0 48 12">
-              <rect y="6" width="4" height="2" fill="#CB1C1F"></rect>
-              <rect x="4" y="6" width="4" height="4" fill="#CB1C1F"></rect>
-              <rect x="8" y="6" width="4" height="6" fill="#CB1C1F"></rect>
-              <rect x="12" y="6" width="4" height="4" fill="#CB1C1F"></rect>
-              <rect x="16" y="6" width="4" height="2" fill="#CB1C1F"></rect>
-              <rect x="20" y="4" width="4" height="2" fill="#2271B4"></rect>
-              <rect x="24" y="6" width="4" height="2" fill="#CB1C1F"></rect>
-              <rect x="28" y="6" width="4" height="2" fill="#CB1C1F"></rect>
-              <rect x="32" y="4" width="4" height="2" fill="#2271B4"></rect>
-              <rect x="36" y="2" width="4" height="4" fill="#2271B4"></rect>
-              <rect x="40" y="0" width="4" height="6" fill="#2271B4"></rect>
-              <rect x="44" y="2" width="4" height="4" fill="#2271B4"></rect>
-            </svg>
-            -->
-            Each row is a game. In this one, <span data-fill="team">…</span> won
-            after trailing by <span data-fill="comeback-deficit">…</span>, it was a <strong>big comeback</strong>
-          </p>
-        </div>
-        <div class="chapter" data-annotation="mostLeadChanges" hidden>
-          <p>This other game was <i>intense</i>, there were <strong><span data-fill="lead-changes">…</span> lead changes
-            </strong> against <span data-fill="lead-changes-opponent">…</span>. <span data-fill="team">…</span> <span
-              data-fill="lead-changes-result">…</span> by <span data-fill="lead-changes-point-difference">…</span> </p>
-        </div>
-        <div class="chapter" data-annotation="finalScores" hidden>
-          <p class="legend">From the side, you can see every game has a dark line, indicating its
-            <span class="marker">win margin</span>
-          </p>
-        </div>
-      </div>
+      <p>Further analysis and highlights will be shown here in the future.</p>
     </section>
     <section class="filters">
       <h2 class="collapse" onclick="app.filters.collapse()">
@@ -93,199 +38,20 @@
       </h2>
 
       <form onsubmit="return false">
-
-        <div class="filter-teams">
-          <label>
-            <span>Your team</span>
-            <select name="team">
-              <option value="ATL">Atlanta Hawks</option>
-              <option value="BOS">Boston Celtics</option>
-              <option value="BRK">Brooklyn Nets</option>
-              <option value="CHO">Charlotte Hornets</option>
-              <option value="CHI">Chicago Bulls</option>
-              <option value="CLE">Cleveland Cavaliers</option>
-              <option value="DAL">Dallas Mavericks</option>
-              <option value="DEN">Denver Nuggets</option>
-              <option value="DET">Detroit Pistons</option>
-              <option value="GSW">Golden State Warriors</option>
-              <option value="HOU">Houston Rockets</option>
-              <option value="IND" selected>Indiana Pacers</option>
-              <option value="LAC">Los Angeles Clippers</option>
-              <option value="LAL">Los Angeles Lakers</option>
-              <option value="MEM">Memphis Grizzlies</option>
-              <option value="MIA">Miami Heat</option>
-              <option value="MIL">Milwaukee Bucks</option>
-              <option value="MIN">Minnesota Timberwolves</option>
-              <option value="NOP">New Orleans Pelicans</option>
-              <option value="NYK">New York Knicks</option>
-              <option value="OKC">Oklahoma City Thunder</option>
-              <option value="ORL">Orlando Magic</option>
-              <option value="PHI">Philadelphia 76ers</option>
-              <option value="PHO">Phoenix Suns</option>
-              <option value="POR">Portland Trail Blazers</option>
-              <option value="SAC">Sacramento Kings</option>
-              <option value="SAS">San Antonio Spurs</option>
-              <option value="TOR">Toronto Raptors</option>
-              <option value="UTA">Utah Jazz</option>
-              <option value="WAS">Washington Wizards</option>
-            </select>
-          </label>
-
-          <div class="versus" aria-hidden="true">×</div>
-
-          <label>
-            <span>Opponent</span>
-            <select name="opponent">
-              <option value="all" selected>All other teams</option>
-              <option value="ATL">Atlanta Hawks</option>
-              <option value="BOS">Boston Celtics</option>
-              <option value="BRK">Brooklyn Nets</option>
-              <option value="CHO">Charlotte Hornets</option>
-              <option value="CHI">Chicago Bulls</option>
-              <option value="CLE">Cleveland Cavaliers</option>
-              <option value="DAL">Dallas Mavericks</option>
-              <option value="DEN">Denver Nuggets</option>
-              <option value="DET">Detroit Pistons</option>
-              <option value="GSW">Golden State Warriors</option>
-              <option value="HOU">Houston Rockets</option>
-              <option value="IND">Indiana Pacers</option>
-              <option value="LAC">Los Angeles Clippers</option>
-              <option value="LAL">Los Angeles Lakers</option>
-              <option value="MEM">Memphis Grizzlies</option>
-              <option value="MIA">Miami Heat</option>
-              <option value="MIL">Milwaukee Bucks</option>
-              <option value="MIN">Minnesota Timberwolves</option>
-              <option value="NOP">New Orleans Pelicans</option>
-              <option value="NYK">New York Knicks</option>
-              <option value="OKC">Oklahoma City Thunder</option>
-              <option value="ORL">Orlando Magic</option>
-              <option value="PHI">Philadelphia 76ers</option>
-              <option value="PHO">Phoenix Suns</option>
-              <option value="POR">Portland Trail Blazers</option>
-              <option value="SAC">Sacramento Kings</option>
-              <option value="SAS">San Antonio Spurs</option>
-              <option value="TOR">Toronto Raptors</option>
-              <option value="UTA">Utah Jazz</option>
-              <option value="WAS">Washington Wizards</option>
-            </select>
-          </label>
-        </div>
-
-        <fieldset>
-          <legend class="screen-reader">View</legend>
-          <div class="cube">
-            <svg viewBox="0 0 100 100" class="cube-shadow">
-              <path d="M13.6259 71.0002L49.9998 92L86.3735 71L91.5698 74L49.9998 98L8.42969 74.0002L13.6259 71.0002Z" />
-            </svg>
-            <label>
-              <input type="radio" name="view" value="user" hidden />
-            </label>
-            <label>
-              <input type="radio" name="view" value="corner" checked />
-              <svg viewBox="0 0 100 100">
-                <path d="M70.7823 37.9995H29.2129L50.0026 73.999L70.7823 37.9995Z" />
-              </svg>
-              <span class="screen-reader">Corner</span>
-            </label>
-            <label>
-              <input type="radio" name="view" value="lines" />
-              <svg viewBox="0 0 100 100">
-                <path
-                  d="M29.2147 37.9993L8.43066 25.9995L8.43129 73.9994L50.0003 97.9997L50.0001 73.9984L29.2101 37.9993H29.2147Z" />
-              </svg>
-              <span class="screen-reader">Lines</span>
-            </label>
-            <label>
-              <input type="radio" name="view" value="bars" />
-              <svg viewBox="0 0 100 100">
-                <path
-                  d="M91.5678 25.9995L91.5675 73.9996L49.9985 97.9999L49.9987 73.9976L70.7746 38.0048L91.5678 25.9995Z" />
-              </svg>
-              <span class="screen-reader">Bars</span>
-            </label>
-            <label>
-              <input type="radio" name="view" value="grid" />
-              <svg viewBox="0 0 100 100">
-                <path
-                  d="M8.43066 25.9998L50.0001 2L91.5694 25.9996L70.7769 38.004L70.7795 37.9994H29.2152L8.43066 25.9998Z" />
-              </svg>
-              <span class="screen-reader">Grid</span>
-            </label>
-          </div>
-        </fieldset>
-
-
-        <label hidden>
-          <span>Game IDs</span>
-          <input name="ids" type="hidden" placeholder="ID1, ID2…" />
-        </label>
-
-        <div class="filter-games">
-          <fieldset>
-            <legend>Games</legend>
-            <label><input type="checkbox" name="results" value="won" checked />Won</label>
-            <label><input type="checkbox" name="results" value="lost" checked />Lost</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Periods</legend>
-            <label><input type="checkbox" name="periods" value="Q1" checked />Q1</label>
-            <label><input type="checkbox" name="periods" value="Q2" checked />Q2</label>
-            <label><input type="checkbox" name="periods" value="Q3" checked />Q3</label>
-            <label><input type="checkbox" name="periods" value="Q4" checked />Q4</label>
-            <label><input type="checkbox" name="periods" value="OT" />OTs</label>
-          </fieldset>
-
-          <fieldset>
-            <legend>Rounds</legend>
-            <label><input type="checkbox" name="rounds" value="RS" checked />Regular Season</label>
-            <label><input type="checkbox" name="rounds" value="PI" checked disabled />Play-In</label>
-            <label><input type="checkbox" name="rounds" value="PO" checked />Playoffs</label>
-          </fieldset>
-        </div>
-
-        <div class="filter-date">
-          <label>
-            <span class="screen-reader">Date</span>
-            <output></output>
-            <input type="range" name="date" step="0" value="0" min="0" max="82" data-picked="false">
-          </label>
-        </div>
-
-        <div class="filter-season-and-sorting">
-          <label>
-            <span>Season</span>
-            <select name="season">
-              <option value="2025" selected>2024-25</option>
-              <option value="2024">2023-24</option>
-              <option value="2023">2022-23</option>
-              <option value="2022">2021-22</option>
-              <option value="2021">2020-21</option>
-              <option value="2020">2019-20</option>
-              <option value="2019">2018-19</option>
-              <option value="2018">2017-18</option>
-              <option value="2017">2016-17</option>
-              <option value="2016">2015-16</option>
-              <option value="2015">2014-15</option>
-            </select>
-          </label>
-
-          <fieldset>
-            <legend>Sort by</legend>
-            <div class="track">
-              <label><input type="radio" name="sorting" value="margin" checked />Win Margin</label>
-              <label><input type="radio" name="sorting" value="date" />Date</label>
-            </div>
-          </fieldset>
+        <div class="filter-group">
+          <label for="ccaa-filter">Autonomous Community (CCAA):</label>
+          <select name="ccaa" id="ccaa-filter">
+            <option value="all" selected>All Communities</option>
+            <!-- Options will be populated by Filters.js -->
+          </select>
         </div>
       </form>
     </section>
 
-    <section class="stats" hidden>
-      <div class="total">0 games</div>
-      <div class="bar"></div>
-      <div class="won">0</div>
-      <div class="lost">0</div>
+    <section class="stats">
+      <div id="stats-total-population">Total Population: 0</div>
+      <div id="stats-total-votes">Total Votes: 0</div>
+      <div id="stats-selected-region">Selected Region: All</div>
     </section>
     <!--
     <aside>
@@ -299,8 +65,7 @@
   <footer>
     <p>
       <small>
-        Fan-made by <a href="https://vsueiro.com" target="_blank">vsueiro</a>. Data from
-        <a href="https://basketball-reference.com/" target="_blank">basketball-reference.com</a>
+        Data Explorer. Source data provided.
         <!-- <span class="fps"></span> -->
       </small>
     </p>

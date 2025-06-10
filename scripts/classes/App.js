@@ -10,7 +10,7 @@ export default class App {
     this.params = new Params(this);
     this.filters = new Filters(this, "form");
     this.data = new Data(this);
-    this.world = new World(this, ".canvas", ".canvas2D");
+    this.world = new World(this);
     this.stories = new Stories(this, ".stories");
     this.stats = new Stats(this, ".stats");
 
@@ -18,9 +18,7 @@ export default class App {
   }
 
   setup() {
-    this.data.load("periods");
-    this.data.load("teams");
-    this.data.load("games");
+    this.data.load("electionData"); // Changed to load the new single data source
 
     this.data.once("ready", () => {
       this.world.build();
