@@ -28,6 +28,12 @@ export default class Filters {
     this.update();
   }
 
+  setRandomTeam() {
+    const options = this.teamSelector.options;
+    const index = Math.floor(Math.random() * options.length);
+    this.teamSelector.selectedIndex = index;
+  }
+
   setPeriods(list = ["Q1", "Q2", "Q3", "Q4", "OT"]) {
     const checkboxes = this.form.querySelectorAll('[name="periods"]');
 
@@ -249,6 +255,8 @@ export default class Filters {
   }
 
   setup() {
+    this.setRandomTeam();
+
     if (window.innerWidth <= 480) {
       this.collapse(true);
     }
@@ -289,7 +297,5 @@ export default class Filters {
     } else {
       this.resetTimeline();
     }
-
-    this.app.params.update(formData);
   }
 }
