@@ -119,14 +119,14 @@ for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
             search_url = build_youtube_query(row["id"], row["home"], row["away"])
             if not search_url:
                 continue
-            print(f"Searching for game {row["id"]}: {search_url}")
+            print(f"{i}/{len(df)} Searching for game {row["id"]}: {search_url}")
             video_id = scrape_video_id(search_url)
             if video_id:
                 df.at[i, "video"] = video_id
                 print(f" → Found video ID: {video_id}")
             else:
                 print(" → No video found.")
-            time.sleep(random.uniform(4, 6))
+            time.sleep(random.uniform(1.5,2.5))
         df.to_csv(path, index=False)
         print(f"Updated {file_name} with video links.")
 
