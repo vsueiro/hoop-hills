@@ -100,14 +100,17 @@ for season in os.listdir(SEASON_DIR):
         highlight_df["video"] = ""
 
         out_path = os.path.join(HIGHLIGHTS_DIR, f"{season}.csv")
-        highlight_df.to_csv(out_path, index=False)
-        print(f"Saved highlights for {season} with {len(highlight_df)} unique game IDs.")
+        if not os.path.exists(out_path):
+            highlight_df.to_csv(out_path, index=False)
+            print(f"Saved highlights for {season} with {len(highlight_df)} unique game IDs.")
+        else:
+            print(f"Skipped saving highlights for {season} — file already exists.")
 
 # Part 2: Scrape YouTube for video IDs
 for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
 
     # TEMP
-    if file_name != '2025.csv':
+    if file_name == '2025.csv':
       continue
 
     if file_name.endswith(".csv"):
@@ -126,7 +129,7 @@ for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
                 print(f" → Found video ID: {video_id}")
             else:
                 print(" → No video found.")
-            time.sleep(random.uniform(1.5,2.5))
+            time.sleep(random.uniform(1,2))
         df.to_csv(path, index=False)
         print(f"Updated {file_name} with video links.")
 
