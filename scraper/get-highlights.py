@@ -119,7 +119,7 @@ for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
             search_url = build_youtube_query(row["id"], row["home"], row["away"])
             if not search_url:
                 continue
-            print(f"{i}/{len(df)} Searching for game {row["id"]}: {search_url}")
+            print(f"{i+1}/{len(df)} Searching for game {row["id"]}: {search_url}")
             video_id = scrape_video_id(search_url)
             if video_id:
                 df.at[i, "video"] = video_id
