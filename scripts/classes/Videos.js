@@ -53,29 +53,27 @@ export default class Videos {
   }
 
   close() {
+    this.clear();
     this.dialog.close();
   }
 
   clear() {
     this.src = "about:blank";
     this.iframe.src = this.src;
-    this.hideButton();
   }
 
   update(id) {
     if (!id) {
       this.clear();
+      this.hideButton();
       return;
     }
-
-    // if (id === this.currentId) {
-    //   return;
-    // }
 
     const video = this.findVideo(id);
 
     if (!video) {
       this.clear();
+      this.hideButton();
       return;
     }
 
