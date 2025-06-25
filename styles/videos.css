@@ -1,0 +1,25 @@
+.videos {
+  position: fixed;
+  pointer-events: none;
+  width: fit-content;
+  top: 1.6rem;
+  right: 14.4rem;
+}
+
+.videos iframe {
+  display: block;
+  height: 10rem;
+  aspect-ratio: 16/9;
+  pointer-events: all;
+  border-radius: 0.4rem;
+}
+
+.videos iframe[src="about:blank"] {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  .videos {
+    display: none;
+  }
+}

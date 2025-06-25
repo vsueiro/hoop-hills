@@ -3,6 +3,7 @@ import Data from "./Data.js";
 import World from "./World.js";
 import Stories from "./Stories.js";
 import Stats from "./Stats.js";
+import Videos from "./Videos.js";
 
 export default class App {
   constructor() {
@@ -11,6 +12,7 @@ export default class App {
     this.world = new World(this, ".canvas", ".canvas2D");
     this.stories = new Stories(this, ".stories");
     this.stats = new Stats(this, ".stats");
+    this.videos = new Videos(this, ".videos");
 
     this.setup();
   }

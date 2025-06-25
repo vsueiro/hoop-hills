@@ -48,27 +48,28 @@ export default class Data {
     }
   }
 
-  path(dependency) {
-    switch (dependency) {
+  path(property) {
+    const { season, team } = this.app.filters;
+
+    switch (property) {
       case "games":
-        const { season, team } = this.app.filters;
         return `./data/seasons/${season}/${team}.csv`;
       case "teams":
         return "./data/teams/2024-25.csv";
       case "periods":
         return "./data/periods.csv";
+      case "highlights":
+        return `./data/highlights/${season}.csv`;
     }
   }
 
   async load(property, callback) {
-    if (!property in this.dependencies) {
-      return;
-    }
-
     let path = this.path(property);
     this[property] = await csv(path, autoType);
 
-    this.dependencies[property].loaded = true;
+    if (property in this.dependencies) {
+      this.dependencies[property].loaded = true;
+    }
 
     if (callback) {
       callback();

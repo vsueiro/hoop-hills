@@ -198,6 +198,12 @@ export default class Filters {
           this.disableUnavailables();
         });
 
+        // Load video highlights data when season changes
+        this.app.data.load("highlights", () => {
+          console.log(this.app.data.highlights);
+          this.app.videos.update();
+        });
+
         // Clear Game ID filter
         this.setIDs();
         break;
@@ -240,18 +246,15 @@ export default class Filters {
     this.dateOutput.textContent = group.userData.date;
   }
 
-  updateVideoLink(index) {
+  updateVideo(index) {
+    if (index === undefined) {
+      this.app.videos?.update();
+      return;
+    }
+
     const group = this.app.world.hills.groups[index];
-
-    const date = group.userData.date;
-    const home = this.app.world.summaries.getNick(group.userData.home ? this.team : group.userData.opponent);
-    const away = this.app.world.summaries.getNick(group.userData.home ? group.userData.opponent : this.team);
-    const query = `${away.toUpperCase()} at ${home.toUpperCase()} | FULL GAME HIGHLIGHTS | ${date}`;
-
-    const url = new URL("https://www.youtube.com/@NBA/search");
-    url.searchParams.set("query", query);
-
-    console.log(url.toString());
+    const { id } = group.userData;
+    this.app.videos.update(id);
   }
 
   setup() {
@@ -293,9 +296,10 @@ export default class Filters {
       const [id] = this.ids;
       const index = this.app.world.summaries.list.findIndex((summary) => summary.id === id);
       this.updateTimeline(index);
-      this.updateVideoLink(index);
+      this.updateVideo(index);
     } else {
       this.resetTimeline();
+      this.updateVideo();
     }
   }
 }
