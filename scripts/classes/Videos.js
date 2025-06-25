@@ -2,10 +2,10 @@ export default class Videos {
   constructor(app, element = ".videos") {
     this.app = app;
 
-    this.currentId = null;
+    this.dialog = typeof element === "string" ? document.querySelector(element) : element;
+    this.iframe = document.querySelector("iframe");
+    this.playButton = document.querySelector("button.play-video");
 
-    this.element = typeof element === "string" ? document.querySelector(element) : element;
-    this.iframe = this.element.querySelector("iframe");
     this.setup();
   }
 
@@ -29,25 +29,48 @@ export default class Videos {
     this.app.data.load("highlights", () => {
       this.app.videos.update();
     });
+
+    this.playButton.addEventListener("click", () => this.open());
+
+    this.dialog.addEventListener("click", (event) => {
+      if (event.target === this.dialog) {
+        this.close();
+      }
+    });
+  }
+
+  showButton() {
+    this.playButton.hidden = false;
+  }
+
+  hideButton() {
+    this.playButton.hidden = true;
+  }
+
+  open() {
+    this.dialog.showModal();
+    this.iframe.src = this.src;
+  }
+
+  close() {
+    this.dialog.close();
   }
 
   clear() {
-    this.iframe.src = "about:blank";
-    this.currentId = null;
+    this.src = "about:blank";
+    this.iframe.src = this.src;
+    this.hideButton();
   }
 
   update(id) {
-    // Temporarily disable videos
-    return false;
-
     if (!id) {
       this.clear();
       return;
     }
 
-    if (id === this.currentId) {
-      return;
-    }
+    // if (id === this.currentId) {
+    //   return;
+    // }
 
     const video = this.findVideo(id);
 
@@ -56,8 +79,7 @@ export default class Videos {
       return;
     }
 
-    this.iframe.src = `https://www.youtube-nocookie.com/embed/${video}?controls=0&autoplay=1`;
-
-    this.currentId = id;
+    this.src = `https://www.youtube-nocookie.com/embed/${video}?controls=0&autoplay=1`;
+    this.showButton();
   }
 }

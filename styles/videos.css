@@ -1,28 +1,82 @@
-.videos {
-  position: fixed;
-  pointer-events: none;
-  width: fit-content;
-  top: 1.6rem;
-  right: 14.4rem;
-
-  /* Temporarily disables videos */
-  display: none;
-}
-
-.videos iframe {
-  display: block;
-  height: 10rem;
-  aspect-ratio: 16/9;
-  pointer-events: all;
+button.play-video,
+dialog.videos form button {
+  align-items: center;
+  backdrop-filter: blur(0.8rem);
+  background: transparent;
+  border: none;
   border-radius: 0.4rem;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: 700;
+  gap: 0.8rem;
+  inset: 0;
+  letter-spacing: 0.05em;
+  margin-inline-start: 0.8rem;
+  padding: 0.2rem 0.8rem;
+  pointer-events: all;
+  text-transform: uppercase;
+  user-select: none;
+  width: fit-content;
+  z-index: 1;
 }
 
-.videos iframe[src="about:blank"] {
+@media (hover: hover) {
+  button.play-video:hover svg {
+    color: var(--trailing);
+  }
+}
+
+dialog.videos {
+  background: transparent;
+  border: 0;
+  left: 2.4rem;
+  padding: 0;
+  position: fixed;
+  top: 50%;
+  translate: 0 -50%;
+
+  /* background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%); */
+}
+
+dialog.videos form {
+  align-items: start;
+  background: transparent;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+dialog.videos iframe {
+  aspect-ratio: 16/9;
+  border-radius: 0.4rem;
+  box-sizing: content-box;
+  border: 0.4rem solid color-mix(in srgb, var(--neutral-100), transparent 33.333%);
+  display: block;
+  pointer-events: all;
+  width: clamp(16rem, 66.666vw, 54rem);
+}
+
+dialog.videos iframe[src="about:blank"] {
   display: none;
 }
 
-@media (max-width: 1280px) {
+dialog.videos form button {
+  background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
+
+  /* position: absolute;
+  top: 0;
+  right: 0;
+  translate: 0 -100%; */
+}
+
+dialog.videos::backdrop {
+  background-color: color-mix(in srgb, var(--neutral-900), transparent 33.333%);
+}
+
+/* @media (max-width: 1280px) {
   .videos {
     display: none;
   }
-}
+} */

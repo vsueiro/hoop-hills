@@ -4,6 +4,12 @@
   max-width: calc(36rem + 1.6rem);
 }
 
+.filters .buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .filter-teams {
   display: flex;
   gap: 0.8rem;
@@ -51,7 +57,7 @@
   cursor: pointer;
   display: flex;
   gap: 0.5em;
-  margin-inline: 1.6rem;
+  margin-inline-start: 1.6rem;
   user-select: none;
   width: fit-content;
 }
@@ -76,7 +82,7 @@
   display: block;
   font-size: 1.4rem;
   inset: 0;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   padding: 0.8rem 1.6rem;
   pointer-events: all;
   text-transform: uppercase;
@@ -108,7 +114,7 @@
   background: transparent;
 }
 
-form {
+.filters form {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -314,7 +320,7 @@ label:has(input[type="radio"]:checked)::before {
 }
 
 @media (max-width: 1280px) {
-  form {
+  .filters form {
     margin-inline-start: 1.6rem;
   }
 
@@ -346,7 +352,7 @@ label:has(input[type="radio"]:checked)::before {
     border-radius: 0.4rem 0.5rem 0 0;
   }
 
-  form::before {
+  .filters form::before {
     backdrop-filter: blur(0.8rem);
     background-color: var(--neutral-100);
     background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
@@ -363,10 +369,14 @@ label:has(input[type="radio"]:checked)::before {
   .filter-date {
     display: none;
   }
+
+  /* .filters .buttons {
+    justify-content: space-between;
+  } */
 }
 
 @media (max-width: 480px) {
-  form {
+  .filters form {
     padding: 1.2rem 1.6rem 1.6rem;
   }
 }
