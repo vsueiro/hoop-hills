@@ -4,6 +4,9 @@
   width: fit-content;
   top: 1.6rem;
   right: 14.4rem;
+
+  /* Temporarily disables videos */
+  display: none;
 }
 
 .videos iframe {

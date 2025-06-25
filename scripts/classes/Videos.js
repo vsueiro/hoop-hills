@@ -37,6 +37,9 @@ export default class Videos {
   }
 
   update(id) {
+    // Temporarily disable videos
+    return false;
+
     if (!id) {
       this.clear();
       return;
