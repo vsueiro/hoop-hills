@@ -53,7 +53,7 @@ export default class Videos {
       return;
     }
 
-    this.iframe.src = `https://www.youtube-nocookie.com/embed/${video}?controls=0`;
+    this.iframe.src = `https://www.youtube-nocookie.com/embed/${video}?controls=0&autoplay=1`;
 
     this.currentId = id;
   }
