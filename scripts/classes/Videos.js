@@ -79,7 +79,7 @@ export default class Videos {
       return;
     }
 
-    this.src = `https://www.youtube-nocookie.com/embed/${video}?controls=0&autoplay=1`;
+    this.src = `https://www.youtube-nocookie.com/embed/${video}?autoplay=1`;
     this.showButton();
   }
 }
