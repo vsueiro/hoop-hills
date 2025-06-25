@@ -109,10 +109,6 @@ for season in os.listdir(SEASON_DIR):
 # Part 2: Scrape YouTube for video IDs
 for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
 
-    # TEMP
-    if file_name == '2025.csv':
-      continue
-
     if file_name.endswith(".csv"):
         path = os.path.join(HIGHLIGHTS_DIR, file_name)
         df = pd.read_csv(path)
@@ -129,9 +125,23 @@ for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
                 print(f" → Found video ID: {video_id}")
             else:
                 print(" → No video found.")
-            time.sleep(random.uniform(1,2))
+            time.sleep(random.uniform(.5,1.5))
         df.to_csv(path, index=False)
         print(f"Updated {file_name} with video links.")
+
+# Part 3: Remove home and away columns from final DFs
+for filename in os.listdir(HIGHLIGHTS_DIR):
+    if filename.endswith('.csv'):
+        file_path = os.path.join(HIGHLIGHTS_DIR, filename)
+        
+        # Read the CSV
+        df = pd.read_csv(file_path)
+        
+        # Drop 'home' and 'away' columns if they exist
+        df = df.drop(columns=[col for col in ['home', 'away'] if col in df.columns])
+        
+        # Save the modified DataFrame back to the same file
+        df.to_csv(file_path, index=False)
 
 '''
 
