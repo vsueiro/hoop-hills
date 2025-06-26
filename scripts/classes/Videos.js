@@ -58,8 +58,7 @@ export default class Videos {
   }
 
   clear() {
-    this.src = "about:blank";
-    this.iframe.src = this.src;
+    this.iframe.src = "about:blank";
   }
 
   update(id) {
