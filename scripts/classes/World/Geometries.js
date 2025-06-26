@@ -9,6 +9,7 @@ export default class Geometries {
     this.lines = {};
     this.hills = {};
     this.marks = {};
+    this.seats = {};
 
     this.setup();
   }
@@ -40,6 +41,14 @@ export default class Geometries {
     }
 
     return this.marks[height];
+  }
+
+  getSeat(side = 1) {
+    if (!this.seats[side]) {
+      this.seats[side] = new THREE.PlaneGeometry(side, side);
+    }
+
+    return this.seats[side];
   }
 
   setup() {}

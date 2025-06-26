@@ -16,6 +16,7 @@ import Hills from "./World/Hills.js";
 import Labels from "./World/Labels.js";
 import Tooltips from "./World/Tooltips.js";
 import Floor from "./World/Floor.js";
+import Seats from "./World/Seats.js";
 
 export default class World {
   constructor(app, canvas, canvas2D) {
@@ -51,6 +52,7 @@ export default class World {
     this.labels = new Labels(this);
     this.tooltips = new Tooltips(this);
     this.floor = new Floor(this);
+    this.seats = new Seats(this);
 
     window.addEventListener("resize", () => {
       this.resize();
@@ -104,6 +106,7 @@ export default class World {
       this.raycaster.update();
       this.environment.update();
       this.floor.update();
+      this.seats.update();
 
       if (this.hills) {
         this.hills.update();

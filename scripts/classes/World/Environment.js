@@ -22,13 +22,10 @@ export default class Environment {
     const mixer = this.world.palette.interpolate(blue, red);
 
     gradient.addColorStop(0.4, mixer(0.31));
-    gradient.addColorStop(0.6, mixer(0.25));
+    gradient.addColorStop(0.5, mixer(0.25));
 
     context.fillStyle = gradient;
     context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // context.fillStyle = "rgba(128,128,128,.2)";
-    // context.fillRect(0, 0, canvas.width, canvas.height);
 
     return new THREE.CanvasTexture(canvas);
   }

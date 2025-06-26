@@ -6,24 +6,48 @@ export default class Materials {
 
     this.basics = {};
     this.hills = {}; // hills[color][opacity]
-    this.opacitySteps = 16;
-    this.opacityStep = 1 / this.opacitySteps;
+    this.seats = {}; // seats[color][opacity]
 
     this.setup();
   }
 
   getHill(color, opacity = 1) {
+    const opacitySteps = 16;
+    const opacityStep = 1 / opacitySteps;
+
     if (!this.hills[color]) {
       this.hills[color] = {};
 
       // Add 16 + 1 levels of opacity (0, .0625, .125, .1875, .25, …, 1)
-      for (let opacity = 0; opacity <= 1; opacity += this.opacityStep) {
+      for (let opacity = 0; opacity <= 1; opacity += opacityStep) {
         this.hills[color][opacity] = new THREE.MeshBasicMaterial({ color, transparent: true, opacity });
       }
     }
 
-    const opacityKey = Math.round(opacity / this.opacityStep) * this.opacityStep;
+    const opacityKey = Math.round(opacity / opacityStep) * opacityStep;
     return this.hills[color][opacityKey];
+  }
+
+  getSeat(color, opacity = 1) {
+    const opacitySteps = 16;
+    const opacityStep = 1 / opacitySteps;
+
+    if (!this.seats[color]) {
+      this.seats[color] = {};
+
+      // Add 16 + 1 levels of opacity (0, .0625, .125, .1875, .25, …, 1)
+      for (let opacity = 0; opacity <= 1; opacity += opacityStep) {
+        this.seats[color][opacity] = new THREE.MeshBasicMaterial({
+          color,
+          transparent: true,
+          opacity,
+          side: THREE.FrontSide,
+        });
+      }
+    }
+
+    const opacityKey = Math.round(opacity / opacityStep) * opacityStep;
+    return this.seats[color][opacityKey];
   }
 
   getBasic(color) {
