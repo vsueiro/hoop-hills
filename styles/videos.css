@@ -41,21 +41,22 @@ dialog.videos {
 }
 
 dialog.videos form {
-  align-items: start;
+  align-items: end;
   background: transparent;
   display: flex;
+  flex-direction: column-reverse;
   margin: 0;
   padding: 0;
 }
 
 dialog.videos iframe {
   aspect-ratio: 16/9;
-  border-radius: 0.4rem;
+  border-radius: 0.4rem 0 0.4rem 0.4rem;
   box-sizing: content-box;
-  border: 0.4rem solid color-mix(in srgb, var(--neutral-100), transparent 33.333%);
+  border: 0.4rem solid var(--neutral-200);
   display: block;
   pointer-events: all;
-  width: clamp(16rem, 66.666vw, 54rem);
+  width: clamp(24rem, 75vw, 54rem);
 }
 
 dialog.videos iframe[src="about:blank"] {
@@ -63,8 +64,9 @@ dialog.videos iframe[src="about:blank"] {
 }
 
 dialog.videos form button {
-  background-color: color-mix(in srgb, var(--neutral-100), transparent 33.333%);
-
+  background: var(--neutral-200);
+  border-radius: 0.4rem 0.4rem 0 0;
+  margin-bottom: -0.5px;
   /* position: absolute;
   top: 0;
   right: 0;
