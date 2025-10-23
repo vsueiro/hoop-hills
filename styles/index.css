@@ -13,3 +13,24 @@
 @import url(./stats.css);
 @import url(./videos.css);
 @import url(./footer.css);
+
+body.minimal-ui {
+  header, .stories, .filters, footer {
+    opacity: 0;
+  }
+
+  .stats {
+    bottom: initial;
+    right: initial;
+    top: 10.4rem;
+    left: 50%;
+    translate: -50% 0;
+  }
+
+  .ratio {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+}

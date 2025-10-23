@@ -91,7 +91,10 @@ export default class Stats {
     this.bar.style.setProperty("--percent-won", `calc(${percentWon}% - ${percentWon < 100 ? 0.1 : 0}rem)`);
     this.bar.style.setProperty("--percent-lost", `calc(${percentLost}% - ${percentLost < 100 ? 0.1 : 0}rem)`);
 
-    // if (percentage < 4) percentage = 4;
-    // else if (percentage > 96) percentage = 96;
+    // TEMP
+    // let ratio = document.querySelector('.ratio') || document.createElement('div');
+    // ratio.classList.add('ratio');
+    // ratio.textContent = (results.won / groups.size ).toFixed(3);
+    // document.body.append(ratio);
   }
 }
