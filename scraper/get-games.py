@@ -6,7 +6,7 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = [2025] # Seasons (ending year) to be scraped (newest to oldest works)
+options['year'] = [2026] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
 options['teams_path'] = './data/teams/2024-25.csv' # Location to read CSV file
 options['seasons_path'] = './data/seasons/' # Location to write games for team and season 
@@ -35,8 +35,8 @@ for year in range(start, stop + step, step):
   for _, team in teams.iterrows():
 
     # TEMP: Filter teams
-    if team['id'] not in ['OKC', 'IND']:
-      continue
+    # if team['id'] not in ['MIA', 'OKC']:
+    #   continue
 
     # Get target filename
     dir = f"{options['seasons_path']}{year}"
