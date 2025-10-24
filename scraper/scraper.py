@@ -5,6 +5,32 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
+def get_request_headers():
+  # More sophisticated headers with random user agents
+  user_agents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+  ]
+
+  headers = {
+    'User-Agent': random.choice(user_agents),
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.basketball-reference.com/',
+    'DNT': '1',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Cache-Control': 'max-age=0',
+  }
+
+  return headers
+
 # Extract game IDs from the specified table in the BeautifulSoup object.
 def scrape_games_from_table(soup, table_id, game_type):
   game_ids = []
@@ -50,33 +76,13 @@ def get_ids_of_games(team_id, year):
 
   print(url)
 
-  # More sophisticated headers with random user agents
-  user_agents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
-  ]
-
-  headers = {
-    'User-Agent': random.choice(user_agents),
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Referer': 'https://www.basketball-reference.com/',
-    'DNT': '1',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'same-origin',
-    'Cache-Control': 'max-age=0',
-  }
-
   # Use a session to maintain cookies
   session = requests.Session()
 
-  # Optional: visit homepage first to get cookies
+  # Simulate user
+  headers = get_request_headers()
+
+  # Visit homepage first to get cookies
   session.get('https://www.basketball-reference.com/', headers=headers)
   time.sleep(random.uniform(1, 2))
 
@@ -237,28 +243,8 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
   # URL of the game’s play-by-play page on Basketball Reference
   url = f'https://basketball-reference.com/boxscores/pbp/{game_id}.html'
 
-  # More sophisticated headers with random user agents
-  user_agents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
-  ]
-
-  headers = {
-    'User-Agent': random.choice(user_agents),
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Referer': 'https://www.basketball-reference.com/',
-    'DNT': '1',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-    'Sec-Fetch-Dest': 'document',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'same-origin',
-    'Cache-Control': 'max-age=0',
-  }
+  # Simulate user
+  headers = get_request_headers()
 
   # Use a session to maintain cookies
   session = requests.Session()
