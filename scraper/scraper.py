@@ -1,5 +1,6 @@
 import re
 import time
+import random
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -49,15 +50,45 @@ def get_ids_of_games(team_id, year):
 
   print(url)
 
+  # More sophisticated headers with random user agents
+  user_agents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+  ]
+
+  headers = {
+    'User-Agent': random.choice(user_agents),
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.basketball-reference.com/',
+    'DNT': '1',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Cache-Control': 'max-age=0',
+  }
+
+  # Use a session to maintain cookies
+  session = requests.Session()
+
+  # Optional: visit homepage first to get cookies
+  session.get('https://www.basketball-reference.com/', headers=headers)
+  time.sleep(random.uniform(1, 2))
+
   game_ids = []
 
-  # Send a GET request to the URL
-  response = requests.get(url)
+  # Send request with session
+  response = session.get(url, headers=headers, timeout=10)
+
   if response.status_code != 200:
-    print('Status was not 200')
+    print(f'Status was not 200 (was {response.status_code})')
     return pd.DataFrame()
 
-  # Parse the HTML content
   soup = BeautifulSoup(response.content, 'html.parser')
 
   # Scrape regular season games
@@ -205,9 +236,41 @@ def get_play_by_play_data( team_id, team_location, game_id, game_type, index, lo
 
   # URL of the game’s play-by-play page on Basketball Reference
   url = f'https://basketball-reference.com/boxscores/pbp/{game_id}.html'
-  
+
+  # More sophisticated headers with random user agents
+  user_agents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.1 Safari/605.1.15',
+  ]
+
+  headers = {
+    'User-Agent': random.choice(user_agents),
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Referer': 'https://www.basketball-reference.com/',
+    'DNT': '1',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Cache-Control': 'max-age=0',
+  }
+
+  # Use a session to maintain cookies
+  session = requests.Session()
+
+  # Optional: visit homepage first to get cookies
+  session.get('https://www.basketball-reference.com/', headers=headers)
+  time.sleep(random.uniform(1, 2))
+
+  game_ids = []
+
   # Send a request to the URL
-  response = requests.get(url)
+  response = session.get(url, headers=headers, timeout=10)
 
   # Check if the request was successful
   if response.status_code != 200:
