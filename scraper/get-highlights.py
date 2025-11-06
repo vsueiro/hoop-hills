@@ -117,9 +117,8 @@ def get_highlights():
     # Part 2: Scrape YouTube for video IDs
     for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
 
-        season = file_name.removesuffix(".csv")
-
         # Abort if not desired season 
+        season = file_name.removesuffix(".csv")
         if season not in SEASONS_TO_SCRAPE:
             continue
 
@@ -149,6 +148,12 @@ def get_highlights():
 
     # Part 3: Remove home and away columns from final DFs and sort them
     for filename in os.listdir(HIGHLIGHTS_DIR):
+
+        # Abort if not desired season 
+        season = filename.removesuffix(".csv")
+        if season not in SEASONS_TO_SCRAPE:
+            continue
+
         if filename.endswith('.csv'):
             file_path = os.path.join(HIGHLIGHTS_DIR, filename)
             
