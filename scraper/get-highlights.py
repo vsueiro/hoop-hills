@@ -107,27 +107,40 @@ def get_highlights():
             highlight_df = highlight_df.sort_values(by='id', ascending=True)
             highlight_df["video"] = ""
 
-            out_path = os.path.join(HIGHLIGHTS_DIR, f"{season}.csv")
-            if not os.path.exists(out_path):
-                highlight_df.to_csv(out_path, index=False)
-                print(f"Saved highlights for {season} with {len(highlight_df)} unique game IDs.")
-            else:
-                print(f"Skipped saving highlights for {season} — file already exists.")
+            temp_path = os.path.join(HIGHLIGHTS_DIR, f"{season}.temp.csv")
+            highlight_df.to_csv(temp_path, index=False)
+            print(f"Saved temp .csv for {season} with {len(highlight_df)} unique game IDs.")
 
     # Part 2: Scrape YouTube for video IDs
     for file_name in sorted(os.listdir(HIGHLIGHTS_DIR), reverse=True):
 
         # Abort if not desired season 
-        season = file_name.removesuffix(".csv")
+        season = file_name.removesuffix(".temp.csv")
         if season not in SEASONS_TO_SCRAPE:
             continue
 
-        if file_name.endswith(".csv"):
-            path = os.path.join(HIGHLIGHTS_DIR, file_name)
-            df = pd.read_csv(path)
+        if file_name.endswith(".temp.csv"):
+            temp_path = os.path.join(HIGHLIGHTS_DIR, file_name)
+            df = pd.read_csv(temp_path)
+
+            # If highlights for this season were already scraped, read them
+            existing_path = os.path.join(HIGHLIGHTS_DIR, f"{season}.csv")
+            existing_df = None
+            if os.path.exists(existing_path):
+                existing_df = pd.read_csv(existing_path)
+
             for i, row in df.iterrows():
                 if pd.notna(row["video"]) and row["video"]:
                     continue
+
+                # Skip if this game ID already exists in the previously scraped data
+                if existing_df is not None and row["id"] in existing_df["id"].values:
+                    print(f"Skipping {row["id"]} because it was already scraped")
+
+                    # Copy over video ID from existing dataset to new one
+                    df.at[i, "video"] = existing_df.loc[existing_df["id"] == row["id"], "video"].iloc[0]
+                    continue
+
                 search_url = build_youtube_query(row["id"], row["home"], row["away"])
                 if not search_url:
                     continue
@@ -143,8 +156,12 @@ def get_highlights():
             # Sort by id so binary search in JS works
             df = df.sort_values(by='id', ascending=True)
 
-            df.to_csv(path, index=False)
+            df.to_csv(existing_path, index=False)
             print(f"Updated {file_name} with video links.")
+
+            # Delete temp file
+            os.remove(temp_path)
+            print(f"Deleted temp file at { temp_path }")
 
     # Part 3: Remove home and away columns from final DFs and sort them
     for filename in os.listdir(HIGHLIGHTS_DIR):
