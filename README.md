@@ -12,4 +12,6 @@ Tweak the options object in the `get-games.py` file to get a specific season, li
 
 If there are games already scraped, the scraper will skip those and append only missing ones to each team’s `.csv` file.
 
-Edit `get-highlights.py` to specify a season (like '2026') and run `python scraper/get-highlights.py` to get YouTube video ids from the official NBA channel. The scraper currently gets all games of a season — or nothing at all (if a file like `2026.csv` already exists). Future versions should only scrape unknown video ids.
+Edit `get-highlights.py` to specify a season (like '2026') and run `python scraper/get-highlights.py` to get YouTube video ids from the official NBA channel.
+
+Two run both scrapers (game data and video highlights), run `python scraper/get-games.py && python scraper/get-highlights.py`.
