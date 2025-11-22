@@ -35,8 +35,8 @@ for year in range(start, stop + step, step):
   for _, team in teams.iterrows():
 
     # TEMP: Filter teams
-    # if team['id'] not in ['MIA', 'OKC']:
-    #   continue
+    if team['id'] not in ['WAS']:
+      continue
 
     # Get target filename
     dir = f"{options['seasons_path']}{year}"
