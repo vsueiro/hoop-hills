@@ -84,7 +84,7 @@ def get_ids_of_games(team_id, year):
 
   # Visit homepage first to get cookies
   session.get('https://www.basketball-reference.com/', headers=headers)
-  time.sleep(random.uniform(1, 2))
+  time.sleep(random.uniform(4, 6))
 
   game_ids = []
 
