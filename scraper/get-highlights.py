@@ -135,11 +135,17 @@ def get_highlights():
 
                 # Skip if this game ID already exists in the previously scraped data
                 if existing_df is not None and row["id"] in existing_df["id"].values:
-                    print(f"Skipping {row["id"]} because it was already scraped")
 
-                    # Copy over video ID from existing dataset to new one
-                    df.at[i, "video"] = existing_df.loc[existing_df["id"] == row["id"], "video"].iloc[0]
-                    continue
+                    # Get existing video id value
+                    existing_video_id = existing_df.loc[existing_df["id"] == row["id"], "video"].iloc[0]
+
+                    # If video is valid (not nan, null, etc)
+                    if not pd.isna(existing_video_id):
+                        print(f"Skipping {row["id"]} because it was already scraped")
+
+                        # Copy over video ID from existing dataset to new one
+                        df.at[i, "video"] = existing_video_id
+                        continue
 
                 search_url = build_youtube_query(row["id"], row["home"], row["away"])
                 if not search_url:
