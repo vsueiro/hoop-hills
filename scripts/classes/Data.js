@@ -55,7 +55,7 @@ export default class Data {
       case "games":
         return `./data/seasons/${season}/${team}.csv`;
       case "teams":
-        return "./data/teams/2024-25.csv";
+        return "./data/teams/since-2015.csv";
       case "periods":
         return "./data/periods.csv";
       case "highlights":
