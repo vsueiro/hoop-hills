@@ -6,17 +6,33 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = [2026] # Seasons (ending year) to be scraped (newest to oldest works)
+options['year'] = [2013] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
-options['teams_path'] = './data/teams/2024-25.csv' # Location to read CSV file
-options['seasons_path'] = './data/seasons/' # Location to write games for team and season 
+options['seasons_path'] = './data/seasons/' # Location to write games for team and season
+options['teams_path'] = './data/teams/' # Location to read CSV file
+options['teams_since'] = [ # List files in chronological order (newest to oldest)
+  2015, # Current for 2026-27 seasons
+  2014,
+  2013,
+]
+
+# Define logic for picking the right teams depending on season year
+def get_team_file(year):
+
+  # Ensure list is sorted  
+  options['teams_since'].sort(reverse=True)
+
+  # Get teams that existed on target year
+  for since_year in options['teams_since']:
+    if since_year <= year:
+      team_filename = f"{options['teams_path']}since-{since_year}.csv"
+      return team_filename
+      
+  return None
 
 # Create or clear error log file
 with open("errors.txt", "w") as error_file:
   pass # This does nothing, effectively clearing the file
-
-# Dataframes
-teams = pd.read_csv(options['teams_path'])
 
 # Extract the years from the list
 years = options['year']
@@ -31,12 +47,22 @@ step = -1 if start > stop else 1
 # Loop through the range of years
 for year in range(start, stop + step, step): 
 
+  # Get team filename based on current year 
+  team_file = get_team_file(year)
+
+  if team_file is None:
+    print(f'No team data found for season ending in year {year}')
+    continue
+  
+  # Read list of teams
+  teams = pd.read_csv(team_file)
+
   # For each NBA team
   for _, team in teams.iterrows():
 
     # TEMP: Filter teams
-    # if team['id'] not in ['MIA']:
-      # continue
+    # if team['id'] not in ['CHA']:
+    #   continue
 
     # Get target filename
     dir = f"{options['seasons_path']}{year}"
