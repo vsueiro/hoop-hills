@@ -6,14 +6,16 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = [2013] # Seasons (ending year) to be scraped (newest to oldest works)
+options['year'] = [2011] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
 options['seasons_path'] = './data/seasons/' # Location to write games for team and season
 options['teams_path'] = './data/teams/' # Location to read CSV file
-options['teams_since'] = [ # List files in chronological order (newest to oldest)
+options['teams_since'] = [ # List files of fixed teams
   2015, # Current for 2026-27 seasons
   2014,
   2013,
+  2009,
+  2005,
 ]
 
 # Define logic for picking the right teams depending on season year
@@ -22,13 +24,20 @@ def get_team_file(year):
   # Ensure list is sorted  
   options['teams_since'].sort(reverse=True)
 
+  # Assume no match is found (pick oldest team list by default)
+  match = options['teams_since'][-1]
+
   # Get teams that existed on target year
   for since_year in options['teams_since']:
     if since_year <= year:
-      team_filename = f"{options['teams_path']}since-{since_year}.csv"
-      return team_filename
-      
-  return None
+      match = since_year
+      break
+
+  print(f'Matched team list since {match}')
+
+  # Build file name for CSV 
+  team_filename = f"{options['teams_path']}since-{match}.csv"
+  return team_filename
 
 # Create or clear error log file
 with open("errors.txt", "w") as error_file:
@@ -61,7 +70,7 @@ for year in range(start, stop + step, step):
   for _, team in teams.iterrows():
 
     # TEMP: Filter teams
-    # if team['id'] not in ['CHA']:
+    # if team['id'] not in ['NJN']:
     #   continue
 
     # Get target filename
