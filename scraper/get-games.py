@@ -6,16 +6,25 @@ from scraper import get_ids_of_games, get_play_by_play_data
 # Settings
 options = {}
 
-options['year'] = [2010, 2009, 2008, 2007] # Seasons (ending year) to be scraped (newest to oldest works)
+options['year'] = [2006, 2005] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
 options['seasons_path'] = './data/seasons/' # Location to write games for team and season
 options['teams_path'] = './data/teams/' # Location to read CSV file
+
+# TODO: Generate list automatically based on existing files in teams/
 options['teams_since'] = [ # List files of fixed teams
   2015, # Current for 2026-27 seasons
   2014,
   2013,
   2009,
+  2008,
+  2006,
   2005,
+  2003,
+  2002,
+  1998,
+  1996,
+  1990,
 ]
 
 # Define logic for picking the right teams depending on season year
@@ -70,7 +79,7 @@ for year in range(start, stop + step, step):
   for _, team in teams.iterrows():
 
     # TEMP: Filter teams
-    # if team['id'] not in ['NJN']:
+    # if team['id'] not in ['NOK']:
     #   continue
 
     # Get target filename
