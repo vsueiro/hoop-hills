@@ -18,14 +18,28 @@ export default class App {
   }
 
   setup() {
-    this.data.load("periods");
-    this.data.load("teams");
-    this.data.load("games");
 
-    this.data.once("ready", () => {
-      this.world.build();
-      this.filters.disableUnavailables();
-      this.stories.update();
+    // Load teams first to populate filters
+    this.data.load("teams", () => {
+
+      // Fill in team options
+      this.filters.populateTeams();
+
+      // Pick a random team
+      this.filters.setRandomTeam();
+
+      // Then load remaining data
+      this.data.load("periods");
+      this.data.load("games");
+
+      // Initialize
+      this.data.once("ready", () => {
+        this.world.build();
+        this.filters.disableUnavailables();
+        this.stories.update();
+      });
     });
+
+    
   }
 }

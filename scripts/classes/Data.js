@@ -16,6 +16,22 @@ export default class Data {
       },
     };
 
+    // List years of team files — should match those CSV in `./data/teams/`
+    this.teamsSince = [
+      2015,
+      2014,
+      2013,
+      2009,
+      2008,
+      2006,
+      2005,
+      2003,
+      2002,
+      1998,
+      1996,
+      1990,
+    ];
+
     this.events = {};
   }
 
@@ -48,6 +64,33 @@ export default class Data {
     }
   }
 
+  getTeamsFile(year, teamsPath = "") {
+    // Ensure list is sorted from most recent to oldest
+    this.teamsSince.sort((a, b) => b - a);
+
+    // Assume no match is found (pick oldest team list by default)
+    let match = this.teamsSince.at(-1);
+
+    // Get teams that existed in target year
+    for (const sinceYear of this.teamsSince) {
+      if (sinceYear <= year) {
+        match = sinceYear;
+        break;
+      }
+    }
+
+    // Build filename for CSV
+    return `${teamsPath}since-${match}.csv`;
+  }
+
+  getHighlightsFile(year, highlightsPath = "") {
+    // Only support video highlights since 2014-15 season
+    if (year < 2015) return false;
+
+    // Build filename for CSV
+    return `${highlightsPath}${year}.csv`;
+  }
+
   path(property) {
     const { season, team } = this.app.filters;
 
@@ -55,16 +98,20 @@ export default class Data {
       case "games":
         return `./data/seasons/${season}/${team}.csv`;
       case "teams":
-        return "./data/teams/since-2015.csv";
+        return this.getTeamsFile(season, "./data/teams/");
       case "periods":
         return "./data/periods.csv";
       case "highlights":
-        return `./data/highlights/${season}.csv`;
+        return this.getHighlightsFile(season, "./data/highlights/");
     }
   }
 
   async load(property, callback) {
     let path = this.path(property);
+
+    // Avoid going further if path is falsey?
+    if (!path) return;
+
     this[property] = await csv(path, autoType);
 
     if (property in this.dependencies) {

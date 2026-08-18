@@ -11,6 +11,7 @@ export default class Videos {
 
   // Binary Search
   findVideo(id, arr = this.app.data.highlights) {
+
     let start = 0;
     let end = arr.length - 1;
 
@@ -62,7 +63,8 @@ export default class Videos {
   }
 
   update(id) {
-    if (!id) {
+    // If id is falsey or no highlight data is available
+    if (!id || !this.app.data.highlights) {
       this.clear();
       this.hideButton();
       return;

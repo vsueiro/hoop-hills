@@ -19,6 +19,13 @@
   translate: -50% 0;
 }
 
+.filter-teams select {
+  width: 18rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .filter-teams .versus {
   align-items: end;
   display: flex;

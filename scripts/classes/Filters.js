@@ -179,7 +179,7 @@ export default class Filters {
       case "team":
         this.app.world.hills.hideAll = true;
 
-        // Reload data when team changes
+        // Reload games data when team changes
         this.app.data.load("games", () => {
           this.app.world.build();
           this.disableUnavailables();
@@ -192,15 +192,22 @@ export default class Filters {
       case "season":
         this.app.world.hills.hideAll = true;
 
-        // Reload data when season changes
-        this.app.data.load("games", () => {
-          this.app.world.build();
-          this.disableUnavailables();
+        // Reload teams info when season changes
+        this.app.data.load("teams", () => {
+
+          // Add new teams as options in selectors
+          this.populateTeams();
+
+          // Then, reload games data
+          this.app.data.load("games", () => {
+            this.app.world.build();
+            this.disableUnavailables();
+          });
+
         });
 
         // Load video highlights data when season changes
         this.app.data.load("highlights", () => {
-          console.log(this.app.data.highlights);
           this.app.videos.update();
         });
 
@@ -257,8 +264,61 @@ export default class Filters {
     this.app.videos.update(id);
   }
 
+  populateTeams() {
+    const selects = [this.teamSelector, this.opponentSelector];
+
+    selects.forEach(select => {
+
+      // Remember currently-selected value
+      const currentValue = select.value;
+      const currentText = currentValue ? select.options[select.selectedIndex].text : "";
+
+      // Clear options
+      select.replaceChildren();
+
+      // Add default selected option for opponent selector
+      if (select.name === "opponent") {
+        const option = document.createElement("option");
+        option.value = "all";
+        option.textContent = "All other teams";
+        select.append(option);
+      }
+
+      // Adds each team as an option
+      this.app.data.teams.forEach(team => {
+        const option = document.createElement("option");
+        option.value = team.id;
+        option.textContent = team.name;
+        select.append(option);
+      });
+
+      // If there was no previous value
+      if (currentValue === "") {
+        // Pick first option
+        select.selectedIndex = 0;
+        // Stop checking further
+        return;
+      }
+
+      // Try to set current value (if any) to newly-populated select
+      select.value = currentValue;
+
+      // Otherwise, the option does not exist anymore
+      if (select.value === "") {
+        
+        // Pick first option
+        select.selectedIndex = 0;
+
+        // TODO: Improve warning message and/or pick best alternative (e.g., Bullets -> Wizards)
+        alert(`Team ${currentText} is not in season ending in ${this.season}`);
+      }
+      
+    })
+
+    this.update();
+  }
+
   setup() {
-    this.setRandomTeam();
 
     if (window.innerWidth <= 480) {
       this.collapse(true);
