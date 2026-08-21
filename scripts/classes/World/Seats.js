@@ -68,6 +68,11 @@ export default class Seats {
     }
 
     this.world.scene.instance.add(this.group);
+
+    // If #downloader mode is on, hide seats
+    if (this.world.app.downloader.mode) {
+      this.group.visible = false;
+    }
   }
 
   update() {}

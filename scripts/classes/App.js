@@ -1,3 +1,4 @@
+import Downloader from "./Downloader.js";
 import Filters from "./Filters.js";
 import Data from "./Data.js";
 import World from "./World.js";
@@ -7,13 +8,15 @@ import Videos from "./Videos.js";
 
 export default class App {
   constructor() {
+    this.downloader = new Downloader(this);
+
     this.filters = new Filters(this, "form");
     this.data = new Data(this);
     this.world = new World(this, ".canvas", ".canvas2D");
     this.stories = new Stories(this, ".stories");
     this.stats = new Stats(this, ".stats");
     this.videos = new Videos(this, ".videos");
-
+    
     this.setup();
   }
 
@@ -39,7 +42,5 @@ export default class App {
         this.stories.update();
       });
     });
-
-    
   }
 }

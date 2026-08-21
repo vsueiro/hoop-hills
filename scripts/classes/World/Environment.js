@@ -40,6 +40,11 @@ export default class Environment {
     this.instance = new THREE.Mesh(sphere, material);
     // Add the sphere to the scene
     this.world.scene.instance.add(this.instance);
+
+    // If #downloader mode is on, hide environment
+    if (this.world.app.downloader.mode) {
+      this.instance.visible = false;
+    }
   }
 
   update() {}

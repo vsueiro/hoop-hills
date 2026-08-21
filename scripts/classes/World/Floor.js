@@ -38,6 +38,11 @@ export default class Floor {
     this.court.rotation.z = Math.PI * 0.5;
     this.court.rotation.x = -Math.PI * 0.5;
     this.world.scene.instance.add(this.court);
+
+    // If #downloader mode is on, hide court
+    if (this.world.app.downloader.mode) {
+      this.court.visible = false;
+    }
   }
 
   createTexture() {
@@ -85,6 +90,11 @@ export default class Floor {
       sideline.rotation.z = Math.PI * (-0.5 * direction);
       sideline.rotation.x = -Math.PI * 0.5;
       this.world.scene.instance.add(sideline);
+
+      // If #downloader mode is on, hide sidelines
+      if (this.world.app.downloader.mode) {
+        sideline.visible = false;
+      }
 
       this.sidelines.push(sideline);
     });
