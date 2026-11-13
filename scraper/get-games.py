@@ -1,7 +1,7 @@
 import os
 import time
 import pandas as pd
-from scraper import get_ids_of_games, get_play_by_play_data
+from scraper import get_ids_of_games, get_play_by_play_data, get_team_file
 
 # Settings
 options = {}
@@ -9,44 +9,6 @@ options = {}
 options['year'] = [2027] # Seasons (ending year) to be scraped (newest to oldest works)
 options['delay'] = 4 # Seconds to be waited between requests
 options['seasons_path'] = './data/seasons/' # Location to write games for team and season
-options['teams_path'] = './data/teams/' # Location to read CSV file
-
-# TODO: Generate list automatically based on existing files in teams/
-options['teams_since'] = [ # List files of fixed teams
-  2015, # Current for 2026-27 seasons
-  2014,
-  2013,
-  2009,
-  2008,
-  2006,
-  2005,
-  2003,
-  2002,
-  1998,
-  1996,
-  1990,
-]
-
-# Define logic for picking the right teams depending on season year
-def get_team_file(year):
-
-  # Ensure list is sorted  
-  options['teams_since'].sort(reverse=True)
-
-  # Assume no match is found (pick oldest team list by default)
-  match = options['teams_since'][-1]
-
-  # Get teams that existed on target year
-  for since_year in options['teams_since']:
-    if since_year <= year:
-      match = since_year
-      break
-
-  print(f'Matched team list since {match}')
-
-  # Build file name for CSV 
-  team_filename = f"{options['teams_path']}since-{match}.csv"
-  return team_filename
 
 # Create or clear error log file
 with open("errors.txt", "w") as error_file:

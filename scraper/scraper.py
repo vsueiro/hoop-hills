@@ -5,6 +5,45 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
+# Define logic for picking the right teams depending on season year
+def get_team_file(year):
+
+  teams_path = './data/teams/' # Location to read CSV file
+
+  # TODO: Generate list automatically based on existing files in teams/
+  teams_since = [ # List files of fixed teams
+    2015, # Current for 2026-27 seasons
+    2014,
+    2013,
+    2009,
+    2008,
+    2006,
+    2005,
+    2003,
+    2002,
+    1998,
+    1996,
+    1990,
+  ]
+
+  # Ensure list is sorted  
+  teams_since.sort(reverse=True)
+
+  # Assume no match is found (pick oldest team list by default)
+  match = teams_since[-1]
+
+  # Get teams that existed on target year
+  for since_year in teams_since:
+    if since_year <= year:
+      match = since_year
+      break
+
+  print(f'Matched team list since {match}')
+
+  # Build file name for CSV 
+  team_filename = f"{teams_path}since-{match}.csv"
+  return team_filename
+
 def get_request_headers():
   # More sophisticated headers with random user agents
   user_agents = [

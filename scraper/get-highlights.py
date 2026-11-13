@@ -9,13 +9,14 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from urllib.parse import quote_plus
+from scraper import get_team_file
 
 SEASON_DIR = "./data/seasons"
 HIGHLIGHTS_DIR = "./data/highlights"
 YOUTUBE_SEARCH_BASE = "https://www.youtube.com/@NBA/search"
-SEASONS_TO_SCRAPE = [ "2026" ] # List of desires folder names
+SEASONS_TO_SCRAPE = [ "2027" ] # List of desired folder names (year season ends
 
-df_teams = pd.read_csv('./data/teams/2024-25.csv')
+df_teams = None
 
 os.makedirs(HIGHLIGHTS_DIR, exist_ok=True)
 
@@ -64,6 +65,8 @@ def scrape_video_id(search_url):
     return None
 
 def get_highlights():
+    global df_teams
+
     # Part 1: Create highlights CSVs with home and away columns
     for season in os.listdir(SEASON_DIR):
         
@@ -118,6 +121,9 @@ def get_highlights():
         season = file_name.removesuffix(".temp.csv")
         if season not in SEASONS_TO_SCRAPE:
             continue
+
+        # Load teams that existed on target season
+        df_teams = pd.read_csv(get_team_file(int(season)))
 
         if file_name.endswith(".temp.csv"):
             temp_path = os.path.join(HIGHLIGHTS_DIR, file_name)
